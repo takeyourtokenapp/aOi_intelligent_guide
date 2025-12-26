@@ -67,7 +67,7 @@ export const NAVIGATION_LINKS = {
 } as const;
 
 export function buildCrossLink(
-  from: keyof typeof DOMAIN_CONFIG,
+  _from: keyof typeof DOMAIN_CONFIG,
   to: keyof typeof DOMAIN_CONFIG,
   path: string
 ): string {
