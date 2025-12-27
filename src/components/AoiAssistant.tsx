@@ -32,7 +32,7 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
     {
       id: '1',
       role: 'aoi',
-      content: 'Hello! I\'m aOi (葵), your guide and controller of the TYT ecosystem. I manage all elements of takeyourtoken.app and bridge it with tyt.foundation.\n\nI can help you understand Web3 technologies, navigate between our platforms, manage security, and explain how your learning contributes to children\'s brain cancer research.\n\nYou can ask me to "run a security audit" anytime.\n\nWhat would you like to know?',
+      content: 'Hello! I\'m aOi (葵), your unified AI guide across takeyourtoken.app and tyt.foundation.\n\n🎯 My Role:\n• Guide you between knowledge (Foundation) and tools (App)\n• Explain Web3 technology and its role in research\n• Track your progress and achievements\n• Manage security across the ecosystem\n• Connect you to the right resources\n\n💡 I can help with:\n• Web3, blockchain, and crypto education\n• How technology enables medical research\n• Navigation between both platforms\n• Security audits (just ask!)\n• Your learning journey and next steps\n\n❌ I do NOT:\n• Provide medical advice or diagnosis\n• Make financial recommendations\n• Access your private data\n\nWhat would you like to know?',
       timestamp: new Date(),
       category: 'general',
     },
