@@ -1,9 +1,10 @@
-import { MessageCircle, X, Send, Sparkles, Wifi, WifiOff, RefreshCw, Shield, TrendingUp, Award } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, Wifi, WifiOff, RefreshCw } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { foundationApi } from '../services/foundationApi';
 import type { AoiContext } from '../services/foundationApi';
 import { useUserProgress } from '../contexts/UserProgressContext';
 import { progressService } from '../services/progressService';
+import { crossDomainApi } from '../services/crossDomainApi';
 
 interface Message {
   id: string;
@@ -21,7 +22,7 @@ interface AoiAssistantProps {
 
 export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssistantProps = {}) {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
-  const { userId, profile, progress, stats, recentActivity, recentAchievements } = useUserProgress();
+  const { userId, profile, progress, stats, recentAchievements } = useUserProgress();
 
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
   const setIsOpen = (value: boolean) => {
@@ -37,7 +38,14 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
       return 'Hello! I\'m aOi (葵), your unified AI guide across takeyourtoken.app and tyt.foundation.\n\n🎯 My Role:\n• Guide you between knowledge (Foundation) and tools (App)\n• Explain Web3 technology and its role in research\n• Track your progress and achievements\n• Manage security across the ecosystem\n• Connect you to the right resources\n\n💡 I can help with:\n• Web3, blockchain, and crypto education\n• How technology enables medical research\n• Navigation between both platforms\n• Security audits (just ask!)\n• Your learning journey and next steps\n\n❌ I do NOT:\n• Provide medical advice or diagnosis\n• Make financial recommendations\n• Access your private data\n\nWhat would you like to know?';
     }
 
-    const owlRank = profile.owl_rank || 'Worker';
+    const owlRankMap: Record<string, string> = {
+      'Beginner': 'Worker',
+      'Explorer': 'Academic',
+      'Builder': 'Diplomat',
+      'Guardian': 'Warrior'
+    };
+    const owlRank = owlRankMap[progress.level] || 'Worker';
+
     return `Hello ${profile.display_name || 'there'}! I'm aOi (葵), your unified AI guide.\n\n🦉 Your Status:\n• Level: ${progress.level} (Owl Rank: ${owlRank})\n• Progress: ${progress.level_progress}%\n• Courses Completed: ${progress.courses_completed}\n• Certificates: ${progress.certificates_earned}\n\n🎯 I can help you:\n• Track your learning progress\n• Show your achievements\n• Guide you through Web3 education\n• Run security audits\n• Navigate between App and Foundation\n\nJust ask "show my progress" or "my achievements" to see your stats!\n\nWhat would you like to do today?`;
   };
 
@@ -191,31 +199,52 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
 
       const userLevel = (profile?.user_level || 'beginner') as 'beginner' | 'explorer' | 'builder' | 'guardian';
 
-      const context: AoiContext = {
-        topic: userInput,
-        userLevel,
-        language: 'en',
-        currentDomain: window.location.hostname.includes('foundation') ? 'foundation' : 'app',
-      };
+      let responseContent = '';
+      let responseCategory = 'general';
 
-      const response = await foundationApi.askAoi(context);
+      if (userId) {
+        try {
+          const ragResponse = await crossDomainApi.queryAoi(
+            userInput,
+            userId,
+            userLevel,
+            { profile, progress, stats }
+          );
+          responseContent = ragResponse.response;
+          responseCategory = ragResponse.sources || 'general';
+        } catch (ragError) {
+          console.error('RAG query failed, falling back to foundationApi:', ragError);
 
-      const relatedLinks: Array<{ label: string; url: string }> = [];
+          const context: AoiContext = {
+            topic: userInput,
+            userLevel,
+            language: 'en',
+            currentDomain: window.location.hostname.includes('foundation') ? 'foundation' : 'app',
+          };
 
-      if (response.appLink) {
-        relatedLinks.push({ label: 'View in Academy', url: response.appLink });
-      }
-      if (response.foundationLink) {
-        relatedLinks.push({ label: 'Learn More', url: response.foundationLink });
+          const fallbackResponse = await foundationApi.askAoi(context);
+          responseContent = fallbackResponse.explanation;
+          responseCategory = fallbackResponse.category;
+        }
+      } else {
+        const context: AoiContext = {
+          topic: userInput,
+          userLevel,
+          language: 'en',
+          currentDomain: window.location.hostname.includes('foundation') ? 'foundation' : 'app',
+        };
+
+        const response = await foundationApi.askAoi(context);
+        responseContent = response.explanation;
+        responseCategory = response.category;
       }
 
       const aoiResponse: Message = {
         id: (Date.now() + 1).toString(),
         role: 'aoi',
-        content: response.explanation,
+        content: responseContent,
         timestamp: new Date(),
-        category: response.category,
-        relatedLinks: relatedLinks.length > 0 ? relatedLinks : undefined,
+        category: responseCategory,
       };
 
       setMessages((prev) => [...prev, aoiResponse]);
@@ -225,7 +254,7 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
           userId,
           'question',
           userInput,
-          response.explanation,
+          responseContent,
           'app'
         );
       }

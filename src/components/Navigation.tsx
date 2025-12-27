@@ -1,4 +1,4 @@
-import { Shield, Menu, X, MessageCircle, Sparkles } from 'lucide-react';
+import { Shield, Menu, X, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { DOMAIN_CONFIG } from '../config/navigation';
 

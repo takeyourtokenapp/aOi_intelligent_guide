@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { progressService, UserProgress, UserProfile, Achievement, ProgressTracking } from '../services/progressService';
 import { supabase } from '../lib/supabase';
 
@@ -77,7 +77,7 @@ export function UserProgressProvider({ children }: { children: ReactNode }) {
 
     checkUser();
 
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (session?.user) {
         setUserId(session.user.id);
         await loadProgressData(session.user.id);
