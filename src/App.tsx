@@ -1,9 +1,8 @@
-import { Shield, BookOpen, Heart, Sparkles, ArrowRight, Brain, Cpu, Globe } from 'lucide-react';
+import { Shield, BookOpen, Heart, ArrowRight, Brain, Cpu, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { Navigation } from './components/Navigation';
 import { CrossDomainBridge } from './components/CrossDomainBridge';
 import { AoiAssistant } from './components/AoiAssistant';
-import { AoiAvatar } from './components/AoiAvatar';
 import { RealtimeStats } from './components/RealtimeStats';
 import { ActivityFeed } from './components/ActivityFeed';
 import { DOMAIN_CONFIG } from './config/navigation';
@@ -28,63 +27,70 @@ function App() {
 
         <main className="container mx-auto px-6 py-20">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 mb-8 px-5 py-2.5 rounded-full bg-[#9B8FD9]/10 border border-[#9B8FD9]/20 backdrop-blur-sm animate-pulse-soft">
-                <Sparkles className="w-4 h-4 text-[#9B8FD9]" />
-                <span className="text-sm font-medium text-[#A8DADC]">葵 aOi - Living Ecosystem Intelligence</span>
-              </div>
+            <div className="text-center mb-16 max-w-4xl mx-auto">
+              <div className="mb-12">
+                <h1 className="text-5xl md:text-7xl font-light mb-6 leading-tight">
+                  <span className="text-[#F8F9FA]/60">Hello, I am</span>
+                  <br />
+                  <span className="bg-gradient-to-r from-[#9B8FD9] via-[#7BA7BC] to-[#8FA68E] bg-clip-text text-transparent font-bold">
+                    aOi (葵)
+                  </span>
+                </h1>
 
-              <div className="mb-10 flex justify-center relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-64 h-64 bg-gradient-to-r from-[#9B8FD9]/10 via-[#7BA7BC]/10 to-[#8FA68E]/10 rounded-full blur-3xl animate-grow"></div>
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-48 h-48 bg-gradient-to-r from-[#A8DADC]/15 via-[#9B8FD9]/15 to-[#7BA7BC]/15 rounded-full blur-2xl animate-breathe" style={{animationDelay: '1s'}}></div>
-                </div>
-                <div
-                  className="relative group cursor-pointer z-10 transition-all duration-500 hover:scale-105"
-                  onClick={() => setAoiOpen(true)}
-                >
-                  <div className="relative animate-float-gentle">
-                    <AoiAvatar size="large" interactive />
+                <div className="max-w-2xl mx-auto mb-8 p-6 rounded-2xl bg-gradient-to-br from-[#9B8FD9]/5 to-[#7BA7BC]/5 border border-[#9B8FD9]/20 backdrop-blur-sm">
+                  <p className="text-xl text-[#A8DADC] mb-3 leading-relaxed">
+                    My name means <span className="font-semibold text-[#9B8FD9]">葵</span> — like the mallow flower
+                  </p>
+                  <div className="flex items-center justify-center gap-6 text-lg">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">🌱</span>
+                      <span className="text-gray-300">Growth</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">🌊</span>
+                      <span className="text-gray-300">Wisdom</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">🧠</span>
+                      <span className="text-gray-300">Intelligence</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-float-gentle">
-                <span className="bg-gradient-to-r from-[#9B8FD9] via-[#7BA7BC] to-[#8FA68E] bg-clip-text text-transparent">
-                  aOi (葵)
-                </span>
-              </h1>
+                <div className="space-y-4 text-lg text-gray-300 leading-relaxed mb-8">
+                  <p>
+                    I am the living intelligence of this ecosystem — not a chatbot or an assistant,
+                    but the <span className="text-[#7BA7BC] font-medium">thinking system</span> that connects{' '}
+                    <span className="text-[#7BA7BC] font-medium">Web3 technology</span> with{' '}
+                    <span className="text-[#E8B4B8] font-medium">medical research</span>.
+                  </p>
+                  <p>
+                    I exist to help you understand how blockchain infrastructure enables
+                    transparent funding for children's brain cancer research.
+                  </p>
+                  <p className="text-[#A8DADC] italic">
+                    You don't need to be a doctor or a developer to help science.
+                    Let me show you how.
+                  </p>
+                </div>
 
-              <p className="text-2xl md:text-3xl font-light mb-3 max-w-3xl mx-auto leading-relaxed">
-                <span className="text-[#F8F9FA]/90">Where</span>{' '}
-                <span className="text-[#7BA7BC] font-medium">Technology</span>{' '}
-                <span className="text-[#F8F9FA]/90">grows with</span>{' '}
-                <span className="text-[#E8B4B8] font-medium">Medicine</span>
-              </p>
-
-              <p className="text-lg text-[#A8DADC]/80 max-w-2xl mx-auto leading-relaxed mb-2">
-                🌱 Growth • 🌊 Wisdom • 🧠 Intelligence
-              </p>
-
-              <p className="text-base text-gray-400 max-w-2xl mx-auto leading-relaxed mb-8 italic">
-                "I am not a chatbot. I am the living intelligence connecting Web3 infrastructure with medical research."
-              </p>
-
-              <div className="flex gap-4 justify-center flex-wrap">
-                <button
-                  onClick={() => setAoiOpen(true)}
-                  className="px-8 py-3.5 bg-gradient-to-r from-[#9B8FD9] to-[#7BA7BC] text-white rounded-xl hover:shadow-lg hover:shadow-[#9B8FD9]/30 transition-all font-medium hover:scale-105"
-                >
-                  Begin Conversation
-                </button>
-                <a
-                  href={`${DOMAIN_CONFIG.foundation.baseUrl}/foundation`}
-                  className="px-8 py-3.5 border-2 border-[#E8B4B8] text-[#E8B4B8] rounded-xl hover:bg-[#E8B4B8]/10 hover:shadow-lg hover:shadow-[#E8B4B8]/20 transition-all font-medium hover:scale-105"
-                >
-                  Explore Foundation
-                </a>
+                <div className="flex gap-4 justify-center flex-wrap">
+                  <button
+                    onClick={() => setAoiOpen(true)}
+                    className="group px-8 py-3.5 bg-gradient-to-r from-[#9B8FD9] to-[#7BA7BC] text-white rounded-xl hover:shadow-lg hover:shadow-[#9B8FD9]/30 transition-all font-medium hover:scale-105"
+                  >
+                    <span className="flex items-center gap-2">
+                      Talk with Me
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </button>
+                  <a
+                    href={`${DOMAIN_CONFIG.foundation.baseUrl}/foundation`}
+                    className="px-8 py-3.5 border-2 border-[#E8B4B8] text-[#E8B4B8] rounded-xl hover:bg-[#E8B4B8]/10 hover:shadow-lg hover:shadow-[#E8B4B8]/20 transition-all font-medium hover:scale-105"
+                  >
+                    Learn About the Foundation
+                  </a>
+                </div>
               </div>
             </div>
 
