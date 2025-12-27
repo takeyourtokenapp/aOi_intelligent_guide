@@ -107,8 +107,9 @@ export function RealtimeStats() {
         label="Learning Now"
         value={stats.activeUsers.toLocaleString()}
         subtext={`${stats.totalUsers} total users`}
-        color="text-[#00F0FF]"
-        borderColor="border-[#00F0FF]/30"
+        color="text-[#7BA7BC]"
+        borderColor="border-[#7BA7BC]/30"
+        bgColor="bg-[#7BA7BC]/5"
         trend="Live"
       />
 
@@ -117,9 +118,10 @@ export function RealtimeStats() {
         label="Courses Completed"
         value={stats.coursesCompleted.toLocaleString()}
         subtext={`${stats.certificatesEarned} certificates earned`}
-        color="text-[#D2A44C]"
-        borderColor="border-[#D2A44C]/30"
-        trend="+12% this week"
+        color="text-[#9B8FD9]"
+        borderColor="border-[#9B8FD9]/30"
+        bgColor="bg-[#9B8FD9]/5"
+        trend="+Growth"
       />
 
       <StatCard
@@ -127,8 +129,9 @@ export function RealtimeStats() {
         label="Foundation This Month"
         value={`$${stats.foundationThisMonth.toLocaleString()}`}
         subtext={`$${stats.foundationTotal.toLocaleString()} total`}
-        color="text-[#FF00FF]"
-        borderColor="border-[#FF00FF]/30"
+        color="text-[#E8B4B8]"
+        borderColor="border-[#E8B4B8]/30"
+        bgColor="bg-[#E8B4B8]/5"
         trend="Real-time"
       />
 
@@ -137,8 +140,9 @@ export function RealtimeStats() {
         label="BTC Ecosystem"
         value="Coming Soon"
         subtext="Mining rewards launching Q1"
-        color="text-[#F7931A]"
-        borderColor="border-[#F7931A]/30"
+        color="text-[#8FA68E]"
+        borderColor="border-[#8FA68E]/30"
+        bgColor="bg-[#8FA68E]/5"
         trend="V3"
       />
     </div>
@@ -152,12 +156,13 @@ interface StatCardProps {
   subtext: string;
   color: string;
   borderColor: string;
+  bgColor: string;
   trend: string;
 }
 
-function StatCard({ icon, label, value, subtext, color, borderColor, trend }: StatCardProps) {
+function StatCard({ icon, label, value, subtext, color, borderColor, bgColor, trend }: StatCardProps) {
   return (
-    <div className={`bg-[#1a2332]/30 rounded-2xl border ${borderColor} p-6 hover:bg-[#1a2332]/50 transition-all duration-300 hover:scale-105`}>
+    <div className={`${bgColor} rounded-2xl border ${borderColor} p-6 hover:border-opacity-60 transition-all duration-300 hover:scale-105 animate-breathe backdrop-blur-sm`}>
       <div className="flex items-center justify-between mb-4">
         <div className={color}>{icon}</div>
         <span className="text-xs text-gray-500 font-medium px-2 py-1 bg-gray-800/50 rounded">

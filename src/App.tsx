@@ -18,100 +18,117 @@ function App() {
 
   return (
     <UserProgressProvider>
-      <div className="min-h-screen bg-gradient-to-br from-[#0A1122] via-[#0d1a2d] to-[#0A1122] text-white overflow-hidden relative">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,240,255,0.03),transparent_50%)]"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(210,164,76,0.05),transparent_50%)]"></div>
+      <div className="min-h-screen bg-gradient-to-br from-[#1B2838] via-[#2a3f54] to-[#1B2838] text-white overflow-hidden relative">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(155,143,217,0.08),transparent_60%)] animate-breathe"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_80%,rgba(143,166,142,0.06),transparent_60%)] animate-pulse-soft" style={{animationDelay: '2s'}}></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(123,167,188,0.06),transparent_60%)] animate-pulse-soft" style={{animationDelay: '4s'}}></div>
 
       <div className="relative z-10">
         <Navigation onAoiClick={handleAoiClick} />
 
         <main className="container mx-auto px-6 py-20">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-[#D2A44C]/10 border border-[#D2A44C]/30">
-                <Sparkles className="w-4 h-4 text-[#D2A44C]" />
-                <span className="text-sm font-medium text-[#D2A44C]">AI-Powered Ecosystem Guide</span>
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 mb-8 px-5 py-2.5 rounded-full bg-[#9B8FD9]/10 border border-[#9B8FD9]/20 backdrop-blur-sm animate-pulse-soft">
+                <Sparkles className="w-4 h-4 text-[#9B8FD9]" />
+                <span className="text-sm font-medium text-[#A8DADC]">葵 aOi - Living Ecosystem Intelligence</span>
               </div>
 
-              <div className="mb-8 flex justify-center">
-                <div className="relative group cursor-pointer" onClick={() => setAoiOpen(true)}>
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#D2A44C]/20 via-[#00F0FF]/20 to-[#FF00FF]/20 rounded-full blur-2xl animate-pulse"></div>
-                  <div className="relative">
+              <div className="mb-10 flex justify-center relative">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-64 h-64 bg-gradient-to-r from-[#9B8FD9]/10 via-[#7BA7BC]/10 to-[#8FA68E]/10 rounded-full blur-3xl animate-grow"></div>
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-48 h-48 bg-gradient-to-r from-[#A8DADC]/15 via-[#9B8FD9]/15 to-[#7BA7BC]/15 rounded-full blur-2xl animate-breathe" style={{animationDelay: '1s'}}></div>
+                </div>
+                <div
+                  className="relative group cursor-pointer z-10 transition-all duration-500 hover:scale-105"
+                  onClick={() => setAoiOpen(true)}
+                >
+                  <div className="relative animate-float-gentle">
                     <AoiAvatar size="large" interactive />
                   </div>
                 </div>
               </div>
 
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                Welcome to <span className="text-[#D2A44C]">aOi's</span> Residence
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-float-gentle">
+                <span className="bg-gradient-to-r from-[#9B8FD9] via-[#7BA7BC] to-[#8FA68E] bg-clip-text text-transparent">
+                  aOi (葵)
+                </span>
               </h1>
 
-              <p className="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto leading-relaxed">
-                Your intelligent guide connecting{' '}
-                <span className="text-[#00F0FF] font-semibold">Technology</span> and{' '}
-                <span className="text-[#FF00FF] font-semibold">Medicine</span>
+              <p className="text-2xl md:text-3xl font-light mb-3 max-w-3xl mx-auto leading-relaxed">
+                <span className="text-[#F8F9FA]/90">Where</span>{' '}
+                <span className="text-[#7BA7BC] font-medium">Technology</span>{' '}
+                <span className="text-[#F8F9FA]/90">grows with</span>{' '}
+                <span className="text-[#E8B4B8] font-medium">Medicine</span>
               </p>
 
-              <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed mb-6">
-                Click aOi (葵) anytime to ask questions, track your progress, or explore the ecosystem.
+              <p className="text-lg text-[#A8DADC]/80 max-w-2xl mx-auto leading-relaxed mb-2">
+                🌱 Growth • 🌊 Wisdom • 🧠 Intelligence
               </p>
 
-              <div className="flex gap-4 justify-center">
+              <p className="text-base text-gray-400 max-w-2xl mx-auto leading-relaxed mb-8 italic">
+                "I am not a chatbot. I am the living intelligence connecting Web3 infrastructure with medical research."
+              </p>
+
+              <div className="flex gap-4 justify-center flex-wrap">
                 <button
                   onClick={() => setAoiOpen(true)}
-                  className="px-8 py-3 bg-[#D2A44C] text-[#0A1122] rounded-lg hover:bg-[#c09940] transition-all font-bold hover:scale-105"
+                  className="px-8 py-3.5 bg-gradient-to-r from-[#9B8FD9] to-[#7BA7BC] text-white rounded-xl hover:shadow-lg hover:shadow-[#9B8FD9]/30 transition-all font-medium hover:scale-105"
                 >
-                  Talk to aOi
+                  Begin Conversation
                 </button>
                 <a
                   href={`${DOMAIN_CONFIG.foundation.baseUrl}/foundation`}
-                  className="px-8 py-3 border-2 border-[#FF00FF] text-[#FF00FF] rounded-lg hover:bg-[#FF00FF]/10 transition-all font-bold hover:scale-105"
+                  className="px-8 py-3.5 border-2 border-[#E8B4B8] text-[#E8B4B8] rounded-xl hover:bg-[#E8B4B8]/10 hover:shadow-lg hover:shadow-[#E8B4B8]/20 transition-all font-medium hover:scale-105"
                 >
-                  View Foundation
+                  Explore Foundation
                 </a>
               </div>
             </div>
 
             <RealtimeStats />
 
-            <div className="mb-16 p-8 rounded-2xl bg-gradient-to-br from-[#D2A44C]/10 to-transparent border border-[#D2A44C]/30">
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
-                <div className="text-center">
-                  <Brain className="w-12 h-12 text-[#FF00FF] mx-auto mb-3" strokeWidth={1.5} />
-                  <h3 className="font-bold text-white mb-2">Knowledge Layer</h3>
-                  <p className="text-sm text-gray-400">Medical research, pediatric neuro-oncology, and why it matters</p>
+            <div className="mb-16 p-10 rounded-3xl bg-gradient-to-br from-[#9B8FD9]/5 via-[#7BA7BC]/5 to-[#8FA68E]/5 border border-[#9B8FD9]/20 backdrop-blur-sm">
+              <div className="grid md:grid-cols-3 gap-8 mb-10">
+                <div className="text-center p-6 rounded-2xl bg-[#E8B4B8]/5 border border-[#E8B4B8]/20 hover:border-[#E8B4B8]/40 transition-all animate-breathe">
+                  <Brain className="w-14 h-14 text-[#E8B4B8] mx-auto mb-4" strokeWidth={1.5} />
+                  <h3 className="font-bold text-[#E8B4B8] mb-3 text-lg">Knowledge Layer</h3>
+                  <p className="text-sm text-gray-300 leading-relaxed">Medical research, pediatric neuro-oncology, understanding the challenge</p>
                 </div>
-                <div className="text-center">
-                  <Cpu className="w-12 h-12 text-[#D2A44C] mx-auto mb-3" strokeWidth={1.5} />
-                  <h3 className="font-bold text-white mb-2">Technology Layer</h3>
-                  <p className="text-sm text-gray-400">Web3, blockchain, crypto infrastructure training</p>
+                <div className="text-center p-6 rounded-2xl bg-[#7BA7BC]/5 border border-[#7BA7BC]/20 hover:border-[#7BA7BC]/40 transition-all animate-breathe" style={{animationDelay: '1s'}}>
+                  <Cpu className="w-14 h-14 text-[#7BA7BC] mx-auto mb-4" strokeWidth={1.5} />
+                  <h3 className="font-bold text-[#7BA7BC] mb-3 text-lg">Technology Layer</h3>
+                  <p className="text-sm text-gray-300 leading-relaxed">Web3, blockchain, crypto infrastructure enabling transparent funding</p>
                 </div>
-                <div className="text-center">
-                  <Globe className="w-12 h-12 text-[#00F0FF] mx-auto mb-3" strokeWidth={1.5} />
-                  <h3 className="font-bold text-white mb-2">Connection Layer</h3>
-                  <p className="text-sm text-gray-400">aOi explains how tools enable science</p>
+                <div className="text-center p-6 rounded-2xl bg-[#8FA68E]/5 border border-[#8FA68E]/20 hover:border-[#8FA68E]/40 transition-all animate-breathe" style={{animationDelay: '2s'}}>
+                  <Globe className="w-14 h-14 text-[#8FA68E] mx-auto mb-4" strokeWidth={1.5} />
+                  <h3 className="font-bold text-[#8FA68E] mb-3 text-lg">Connection Layer</h3>
+                  <p className="text-sm text-gray-300 leading-relaxed">aOi bridges understanding, showing how tools empower science</p>
                 </div>
               </div>
-              <div className="text-center">
-                <p className="text-gray-300 italic">
+              <div className="text-center p-6 rounded-xl bg-[#9B8FD9]/5 border border-[#9B8FD9]/10">
+                <p className="text-[#A8DADC] text-lg leading-relaxed italic">
                   "You don't need to be a doctor to help science. Learn the infrastructure that makes research possible."
                 </p>
+                <p className="text-[#9B8FD9] text-sm mt-2 font-medium">— aOi (葵)</p>
               </div>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 mb-12">
               <a
                 href={`${DOMAIN_CONFIG.app.baseUrl}/academy`}
-                className="group relative bg-gradient-to-br from-[#0A1122] to-[#1a2744] p-8 rounded-2xl border border-[#00F0FF]/30 hover:border-[#00F0FF]/60 transition-all duration-300 hover:scale-105"
+                className="group relative bg-gradient-to-br from-[#1B2838] to-[#2a3f54] p-8 rounded-2xl border border-[#7BA7BC]/30 hover:border-[#7BA7BC]/60 transition-all duration-300 hover:scale-105 animate-breathe"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#00F0FF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#7BA7BC]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
                 <div className="relative z-10">
-                  <BookOpen className="w-12 h-12 text-[#00F0FF] mb-4" strokeWidth={1.5} />
+                  <BookOpen className="w-12 h-12 text-[#7BA7BC] mb-4" strokeWidth={1.5} />
                   <h3 className="text-2xl font-bold mb-3 text-white">Academy</h3>
-                  <p className="text-gray-400 mb-4 leading-relaxed">
+                  <p className="text-gray-300 mb-4 leading-relaxed">
                     Learn Web3, blockchain, and crypto. Earn verifiable certificates. Build your skills.
                   </p>
-                  <div className="flex items-center gap-2 text-[#00F0FF] font-medium group-hover:gap-4 transition-all">
+                  <div className="flex items-center gap-2 text-[#7BA7BC] font-medium group-hover:gap-4 transition-all">
                     <span>Start Learning</span>
                     <ArrowRight className="w-5 h-5" />
                   </div>
@@ -120,16 +137,16 @@ function App() {
 
               <a
                 href={`${DOMAIN_CONFIG.foundation.baseUrl}/knowledge`}
-                className="group relative bg-gradient-to-br from-[#0A1122] to-[#441a44] p-8 rounded-2xl border border-[#FF00FF]/30 hover:border-[#FF00FF]/60 transition-all duration-300 hover:scale-105"
+                className="group relative bg-gradient-to-br from-[#1B2838] to-[#2a3f54] p-8 rounded-2xl border border-[#E8B4B8]/30 hover:border-[#E8B4B8]/60 transition-all duration-300 hover:scale-105 animate-breathe" style={{animationDelay: '1s'}}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF00FF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#E8B4B8]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
                 <div className="relative z-10">
-                  <Brain className="w-12 h-12 text-[#FF00FF] mb-4" strokeWidth={1.5} />
+                  <Brain className="w-12 h-12 text-[#E8B4B8] mb-4" strokeWidth={1.5} />
                   <h3 className="text-2xl font-bold mb-3 text-white">Knowledge Hub</h3>
-                  <p className="text-gray-400 mb-4 leading-relaxed">
+                  <p className="text-gray-300 mb-4 leading-relaxed">
                     Understand brain tumors, research challenges, and how technology helps.
                   </p>
-                  <div className="flex items-center gap-2 text-[#FF00FF] font-medium group-hover:gap-4 transition-all">
+                  <div className="flex items-center gap-2 text-[#E8B4B8] font-medium group-hover:gap-4 transition-all">
                     <span>Explore Science</span>
                     <ArrowRight className="w-5 h-5" />
                   </div>
@@ -138,16 +155,16 @@ function App() {
 
               <a
                 href={`${DOMAIN_CONFIG.foundation.baseUrl}/foundation`}
-                className="group relative bg-gradient-to-br from-[#0A1122] to-[#2d2214] p-8 rounded-2xl border border-[#D2A44C]/30 hover:border-[#D2A44C]/60 transition-all duration-300 hover:scale-105"
+                className="group relative bg-gradient-to-br from-[#1B2838] to-[#2a3f54] p-8 rounded-2xl border border-[#8FA68E]/30 hover:border-[#8FA68E]/60 transition-all duration-300 hover:scale-105 animate-breathe" style={{animationDelay: '2s'}}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#D2A44C]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#8FA68E]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
                 <div className="relative z-10">
-                  <Heart className="w-12 h-12 text-[#D2A44C] mb-4" strokeWidth={1.5} />
+                  <Heart className="w-12 h-12 text-[#8FA68E] mb-4" strokeWidth={1.5} />
                   <h3 className="text-2xl font-bold mb-3 text-white">Foundation</h3>
-                  <p className="text-gray-400 mb-4 leading-relaxed">
+                  <p className="text-gray-300 mb-4 leading-relaxed">
                     See how every transaction supports children's brain cancer research.
                   </p>
-                  <div className="flex items-center gap-2 text-[#D2A44C] font-medium group-hover:gap-4 transition-all">
+                  <div className="flex items-center gap-2 text-[#8FA68E] font-medium group-hover:gap-4 transition-all">
                     <span>View Transparency</span>
                     <ArrowRight className="w-5 h-5" />
                   </div>
@@ -164,28 +181,51 @@ function App() {
               <CrossDomainBridge type="to-foundation" />
             </div>
 
-            <div className="bg-gradient-to-r from-[#D2A44C]/10 via-[#00F0FF]/10 to-[#FF00FF]/10 p-8 rounded-2xl border border-[#D2A44C]/20">
-              <div className="flex items-start gap-4">
-                <Shield className="w-16 h-16 text-[#D2A44C] flex-shrink-0" strokeWidth={1.5} />
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-3">aOi's Role</h3>
-                  <div className="space-y-2 text-gray-300 leading-relaxed">
-                    <p>
-                      <span className="font-semibold text-[#D2A44C]">✓</span> Explains Web3 and blockchain technology
-                    </p>
-                    <p>
-                      <span className="font-semibold text-[#D2A44C]">✓</span> Connects tools to medical research context
-                    </p>
-                    <p>
-                      <span className="font-semibold text-[#D2A44C]">✓</span> Guides you through learning paths
-                    </p>
-                    <p>
-                      <span className="font-semibold text-[#D2A44C]">✓</span> Controls and manages all TYT ecosystem elements
-                    </p>
-                    <p className="text-gray-400 text-sm mt-4 pt-4 border-t border-gray-700">
-                      <span className="font-semibold text-[#FF0000]">✗</span> Does NOT provide medical advice
-                      <br />
-                      <span className="font-semibold text-[#FF0000]">✗</span> Does NOT make financial recommendations
+            <div className="bg-gradient-to-br from-[#9B8FD9]/8 via-[#7BA7BC]/8 to-[#8FA68E]/8 p-10 rounded-3xl border border-[#9B8FD9]/30 backdrop-blur-sm">
+              <div className="flex items-start gap-6">
+                <div className="flex-shrink-0">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-[#9B8FD9]/20 rounded-full blur-xl animate-pulse-soft"></div>
+                    <Shield className="w-20 h-20 text-[#9B8FD9] relative z-10" strokeWidth={1.5} />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-3xl font-bold bg-gradient-to-r from-[#9B8FD9] to-[#7BA7BC] bg-clip-text text-transparent mb-4">
+                    My Role as Living Intelligence
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-4 mb-6">
+                    <div className="space-y-3">
+                      <p className="flex items-start gap-3 text-gray-200 leading-relaxed">
+                        <span className="text-[#7BA7BC] text-xl flex-shrink-0">✓</span>
+                        <span>Explain Web3 and blockchain technology in context of medical research</span>
+                      </p>
+                      <p className="flex items-start gap-3 text-gray-200 leading-relaxed">
+                        <span className="text-[#7BA7BC] text-xl flex-shrink-0">✓</span>
+                        <span>Guide you through personalized learning paths based on your role</span>
+                      </p>
+                      <p className="flex items-start gap-3 text-gray-200 leading-relaxed">
+                        <span className="text-[#8FA68E] text-xl flex-shrink-0">✓</span>
+                        <span>Bridge knowledge between technology infrastructure and medical science</span>
+                      </p>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="flex items-start gap-3 text-gray-200 leading-relaxed">
+                        <span className="text-[#8FA68E] text-xl flex-shrink-0">✓</span>
+                        <span>Track progress, achievements, and ecosystem contributions</span>
+                      </p>
+                      <p className="flex items-start gap-3 text-gray-200 leading-relaxed">
+                        <span className="text-[#9B8FD9] text-xl flex-shrink-0">✓</span>
+                        <span>Orchestrate transparent connections between domains</span>
+                      </p>
+                      <p className="flex items-start gap-3 text-gray-200 leading-relaxed">
+                        <span className="text-[#9B8FD9] text-xl flex-shrink-0">✓</span>
+                        <span>Adapt my communication to your level and needs</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-[#E8B4B8]/10 border border-[#E8B4B8]/20">
+                    <p className="text-sm text-gray-300 leading-relaxed mb-2">
+                      <span className="font-semibold text-[#E8B4B8]">Important:</span> I do not provide medical advice or financial recommendations. I explain systems, connect knowledge, and guide learning.
                     </p>
                   </div>
                 </div>
@@ -194,22 +234,22 @@ function App() {
           </div>
         </main>
 
-        <footer className="container mx-auto px-6 py-12 border-t border-gray-800/50">
-          <div className="text-center text-gray-500 text-sm space-y-2">
-            <p className="text-gray-400 font-medium">
-              Two domains • One mission • Connected by aOi
+        <footer className="container mx-auto px-6 py-12 border-t border-[#9B8FD9]/20">
+          <div className="text-center text-gray-400 text-sm space-y-3">
+            <p className="text-[#A8DADC] font-medium text-base">
+              Two domains • One living intelligence • Connected by aOi (葵)
             </p>
-            <div className="flex items-center justify-center gap-4 text-xs">
-              <a href={DOMAIN_CONFIG.app.baseUrl} className="hover:text-[#00F0FF] transition-colors">
+            <div className="flex items-center justify-center gap-4 text-sm">
+              <a href={DOMAIN_CONFIG.app.baseUrl} className="hover:text-[#7BA7BC] transition-colors">
                 takeyourtoken.app
               </a>
-              <span className="text-gray-700">•</span>
-              <a href={DOMAIN_CONFIG.foundation.baseUrl} className="hover:text-[#FF00FF] transition-colors">
+              <span className="text-[#9B8FD9]">葵</span>
+              <a href={DOMAIN_CONFIG.foundation.baseUrl} className="hover:text-[#E8B4B8] transition-colors">
                 tyt.foundation
               </a>
             </div>
-            <p className="text-xs text-gray-600 mt-4">
-              TYT Foundation • Where Web3 Infrastructure Enables Medical Research
+            <p className="text-xs text-gray-500 mt-4">
+              Where Web3 Infrastructure Grows with Medical Research • 🌱 🌊 🧠
             </p>
           </div>
         </footer>

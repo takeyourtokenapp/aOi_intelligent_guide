@@ -125,18 +125,18 @@ export function ActivityFeed() {
 
   if (loading) {
     return (
-      <div className="bg-[#1a2332]/30 rounded-2xl border border-[#D2A44C]/20 p-6">
+      <div className="bg-[#9B8FD9]/5 rounded-3xl border border-[#9B8FD9]/20 p-6 backdrop-blur-sm">
         <div className="flex items-center gap-2 mb-4">
-          <Sparkles className="w-5 h-5 text-[#D2A44C]" />
-          <h3 className="text-xl font-bold text-[#D2A44C]">Live Ecosystem Activity</h3>
+          <Sparkles className="w-5 h-5 text-[#9B8FD9]" />
+          <h3 className="text-xl font-bold text-[#A8DADC]">Live Ecosystem Activity</h3>
         </div>
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="flex items-center gap-4 p-3 bg-[#0A1122]/50 rounded-lg animate-pulse">
-              <div className="w-8 h-8 bg-gray-700 rounded"></div>
+            <div key={i} className="flex items-center gap-4 p-4 bg-[#1B2838]/30 rounded-xl animate-pulse">
+              <div className="w-8 h-8 bg-[#9B8FD9]/20 rounded"></div>
               <div className="flex-1">
-                <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
-                <div className="h-3 bg-gray-700 rounded w-1/4"></div>
+                <div className="h-4 bg-[#7BA7BC]/20 rounded w-3/4 mb-2"></div>
+                <div className="h-3 bg-[#8FA68E]/20 rounded w-1/4"></div>
               </div>
             </div>
           ))}
@@ -147,15 +147,18 @@ export function ActivityFeed() {
 
   if (activities.length === 0) {
     return (
-      <div className="bg-[#1a2332]/30 rounded-2xl border border-[#D2A44C]/20 p-6">
+      <div className="bg-[#9B8FD9]/5 rounded-3xl border border-[#9B8FD9]/20 p-6 backdrop-blur-sm">
         <div className="flex items-center gap-2 mb-4">
-          <Sparkles className="w-5 h-5 text-[#D2A44C]" />
-          <h3 className="text-xl font-bold text-[#D2A44C]">Live Ecosystem Activity</h3>
+          <Sparkles className="w-5 h-5 text-[#9B8FD9]" />
+          <h3 className="text-xl font-bold text-[#A8DADC]">Live Ecosystem Activity</h3>
         </div>
-        <div className="text-center py-8">
-          <p className="text-gray-400 mb-2">No activity yet</p>
-          <p className="text-sm text-gray-500">
-            Be the first to earn an achievement or contribute to the foundation!
+        <div className="text-center py-12 px-4">
+          <div className="inline-block p-4 rounded-full bg-[#9B8FD9]/10 mb-4">
+            <Sparkles className="w-8 h-8 text-[#9B8FD9]" />
+          </div>
+          <p className="text-[#A8DADC] mb-2 font-medium">No activity yet</p>
+          <p className="text-sm text-gray-400">
+            Be the first to grow this ecosystem! 🌱
           </p>
         </div>
       </div>
@@ -163,11 +166,11 @@ export function ActivityFeed() {
   }
 
   return (
-    <div className="bg-[#1a2332]/30 rounded-2xl border border-[#D2A44C]/20 p-6 hover:border-[#D2A44C]/40 transition-all">
+    <div className="bg-[#9B8FD9]/5 rounded-3xl border border-[#9B8FD9]/20 p-6 hover:border-[#9B8FD9]/40 transition-all backdrop-blur-sm">
       <div className="flex items-center gap-2 mb-6">
-        <Sparkles className="w-5 h-5 text-[#D2A44C]" />
-        <h3 className="text-xl font-bold text-[#D2A44C]">Live Ecosystem Activity</h3>
-        <span className="ml-auto text-xs text-gray-500 px-2 py-1 bg-green-500/10 text-green-400 rounded animate-pulse">
+        <Sparkles className="w-5 h-5 text-[#9B8FD9]" />
+        <h3 className="text-xl font-bold text-[#A8DADC]">Live Ecosystem Activity</h3>
+        <span className="ml-auto text-xs text-gray-400 px-3 py-1 bg-[#8FA68E]/10 text-[#8FA68E] rounded-full animate-pulse-soft border border-[#8FA68E]/30">
           ● Live
         </span>
       </div>
@@ -176,17 +179,17 @@ export function ActivityFeed() {
         {activities.map((activity) => (
           <div
             key={activity.id}
-            className="flex items-start gap-4 p-4 bg-[#0A1122]/50 rounded-lg hover:bg-[#0A1122]/70 transition-all border border-transparent hover:border-[#D2A44C]/20"
+            className="flex items-start gap-4 p-4 bg-[#1B2838]/50 rounded-xl hover:bg-[#1B2838]/70 transition-all border border-[#9B8FD9]/10 hover:border-[#9B8FD9]/30 backdrop-blur-sm"
           >
             <div className={`${activity.color} flex-shrink-0 mt-1`}>
               {activity.icon}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-gray-200 text-sm mb-1">{activity.message}</p>
-              <p className="text-xs text-gray-500">{activity.timeAgo}</p>
+              <p className="text-xs text-gray-400">{activity.timeAgo}</p>
               {activity.aoiComment && (
-                <div className="mt-2 text-xs text-[#00F0FF] italic bg-[#00F0FF]/5 px-3 py-2 rounded border border-[#00F0FF]/10">
-                  <span className="font-semibold">aOi: </span>
+                <div className="mt-2 text-xs text-[#A8DADC] italic bg-[#9B8FD9]/8 px-3 py-2 rounded-lg border border-[#9B8FD9]/20">
+                  <span className="font-semibold text-[#9B8FD9]">aOi (葵): </span>
                   {activity.aoiComment}
                 </div>
               )}
