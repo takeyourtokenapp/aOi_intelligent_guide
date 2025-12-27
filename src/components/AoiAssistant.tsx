@@ -1,7 +1,9 @@
-import { MessageCircle, X, Send, Sparkles, Wifi, WifiOff, RefreshCw, Shield } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, Wifi, WifiOff, RefreshCw, Shield, TrendingUp, Award } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { foundationApi } from '../services/foundationApi';
 import type { AoiContext } from '../services/foundationApi';
+import { useUserProgress } from '../contexts/UserProgressContext';
+import { progressService } from '../services/progressService';
 
 interface Message {
   id: string;
@@ -19,6 +21,7 @@ interface AoiAssistantProps {
 
 export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssistantProps = {}) {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const { userId, profile, progress, stats, recentActivity, recentAchievements } = useUserProgress();
 
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
   const setIsOpen = (value: boolean) => {
@@ -28,11 +31,21 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
       setInternalIsOpen(value);
     }
   };
+
+  const getWelcomeMessage = () => {
+    if (!profile || !progress) {
+      return 'Hello! I\'m aOi (葵), your unified AI guide across takeyourtoken.app and tyt.foundation.\n\n🎯 My Role:\n• Guide you between knowledge (Foundation) and tools (App)\n• Explain Web3 technology and its role in research\n• Track your progress and achievements\n• Manage security across the ecosystem\n• Connect you to the right resources\n\n💡 I can help with:\n• Web3, blockchain, and crypto education\n• How technology enables medical research\n• Navigation between both platforms\n• Security audits (just ask!)\n• Your learning journey and next steps\n\n❌ I do NOT:\n• Provide medical advice or diagnosis\n• Make financial recommendations\n• Access your private data\n\nWhat would you like to know?';
+    }
+
+    const owlRank = profile.owl_rank || 'Worker';
+    return `Hello ${profile.display_name || 'there'}! I'm aOi (葵), your unified AI guide.\n\n🦉 Your Status:\n• Level: ${progress.level} (Owl Rank: ${owlRank})\n• Progress: ${progress.level_progress}%\n• Courses Completed: ${progress.courses_completed}\n• Certificates: ${progress.certificates_earned}\n\n🎯 I can help you:\n• Track your learning progress\n• Show your achievements\n• Guide you through Web3 education\n• Run security audits\n• Navigate between App and Foundation\n\nJust ask "show my progress" or "my achievements" to see your stats!\n\nWhat would you like to do today?`;
+  };
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
       role: 'aoi',
-      content: 'Hello! I\'m aOi (葵), your unified AI guide across takeyourtoken.app and tyt.foundation.\n\n🎯 My Role:\n• Guide you between knowledge (Foundation) and tools (App)\n• Explain Web3 technology and its role in research\n• Track your progress and achievements\n• Manage security across the ecosystem\n• Connect you to the right resources\n\n💡 I can help with:\n• Web3, blockchain, and crypto education\n• How technology enables medical research\n• Navigation between both platforms\n• Security audits (just ask!)\n• Your learning journey and next steps\n\n❌ I do NOT:\n• Provide medical advice or diagnosis\n• Make financial recommendations\n• Access your private data\n\nWhat would you like to know?',
+      content: getWelcomeMessage(),
       timestamp: new Date(),
       category: 'general',
     },
@@ -76,14 +89,80 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    const userInput = input;
     setInput('');
     setIsLoading(true);
 
     try {
+      const progressKeywords = ['progress', 'my progress', 'show progress', 'how am i doing', 'my stats'];
+      const achievementKeywords = ['achievements', 'my achievements', 'show achievements', 'badges', 'certificates'];
       const securityKeywords = ['security', 'audit', 'check security', 'run audit', 'security check', 'vulnerability', 'safe'];
-      const isSecurityQuery = securityKeywords.some(keyword =>
-        input.toLowerCase().includes(keyword)
+
+      const isProgressQuery = progressKeywords.some(keyword =>
+        userInput.toLowerCase().includes(keyword)
       );
+      const isAchievementQuery = achievementKeywords.some(keyword =>
+        userInput.toLowerCase().includes(keyword)
+      );
+      const isSecurityQuery = securityKeywords.some(keyword =>
+        userInput.toLowerCase().includes(keyword)
+      );
+
+      if (isProgressQuery && stats) {
+        const progressContent = `📊 Your Progress Summary:\n\n🎓 Academy:\n• Total Modules: ${stats.academy.total}\n• Completed: ${stats.academy.completed}\n• In Progress: ${stats.academy.inProgress}\n• Time Spent: ${Math.floor(stats.academy.totalTimeMinutes / 60)}h ${stats.academy.totalTimeMinutes % 60}m\n\n📚 Knowledge:\n• Modules Accessed: ${stats.knowledge.total}\n• Completed: ${stats.knowledge.completed}\n• Study Time: ${Math.floor(stats.knowledge.totalTimeMinutes / 60)}h ${stats.knowledge.totalTimeMinutes % 60}m\n\n💝 Foundation Support:\n• Contributions: ${stats.contribution.total}\n• Amount: $${stats.contribution.totalAmount.toFixed(2)}\n\n🏆 Achievements: ${stats.achievements.total} total\n• Badges: ${stats.achievements.badges}\n• Certificates: ${stats.achievements.certificates}\n• Milestones: ${stats.achievements.milestones}`;
+
+        const progressResponse: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'aoi',
+          content: progressContent,
+          timestamp: new Date(),
+          category: 'progress',
+        };
+
+        setMessages((prev) => [...prev, progressResponse]);
+
+        if (userId) {
+          await progressService.recordAoiInteraction(
+            userId,
+            'progress_check',
+            userInput,
+            progressContent,
+            'app'
+          );
+        }
+
+        setIsLoading(false);
+        return;
+      }
+
+      if (isAchievementQuery && recentAchievements.length > 0) {
+        const achievementsContent = `🏆 Your Recent Achievements:\n\n${recentAchievements.map((a, idx) =>
+          `${idx + 1}. ${a.title}\n   Type: ${a.achievement_type}\n   Earned: ${new Date(a.earned_at).toLocaleDateString()}\n   ${a.description || ''}`
+        ).join('\n\n')}\n\nTotal Achievements: ${recentAchievements.length}\n\nKeep up the great work! Every achievement brings you closer to becoming a Guardian.`;
+
+        const achievementResponse: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'aoi',
+          content: achievementsContent,
+          timestamp: new Date(),
+          category: 'achievements',
+        };
+
+        setMessages((prev) => [...prev, achievementResponse]);
+
+        if (userId) {
+          await progressService.recordAoiInteraction(
+            userId,
+            'progress_check',
+            userInput,
+            achievementsContent,
+            'app'
+          );
+        }
+
+        setIsLoading(false);
+        return;
+      }
 
       if (isSecurityQuery) {
         const auditResponse: Message = {
@@ -95,13 +174,26 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
         };
 
         setMessages((prev) => [...prev, auditResponse]);
+
+        if (userId) {
+          await progressService.recordAoiInteraction(
+            userId,
+            'audit',
+            userInput,
+            auditResponse.content,
+            'app'
+          );
+        }
+
         setIsLoading(false);
         return;
       }
 
+      const userLevel = (profile?.user_level || 'beginner') as 'beginner' | 'explorer' | 'builder' | 'guardian';
+
       const context: AoiContext = {
-        topic: input,
-        userLevel: 'explorer',
+        topic: userInput,
+        userLevel,
         language: 'en',
         currentDomain: window.location.hostname.includes('foundation') ? 'foundation' : 'app',
       };
@@ -127,6 +219,16 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
       };
 
       setMessages((prev) => [...prev, aoiResponse]);
+
+      if (userId) {
+        await progressService.recordAoiInteraction(
+          userId,
+          'question',
+          userInput,
+          response.explanation,
+          'app'
+        );
+      }
     } catch (error) {
       console.error('Error getting aOi response:', error);
 
@@ -139,6 +241,16 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
       };
 
       setMessages((prev) => [...prev, errorResponse]);
+
+      if (userId) {
+        await progressService.recordAoiInteraction(
+          userId,
+          'question',
+          userInput,
+          errorResponse.content,
+          'app'
+        );
+      }
     } finally {
       setIsLoading(false);
     }

@@ -4,6 +4,7 @@ import { Navigation } from './components/Navigation';
 import { CrossDomainBridge } from './components/CrossDomainBridge';
 import { AoiAssistant } from './components/AoiAssistant';
 import { DOMAIN_CONFIG } from './config/navigation';
+import { UserProgressProvider } from './contexts/UserProgressContext';
 
 function App() {
   const [aoiOpen, setAoiOpen] = useState(false);
@@ -13,7 +14,8 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0A1122] via-[#0d1a2d] to-[#0A1122] text-white overflow-hidden relative">
+    <UserProgressProvider>
+      <div className="min-h-screen bg-gradient-to-br from-[#0A1122] via-[#0d1a2d] to-[#0A1122] text-white overflow-hidden relative">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,240,255,0.03),transparent_50%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(210,164,76,0.05),transparent_50%)]"></div>
 
@@ -181,7 +183,8 @@ function App() {
       </div>
 
       <AoiAssistant isOpen={aoiOpen} onOpenChange={setAoiOpen} />
-    </div>
+      </div>
+    </UserProgressProvider>
   );
 }
 
