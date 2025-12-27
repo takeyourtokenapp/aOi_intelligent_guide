@@ -1,17 +1,24 @@
 import { Shield, BookOpen, Heart, Sparkles, ArrowRight, Brain, Cpu, Globe } from 'lucide-react';
+import { useState } from 'react';
 import { Navigation } from './components/Navigation';
 import { CrossDomainBridge } from './components/CrossDomainBridge';
 import { AoiAssistant } from './components/AoiAssistant';
 import { DOMAIN_CONFIG } from './config/navigation';
 
 function App() {
+  const [aoiOpen, setAoiOpen] = useState(false);
+
+  const handleAoiClick = () => {
+    setAoiOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0A1122] via-[#0d1a2d] to-[#0A1122] text-white overflow-hidden relative">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,240,255,0.03),transparent_50%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(210,164,76,0.05),transparent_50%)]"></div>
 
       <div className="relative z-10">
-        <Navigation />
+        <Navigation onAoiClick={handleAoiClick} />
 
         <main className="container mx-auto px-6 py-20">
           <div className="max-w-6xl mx-auto">
@@ -137,6 +144,9 @@ function App() {
                     <p>
                       <span className="font-semibold text-[#D2A44C]">✓</span> Guides you through learning paths
                     </p>
+                    <p>
+                      <span className="font-semibold text-[#D2A44C]">✓</span> Controls and manages all TYT ecosystem elements
+                    </p>
                     <p className="text-gray-400 text-sm mt-4 pt-4 border-t border-gray-700">
                       <span className="font-semibold text-[#FF0000]">✗</span> Does NOT provide medical advice
                       <br />
@@ -170,7 +180,7 @@ function App() {
         </footer>
       </div>
 
-      <AoiAssistant />
+      <AoiAssistant isOpen={aoiOpen} onOpenChange={setAoiOpen} />
     </div>
   );
 }

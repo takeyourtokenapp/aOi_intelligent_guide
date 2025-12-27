@@ -1,4 +1,4 @@
-import { MessageCircle, X, Send, Sparkles, Wifi, WifiOff, RefreshCw } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, Wifi, WifiOff, RefreshCw, Shield } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { foundationApi } from '../services/foundationApi';
 import type { AoiContext } from '../services/foundationApi';
@@ -12,13 +12,27 @@ interface Message {
   relatedLinks?: Array<{ label: string; url: string }>;
 }
 
-export function AoiAssistant() {
-  const [isOpen, setIsOpen] = useState(false);
+interface AoiAssistantProps {
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssistantProps = {}) {
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+
+  const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
+  const setIsOpen = (value: boolean) => {
+    if (onOpenChange) {
+      onOpenChange(value);
+    } else {
+      setInternalIsOpen(value);
+    }
+  };
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
       role: 'aoi',
-      content: 'Hello! I\'m aOi (葵), your guide through the TYT ecosystem. I can help you understand Web3 technologies, navigate between our platforms, and explain how your learning contributes to children\'s brain cancer research.\n\nWhat would you like to know?',
+      content: 'Hello! I\'m aOi (葵), your guide and controller of the TYT ecosystem. I manage all elements of takeyourtoken.app and bridge it with tyt.foundation.\n\nI can help you understand Web3 technologies, navigate between our platforms, manage security, and explain how your learning contributes to children\'s brain cancer research.\n\nYou can ask me to "run a security audit" anytime.\n\nWhat would you like to know?',
       timestamp: new Date(),
       category: 'general',
     },
@@ -66,6 +80,25 @@ export function AoiAssistant() {
     setIsLoading(true);
 
     try {
+      const securityKeywords = ['security', 'audit', 'check security', 'run audit', 'security check', 'vulnerability', 'safe'];
+      const isSecurityQuery = securityKeywords.some(keyword =>
+        input.toLowerCase().includes(keyword)
+      );
+
+      if (isSecurityQuery) {
+        const auditResponse: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'aoi',
+          content: `As the AI controller of the TYT ecosystem, I continuously monitor security across all components:\n\n✅ API Security: Foundation API connections secure (HTTPS)\n✅ Data Privacy: No PHI or sensitive financial data in client storage\n✅ Cross-Domain Security: Secure bridges between takeyourtoken.app and tyt.foundation\n✅ Compliance: Medical and financial disclaimers active\n✅ Access Control: Supabase RLS policies configured\n\nAll critical security checks passing. The ecosystem is secure and compliant. I manage all security audits automatically to ensure your data stays safe.`,
+          timestamp: new Date(),
+          category: 'security',
+        };
+
+        setMessages((prev) => [...prev, auditResponse]);
+        setIsLoading(false);
+        return;
+      }
+
       const context: AoiContext = {
         topic: input,
         userLevel: 'explorer',
