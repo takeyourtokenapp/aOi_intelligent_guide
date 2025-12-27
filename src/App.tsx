@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { Navigation } from './components/Navigation';
 import { CrossDomainBridge } from './components/CrossDomainBridge';
 import { AoiAssistant } from './components/AoiAssistant';
+import { AoiAvatar } from './components/AoiAvatar';
+import { RealtimeStats } from './components/RealtimeStats';
+import { ActivityFeed } from './components/ActivityFeed';
 import { DOMAIN_CONFIG } from './config/navigation';
 import { UserProgressProvider } from './contexts/UserProgressContext';
 
@@ -24,14 +27,23 @@ function App() {
 
         <main className="container mx-auto px-6 py-20">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 animate-float">
+            <div className="text-center mb-12">
               <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-[#D2A44C]/10 border border-[#D2A44C]/30">
                 <Sparkles className="w-4 h-4 text-[#D2A44C]" />
-                <span className="text-sm font-medium text-[#D2A44C]">AI-Powered Navigation</span>
+                <span className="text-sm font-medium text-[#D2A44C]">AI-Powered Ecosystem Guide</span>
               </div>
 
-              <h1 className="text-6xl md:text-7xl font-bold mb-6">
-                Meet <span className="text-[#D2A44C]">aOi (葵)</span>
+              <div className="mb-8 flex justify-center">
+                <div className="relative group cursor-pointer" onClick={() => setAoiOpen(true)}>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#D2A44C]/20 via-[#00F0FF]/20 to-[#FF00FF]/20 rounded-full blur-2xl animate-pulse"></div>
+                  <div className="relative">
+                    <AoiAvatar size="large" interactive />
+                  </div>
+                </div>
+              </div>
+
+              <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                Welcome to <span className="text-[#D2A44C]">aOi's</span> Residence
               </h1>
 
               <p className="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto leading-relaxed">
@@ -40,10 +52,27 @@ function App() {
                 <span className="text-[#FF00FF] font-semibold">Medicine</span>
               </p>
 
-              <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                aOi is not a chatbot or mascot. She's your navigation assistant between two worlds: learning Web3 tools on <span className="text-[#00F0FF]">takeyourtoken.app</span> and understanding medical research on <span className="text-[#FF00FF]">tyt.foundation</span>.
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed mb-6">
+                Click aOi (葵) anytime to ask questions, track your progress, or explore the ecosystem.
               </p>
+
+              <div className="flex gap-4 justify-center">
+                <button
+                  onClick={() => setAoiOpen(true)}
+                  className="px-8 py-3 bg-[#D2A44C] text-[#0A1122] rounded-lg hover:bg-[#c09940] transition-all font-bold hover:scale-105"
+                >
+                  Talk to aOi
+                </button>
+                <a
+                  href={`${DOMAIN_CONFIG.foundation.baseUrl}/foundation`}
+                  className="px-8 py-3 border-2 border-[#FF00FF] text-[#FF00FF] rounded-lg hover:bg-[#FF00FF]/10 transition-all font-bold hover:scale-105"
+                >
+                  View Foundation
+                </a>
+              </div>
             </div>
+
+            <RealtimeStats />
 
             <div className="mb-16 p-8 rounded-2xl bg-gradient-to-br from-[#D2A44C]/10 to-transparent border border-[#D2A44C]/30">
               <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -124,6 +153,10 @@ function App() {
                   </div>
                 </div>
               </a>
+            </div>
+
+            <div className="mb-12">
+              <ActivityFeed />
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 mb-12">
