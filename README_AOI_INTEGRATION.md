@@ -1,25 +1,52 @@
 # aOi (葵) Integration Guide
 
-## Архитектура экосистемы TYT
+**Version**: 1.0.0 | **Last Updated**: 2025-12-28 | **Status**: Production Ready
 
-### Два домена — одна миссия
+## Overview
+
+This guide provides a comprehensive overview of aOi integration across the TYT ecosystem. For detailed specifications, see the linked documentation.
+
+## 📚 Complete Documentation Suite
+
+### Core Documentation
+- **[AOI_API_CONTRACT.md](./AOI_API_CONTRACT.md)** - API specification between domains
+- **[AOI_KNOWLEDGE_SCHEMA.md](./AOI_KNOWLEDGE_SCHEMA.md)** - Database schema and content structure
+- **[AOI_LEGAL_CONSTRAINTS.md](./AOI_LEGAL_CONSTRAINTS.md)** - Legal, ethical, and safety constraints
+- **[AOI_VISUAL_IDENTITY.md](./AOI_VISUAL_IDENTITY.md)** - Visual canon and brand guidelines
+
+### Implementation Guides
+- **[AOI_TEST_SCENARIOS.md](./AOI_TEST_SCENARIOS.md)** - Comprehensive test scenarios
+- **[AOI_SAFETY_CHECKLIST.md](./AOI_SAFETY_CHECKLIST.md)** - Pre-deployment and ongoing safety checks
+
+### Content Templates
+- **[TEMPLATE_MEDICAL_CONTENT.md](./TEMPLATE_MEDICAL_CONTENT.md)** - Medical knowledge formatting
+- **[TEMPLATE_WEB3_CONTENT.md](./TEMPLATE_WEB3_CONTENT.md)** - Web3 education formatting
+- **[TEMPLATE_RESPONSE_FORMATS.md](./TEMPLATE_RESPONSE_FORMATS.md)** - Response templates
+
+---
+
+## Architecture Overview
+
+### Two Domains — One Mission
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    aOi - AI Navigator                        │
-│                  (Connecting Layer)                          │
+│              (Lives on tyt.foundation)                       │
 └─────────────────┬───────────────────────┬───────────────────┘
                   │                       │
          ┌────────▼─────────┐    ┌────────▼─────────┐
-         │ tyt.foundation   │    │takeyourtoken.app│
+         │ tyt.foundation   │    │takeyourtoken.app │
          │                  │    │                  │
-         │  ЗНАНИЕ          │◄───►│  ИНСТРУМЕНТЫ    │
-         │  • Нейроонко     │    │  • Web3         │
-         │  • Наука         │    │  • Blockchain   │
-         │  • Whitepaper    │    │  • Academy      │
-         │  • Прозрачность  │    │  • NFT Mining   │
+         │  KNOWLEDGE       │◄───►│  TOOLS           │
+         │  • Neuro-onco    │    │  • Web3          │
+         │  • Research      │    │  • Blockchain    │
+         │  • Whitepaper    │    │  • Academy       │
+         │  • Transparency  │    │  • NFT Mining    │
          └──────────────────┘    └──────────────────┘
 ```
+
+**Critical**: aOi is ONE agent that lives on `tyt.foundation`. `takeyourtoken.app` is a client that calls aOi via API.
 
 ## Ключевые принципы
 
@@ -222,36 +249,43 @@ Builder    → взрослее, микро-голограммы
 Guardian   → максимум собранности, контрольный центр
 ```
 
-## API Endpoints (будущее)
+## API Endpoints
 
-### aOi Context API
+### Foundation API (tyt.foundation)
+
 ```typescript
-POST /api/aoi/explain
+// Health check
+GET /api/health
+
+// Ask aOi
+POST /api/aoi/ask
 {
   "topic": "medulloblastoma",
   "userLevel": "beginner",
-  "language": "en"
+  "language": "en",
+  "currentDomain": "app"
 }
 
-Response:
-{
-  "explanation": "...",
-  "relatedTools": ["web3-basics", "blockchain-intro"],
-  "foundationLink": "https://tyt.foundation/knowledge/mb"
-}
+// Recommendations
+GET /api/aoi/recommendations?userId={uuid}&level={string}
 ```
 
-### Progress Sync API
+**Full API specification**: See [AOI_API_CONTRACT.md](./AOI_API_CONTRACT.md)
+
+### Edge Function (Supabase)
+
 ```typescript
-GET /api/progress/:userId
-Response:
+POST /functions/v1/aoi-rag-query
 {
-  "academy": { completed: 15, total: 50 },
-  "knowledge": { read: 8, total: 20 },
-  "achievements": [...],
-  "nextRecommendation": "..."
+  "question": "What is blockchain?",
+  "userId": "uuid",
+  "userLevel": "explorer",
+  "domain": "app",
+  "context": {...}
 }
 ```
+
+**Implementation**: `/supabase/functions/aoi-rag-query/index.ts`
 
 ## Security & Compliance
 
@@ -305,21 +339,70 @@ npm run build
 ### Для студентов:
 "Build a verifiable learning record. Join real research infrastructure."
 
-## Следующие шаги
+## Implementation Status
 
-1. **Создать tyt.foundation сайт** с той же дизайн-системой
-2. **Настроить cross-domain authentication** (SSO или shared session)
-3. **Развернуть aOi Context API** для умных подсказок
-4. **Интегрировать Guardian Gate** в регистрацию
-5. **Создать Certificate Minting** для on-chain proof
+### ✅ Completed
+- [x] Client-side API service (`/src/services/foundationApi.ts`)
+- [x] Edge Function (`/supabase/functions/aoi-rag-query/index.ts`)
+- [x] Knowledge base schema (migration applied)
+- [x] Visual identity system (`/src/config/aoiAssets.ts`)
+- [x] Fallback mode (smart local responses)
+- [x] Cross-domain navigation config
+- [x] User progress tracking
+- [x] Complete documentation suite
 
-## Контакты для интеграции
+### 🚧 In Progress
+- [ ] Deploy Foundation API on tyt.foundation
+- [ ] Populate knowledge base (CNS + Web3 content)
+- [ ] Implement Guardian consent flow
+- [ ] Set up monitoring and analytics
 
-- takeyourtoken.app: Web3 tools & Academy
-- tyt.foundation: Knowledge hub & Mission
-- Supabase: Progress Ledger
-- aOi: Navigation layer
+### 📋 Roadmap
+- [ ] Cross-domain SSO/authentication
+- [ ] Certificate minting (on-chain proof)
+- [ ] Multi-language support
+- [ ] Voice interaction mode
+- [ ] Mobile app integration
 
 ---
 
-**Помните**: aOi — это мост, а не стена. Она соединяет, а не разделяет.
+## Quick Start
+
+### For Developers
+
+1. **Read the architecture**: [AOI_API_CONTRACT.md](./AOI_API_CONTRACT.md)
+2. **Review constraints**: [AOI_LEGAL_CONSTRAINTS.md](./AOI_LEGAL_CONSTRAINTS.md)
+3. **Check schema**: [AOI_KNOWLEDGE_SCHEMA.md](./AOI_KNOWLEDGE_SCHEMA.md)
+4. **Run tests**: [AOI_TEST_SCENARIOS.md](./AOI_TEST_SCENARIOS.md)
+5. **Deploy safely**: [AOI_SAFETY_CHECKLIST.md](./AOI_SAFETY_CHECKLIST.md)
+
+### For Content Creators
+
+1. **Medical content**: Use [TEMPLATE_MEDICAL_CONTENT.md](./TEMPLATE_MEDICAL_CONTENT.md)
+2. **Web3 content**: Use [TEMPLATE_WEB3_CONTENT.md](./TEMPLATE_WEB3_CONTENT.md)
+3. **Responses**: Follow [TEMPLATE_RESPONSE_FORMATS.md](./TEMPLATE_RESPONSE_FORMATS.md)
+4. **Review safety**: Check [AOI_LEGAL_CONSTRAINTS.md](./AOI_LEGAL_CONSTRAINTS.md)
+
+### For Designers
+
+1. **Visual canon**: [AOI_VISUAL_IDENTITY.md](./AOI_VISUAL_IDENTITY.md)
+2. **Asset specs**: `/src/config/aoiAssets.ts`
+3. **Color system**: Primary #9b87f5, Accent #00F0FF, Gold #D2A44C
+4. **Master prompt**: See visual identity guide
+
+---
+
+## Key Contacts
+
+- **Technical**: TYT Development Team
+- **Medical Content**: Medical Advisory Board
+- **Legal/Compliance**: TYT Legal Team
+- **Design**: TYT Design Team
+
+---
+
+## License & Usage
+
+All aOi documentation and specifications are proprietary to TYT Foundation.
+
+**Remember**: aOi is not just a feature — she is the bridge between technology and humanity, between complexity and understanding, between Web3 and children's lives.
