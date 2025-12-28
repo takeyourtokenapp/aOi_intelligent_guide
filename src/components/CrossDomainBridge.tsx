@@ -3,32 +3,53 @@ import { DOMAIN_CONFIG } from '../config/navigation';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface CrossDomainBridgeProps {
-  type: 'to-foundation' | 'to-app';
+  type: 'to-foundation' | 'to-app' | 'to-foundation-page';
   context?: string;
   className?: string;
+  onClick?: () => void;
 }
 
-export function CrossDomainBridge({ type, context, className = '' }: CrossDomainBridgeProps) {
-  const { t } = useLanguage();
-  const isToFoundation = type === 'to-foundation';
+export function CrossDomainBridge({ type, context, className = '', onClick }: CrossDomainBridgeProps) {
+  const { t, language } = useLanguage();
+  const isToFoundation = type === 'to-foundation' || type === 'to-foundation-page';
 
-  const config = isToFoundation
-    ? {
-        title: t('bridge.toFoundation.title'),
-        description: t('bridge.toFoundation.desc'),
-        url: `${DOMAIN_CONFIG.foundation.baseUrl}/knowledge`,
-        buttonText: t('bridge.toFoundation.button'),
+  const getConfig = () => {
+    if (type === 'to-foundation-page') {
+      return {
+        title: language === 'en' ? 'Visit Foundation Dashboard' : 'Перейти в Фонд',
+        description: language === 'en'
+          ? 'Explore our research mission, view impact reports, and support children\'s brain cancer research'
+          : 'Изучите нашу исследовательскую миссию, посмотрите отчёты о влиянии и поддержите исследования рака мозга у детей',
+        url: '#',
+        isInternal: true,
+        buttonText: language === 'en' ? 'Go to Foundation' : 'Перейти в Фонд',
         color: '#E8B4B8',
         lightColor: '#D97B8F',
-      }
-    : {
-        title: t('bridge.toApp.title'),
-        description: t('bridge.toApp.desc'),
-        url: `${DOMAIN_CONFIG.app.baseUrl}/academy`,
-        buttonText: t('bridge.toApp.button'),
-        color: '#7BA7BC',
-        lightColor: '#5B8BA0',
       };
+    }
+
+    return isToFoundation
+      ? {
+          title: t('bridge.toFoundation.title'),
+          description: t('bridge.toFoundation.desc'),
+          url: `${DOMAIN_CONFIG.foundation.baseUrl}/knowledge`,
+          isInternal: false,
+          buttonText: t('bridge.toFoundation.button'),
+          color: '#E8B4B8',
+          lightColor: '#D97B8F',
+        }
+      : {
+          title: t('bridge.toApp.title'),
+          description: t('bridge.toApp.desc'),
+          url: `${DOMAIN_CONFIG.app.baseUrl}/academy`,
+          isInternal: false,
+          buttonText: t('bridge.toApp.button'),
+          color: '#7BA7BC',
+          lightColor: '#5B8BA0',
+        };
+  };
+
+  const config = getConfig();
 
   return (
     <div
@@ -67,19 +88,33 @@ export function CrossDomainBridge({ type, context, className = '' }: CrossDomain
           </p>
         )}
 
-        <a
-          href={config.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 shadow-md ${
-            isToFoundation
-              ? 'bg-[#E8B4B8]/20 dark:bg-[#E8B4B8]/20 text-[#D97B8F] dark:text-[#E8B4B8] border-2 border-[#D97B8F] dark:border-[#E8B4B8]/40 hover:bg-[#E8B4B8]/30 dark:hover:bg-[#E8B4B8]/30'
-              : 'bg-[#7BA7BC]/20 dark:bg-[#7BA7BC]/20 text-[#5B8BA0] dark:text-[#7BA7BC] border-2 border-[#5B8BA0] dark:border-[#7BA7BC]/40 hover:bg-[#7BA7BC]/30 dark:hover:bg-[#7BA7BC]/30'
-          }`}
-        >
-          <span>{config.buttonText}</span>
-          <ArrowRight size={18} />
-        </a>
+        {config.isInternal ? (
+          <button
+            onClick={onClick}
+            className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 shadow-md ${
+              isToFoundation
+                ? 'bg-[#E8B4B8]/20 dark:bg-[#E8B4B8]/20 text-[#D97B8F] dark:text-[#E8B4B8] border-2 border-[#D97B8F] dark:border-[#E8B4B8]/40 hover:bg-[#E8B4B8]/30 dark:hover:bg-[#E8B4B8]/30'
+                : 'bg-[#7BA7BC]/20 dark:bg-[#7BA7BC]/20 text-[#5B8BA0] dark:text-[#7BA7BC] border-2 border-[#5B8BA0] dark:border-[#7BA7BC]/40 hover:bg-[#7BA7BC]/30 dark:hover:bg-[#7BA7BC]/30'
+            }`}
+          >
+            <span>{config.buttonText}</span>
+            <ArrowRight size={18} />
+          </button>
+        ) : (
+          <a
+            href={config.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 shadow-md ${
+              isToFoundation
+                ? 'bg-[#E8B4B8]/20 dark:bg-[#E8B4B8]/20 text-[#D97B8F] dark:text-[#E8B4B8] border-2 border-[#D97B8F] dark:border-[#E8B4B8]/40 hover:bg-[#E8B4B8]/30 dark:hover:bg-[#E8B4B8]/30'
+                : 'bg-[#7BA7BC]/20 dark:bg-[#7BA7BC]/20 text-[#5B8BA0] dark:text-[#7BA7BC] border-2 border-[#5B8BA0] dark:border-[#7BA7BC]/40 hover:bg-[#7BA7BC]/30 dark:hover:bg-[#7BA7BC]/30'
+            }`}
+          >
+            <span>{config.buttonText}</span>
+            <ArrowRight size={18} />
+          </a>
+        )}
       </div>
 
       <div className="mt-6 pt-6 border-t-2 border-slate-300 dark:border-gray-800">

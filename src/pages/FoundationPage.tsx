@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { BookOpen, Users, Target, FileText, ExternalLink, Sparkles } from 'lucide-react';
+import { BookOpen, Users, Target, FileText, ExternalLink, Sparkles, Heart } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { AoiAvatar } from '../components/AoiAvatar';
+import { FoundationStats } from '../components/FoundationStats';
+import { DonationWidget } from '../components/DonationWidget';
 
 interface ResearchPost {
   id: string;
@@ -129,48 +131,56 @@ function AboutSection() {
         <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
           {language === 'en' ? 'Our Mission' : 'Наша миссия'}
         </h2>
-        <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+        <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
           {language === 'en'
             ? 'TYT Foundation is dedicated to advancing research in pediatric brain tumors, particularly medulloblastoma and related central nervous system tumors. We combine cutting-edge technology with transparent, community-driven funding to accelerate scientific progress and support affected families.'
             : 'Фонд TYT посвящён продвижению исследований опухолей мозга у детей, особенно медуллобластомы и связанных опухолей центральной нервной системы. Мы объединяем передовые технологии с прозрачным, управляемым сообществом финансированием для ускорения научного прогресса и поддержки пострадавших семей.'}
         </p>
+
+        <FoundationStats />
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
-          <Target className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-3" />
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
-            {language === 'en' ? 'Research Funding' : 'Финансирование исследований'}
-          </h3>
-          <p className="text-slate-600 dark:text-slate-300">
-            {language === 'en'
-              ? 'Direct support for clinical research, laboratory studies, and computational biology projects'
-              : 'Прямая поддержка клинических исследований, лабораторных работ и проектов вычислительной биологии'}
-          </p>
+      <div className="grid lg:grid-cols-2 gap-6">
+        <div className="space-y-6">
+          <div className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+            <Target className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-3" />
+            <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+              {language === 'en' ? 'Research Funding' : 'Финансирование исследований'}
+            </h3>
+            <p className="text-slate-600 dark:text-slate-300">
+              {language === 'en'
+                ? 'Direct support for clinical research, laboratory studies, and computational biology projects'
+                : 'Прямая поддержка клинических исследований, лабораторных работ и проектов вычислительной биологии'}
+            </p>
+          </div>
+
+          <div className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-200 dark:border-green-800">
+            <Users className="w-8 h-8 text-green-600 dark:text-green-400 mb-3" />
+            <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+              {language === 'en' ? 'Family Support' : 'Поддержка семей'}
+            </h3>
+            <p className="text-slate-600 dark:text-slate-300">
+              {language === 'en'
+                ? 'Resources and assistance for families affected by pediatric brain tumors'
+                : 'Ресурсы и помощь для семей, столкнувшихся с опухолями мозга у детей'}
+            </p>
+          </div>
+
+          <div className="p-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200 dark:border-purple-800">
+            <BookOpen className="w-8 h-8 text-purple-600 dark:text-purple-400 mb-3" />
+            <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+              {language === 'en' ? 'Education' : 'Образование'}
+            </h3>
+            <p className="text-slate-600 dark:text-slate-300">
+              {language === 'en'
+                ? 'Public education about pediatric CNS tumors and emerging treatment approaches'
+                : 'Просвещение общества об опухолях ЦНС у детей и новых подходах к лечению'}
+            </p>
+          </div>
         </div>
 
-        <div className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-200 dark:border-green-800">
-          <Users className="w-8 h-8 text-green-600 dark:text-green-400 mb-3" />
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
-            {language === 'en' ? 'Family Support' : 'Поддержка семей'}
-          </h3>
-          <p className="text-slate-600 dark:text-slate-300">
-            {language === 'en'
-              ? 'Resources and assistance for families affected by pediatric brain tumors'
-              : 'Ресурсы и помощь для семей, столкнувшихся с опухолями мозга у детей'}
-          </p>
-        </div>
-
-        <div className="p-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200 dark:border-purple-800">
-          <BookOpen className="w-8 h-8 text-purple-600 dark:text-purple-400 mb-3" />
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
-            {language === 'en' ? 'Education' : 'Образование'}
-          </h3>
-          <p className="text-slate-600 dark:text-slate-300">
-            {language === 'en'
-              ? 'Public education about pediatric CNS tumors and emerging treatment approaches'
-              : 'Просвещение общества об опухолях ЦНС у детей и новых подходах к лечению'}
-          </p>
+        <div>
+          <DonationWidget />
         </div>
       </div>
     </div>

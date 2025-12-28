@@ -8,9 +8,10 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 interface HomePageProps {
   onAoiClick: () => void;
+  onNavigate?: (page: 'home' | 'foundation') => void;
 }
 
-export default function HomePage({ onAoiClick }: HomePageProps) {
+export default function HomePage({ onAoiClick, onNavigate }: HomePageProps) {
   const { t } = useLanguage();
 
   return (
@@ -108,7 +109,10 @@ export default function HomePage({ onAoiClick }: HomePageProps) {
 
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           <CrossDomainBridge type="to-app" />
-          <CrossDomainBridge type="to-foundation" />
+          <CrossDomainBridge
+            type="to-foundation-page"
+            onClick={() => onNavigate?.('foundation')}
+          />
         </div>
 
         <div className="bg-white/90 dark:bg-gradient-to-br dark:from-[#1B2838] dark:via-[#2a3f54] dark:to-[#1B2838] p-10 rounded-3xl border-2 border-[#8B7AC7] dark:border-[#9B8FD9]/30 backdrop-blur-sm shadow-2xl dark:shadow-none">

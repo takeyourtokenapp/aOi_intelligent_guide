@@ -31,7 +31,7 @@ function AppContent() {
       <div className="relative z-10">
         <Navigation onAoiClick={handleAoiClick} onNavigate={handleNavigate} currentPage={currentPage} />
 
-        {currentPage === 'home' && <HomePage onAoiClick={handleAoiClick} />}
+        {currentPage === 'home' && <HomePage onAoiClick={handleAoiClick} onNavigate={handleNavigate} />}
         {currentPage === 'foundation' && <FoundationPage />}
 
         <footer className="container mx-auto px-6 py-12 border-t-2 border-[#9B8FD9]/40 dark:border-[#9B8FD9]/20">
