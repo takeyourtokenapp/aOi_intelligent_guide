@@ -54,13 +54,13 @@ export function CrossDomainBridge({ type, context, className = '' }: CrossDomain
           {config.title}
         </h3>
 
-        <p className="text-slate-700 dark:text-gray-400 leading-relaxed font-medium">
+        <p className="text-slate-900 dark:text-gray-100 leading-relaxed font-bold">
           {config.description}
         </p>
 
         {context && (
           <p
-            className="text-sm text-slate-600 dark:text-gray-500 italic border-l-4 pl-4 font-medium"
+            className="text-sm text-slate-800 dark:text-gray-200 italic border-l-4 pl-4 font-bold"
             style={{ borderColor: isToFoundation ? config.lightColor : config.lightColor }}
           >
             {t('bridge.context')} {context}
@@ -83,7 +83,7 @@ export function CrossDomainBridge({ type, context, className = '' }: CrossDomain
       </div>
 
       <div className="mt-6 pt-6 border-t-2 border-slate-300 dark:border-gray-800">
-        <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-500 font-medium">
+        <div className="flex items-center gap-2 text-xs text-slate-800 dark:text-gray-200 font-bold">
           <div
             className="w-2 h-2 rounded-full animate-pulse"
             style={{ backgroundColor: isToFoundation ? config.lightColor : config.lightColor }}
