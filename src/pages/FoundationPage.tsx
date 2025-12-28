@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { BookOpen, Users, Target, FileText, ExternalLink, Sparkles, Heart, ArrowLeft } from 'lucide-react';
+import { BookOpen, Users, Target, FileText, ExternalLink, Sparkles, Heart, ArrowLeft, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { AoiAvatar } from '../components/AoiAvatar';
 import { FoundationStats } from '../components/FoundationStats';
@@ -388,6 +388,7 @@ function ResearchSection({ posts, loading }: { posts: ResearchPost[]; loading: b
 
 function ManifestoSection({ post, loading }: { post: ResearchPost | null; loading: boolean }) {
   const { language } = useLanguage();
+  const [viewingFull, setViewingFull] = useState(false);
 
   if (loading) {
     return (
@@ -415,6 +416,58 @@ function ManifestoSection({ post, loading }: { post: ResearchPost | null; loadin
   const title = language === 'en' ? post.title_en : post.title_ru;
   const subtitle = language === 'en' ? post.subtitle_en : post.subtitle_ru;
   const excerpt = language === 'en' ? post.excerpt_en : post.excerpt_ru;
+  const content = language === 'en' ? post.content_en : post.content_ru;
+
+  if (viewingFull && content) {
+    return (
+      <div className="p-8 space-y-6">
+        <button
+          onClick={() => setViewingFull(false)}
+          className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          <span>{language === 'en' ? 'Back to overview' : 'Назад к обзору'}</span>
+        </button>
+
+        <div className="flex items-start gap-6 mb-8">
+          <AoiAvatar size="lg" emotion="thinking" level="guardian" showKanji={true} />
+          <div className="flex-1">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full text-xs font-medium text-blue-700 dark:text-blue-300 mb-4">
+              <Sparkles className="w-3 h-3" />
+              <span>{language === 'en' ? 'Authored by aOi' : 'Автор: aOi'}</span>
+            </div>
+
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">
+              {title}
+            </h2>
+
+            {subtitle && (
+              <p className="text-xl text-blue-600 dark:text-blue-400 mb-4">
+                {subtitle}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <article
+          className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-2xl p-8 shadow-lg"
+          style={{
+            direction: language === 'he' ? 'rtl' : 'ltr',
+            textAlign: language === 'he' ? 'right' : 'left'
+          }}
+        >
+          <div
+            className="prose prose-lg prose-slate dark:prose-invert max-w-none"
+            style={{
+              fontFamily: language === 'he' ? 'system-ui, -apple-system, sans-serif' : 'inherit',
+              lineHeight: '1.8'
+            }}
+            dangerouslySetInnerHTML={{ __html: parseMarkdownToHTML(content) }}
+          />
+        </article>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 space-y-8">
@@ -498,16 +551,14 @@ function ManifestoSection({ post, loading }: { post: ResearchPost | null; loadin
       </div>
 
       <div className="flex gap-4">
-        <a
-          href="/TYT_RESEARCH_MANIFESTO_I-QCC.md"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => setViewingFull(true)}
           className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl font-medium hover:shadow-lg transition-shadow"
         >
           <FileText className="w-5 h-5" />
           <span>{language === 'en' ? 'Read Full Manifesto' : 'Читать полный манифест'}</span>
-          <ExternalLink className="w-4 h-4" />
-        </a>
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );
