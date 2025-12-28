@@ -12,33 +12,33 @@ export function Navigation({ onAoiClick }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0A1122]/95 dark:bg-[#050810]/95 backdrop-blur-lg border-b border-[#D2A44C]/20">
+    <header className="sticky top-0 z-50 bg-white/90 dark:bg-[#050810]/95 backdrop-blur-lg border-b border-gray-200 dark:border-[#D2A44C]/20 shadow-sm dark:shadow-none">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           <a href="/" className="flex items-center gap-3">
             <Shield className="w-10 h-10 text-[#D2A44C]" strokeWidth={1.5} />
             <div>
               <h1 className="text-xl font-bold text-[#D2A44C]">TakeYourToken</h1>
-              <p className="text-xs text-gray-400 dark:text-gray-500">Owl Warrior Platform</p>
+              <p className="text-xs text-gray-500 dark:text-gray-500">Owl Warrior Platform</p>
             </div>
           </a>
 
           <nav className="hidden md:flex items-center gap-4">
             <a
               href={`${DOMAIN_CONFIG.app.baseUrl}/academy`}
-              className="text-sm font-medium text-gray-300 hover:text-[#00F0FF] transition-colors"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
             >
               Academy
             </a>
             <a
               href={`${DOMAIN_CONFIG.foundation.baseUrl}/foundation`}
-              className="text-sm font-medium text-gray-300 hover:text-[#D2A44C] transition-colors"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#D2A44C] transition-colors"
             >
               Foundation
             </a>
             <a
               href={`${DOMAIN_CONFIG.app.baseUrl}/dashboard`}
-              className="text-sm font-medium text-gray-300 hover:text-[#00F0FF] transition-colors"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
             >
               Dashboard
             </a>
@@ -69,7 +69,7 @@ export function Navigation({ onAoiClick }: NavigationProps) {
           </nav>
 
           <button
-            className="md:hidden text-gray-300"
+            className="md:hidden text-gray-700 dark:text-gray-300"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -77,7 +77,7 @@ export function Navigation({ onAoiClick }: NavigationProps) {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden py-6 space-y-4 border-t border-[#D2A44C]/20">
+          <div className="md:hidden py-6 space-y-4 border-t border-gray-200 dark:border-[#D2A44C]/20">
             <div className="flex gap-2 mb-4">
               <div className="flex-1">
                 <LanguageSwitcher />
@@ -105,21 +105,21 @@ export function Navigation({ onAoiClick }: NavigationProps) {
 
             <a
               href={`${DOMAIN_CONFIG.app.baseUrl}/academy`}
-              className="block py-2 text-gray-300 hover:text-[#00F0FF] transition-colors"
+              className="block py-2 text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               Academy
             </a>
             <a
               href={`${DOMAIN_CONFIG.foundation.baseUrl}/foundation`}
-              className="block py-2 text-gray-300 hover:text-[#D2A44C] transition-colors"
+              className="block py-2 text-gray-700 dark:text-gray-300 hover:text-[#D2A44C] transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               Foundation
             </a>
             <a
               href={`${DOMAIN_CONFIG.app.baseUrl}/dashboard`}
-              className="block py-2 text-gray-300 hover:text-[#00F0FF] transition-colors"
+              className="block py-2 text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               Dashboard
