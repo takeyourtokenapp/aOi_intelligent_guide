@@ -34,25 +34,25 @@ function AppContent() {
 
             <RealtimeStats />
 
-            <div className="mb-16 p-10 rounded-3xl bg-white/90 dark:bg-gradient-to-br dark:from-[#9B8FD9]/5 dark:via-[#7BA7BC]/5 dark:to-[#8FA68E]/5 border-2 border-[#9B8FD9]/50 dark:border-[#9B8FD9]/20 backdrop-blur-sm shadow-2xl dark:shadow-none">
+            <div className="mb-16 p-10 rounded-3xl bg-white/90 dark:bg-gradient-to-br dark:from-[#1B2838] dark:via-[#2a3f54] dark:to-[#1B2838] border-2 border-[#9B8FD9]/50 dark:border-[#9B8FD9]/30 backdrop-blur-sm shadow-2xl dark:shadow-none">
               <div className="grid md:grid-cols-3 gap-8 mb-10">
-                <div className="text-center p-6 rounded-2xl bg-white dark:bg-[#E8B4B8]/5 border-2 border-[#D97B8F] dark:border-[#E8B4B8]/20 hover:border-[#C7637A] dark:hover:border-[#E8B4B8]/40 transition-all animate-breathe shadow-lg dark:shadow-none">
+                <div className="text-center p-6 rounded-2xl bg-white dark:bg-[#1B2838] border-2 border-[#D97B8F] dark:border-[#E8B4B8]/30 hover:border-[#C7637A] dark:hover:border-[#E8B4B8]/50 transition-all animate-breathe shadow-lg dark:shadow-none">
                   <Brain className="w-14 h-14 text-[#D97B8F] dark:text-[#E8B4B8] mx-auto mb-4" strokeWidth={2} />
                   <h3 className="font-bold text-[#D97B8F] dark:text-[#E8B4B8] mb-3 text-lg">{t('layers.knowledge')}</h3>
                   <p className="text-sm text-slate-900 dark:text-gray-100 leading-relaxed font-bold">{t('layers.knowledgeDesc')}</p>
                 </div>
-                <div className="text-center p-6 rounded-2xl bg-white dark:bg-[#7BA7BC]/5 border-2 border-[#5B8BA0] dark:border-[#7BA7BC]/20 hover:border-[#3E7C9A] dark:hover:border-[#7BA7BC]/40 transition-all animate-breathe shadow-lg dark:shadow-none" style={{animationDelay: '1s'}}>
+                <div className="text-center p-6 rounded-2xl bg-white dark:bg-[#1B2838] border-2 border-[#5B8BA0] dark:border-[#7BA7BC]/30 hover:border-[#3E7C9A] dark:hover:border-[#7BA7BC]/50 transition-all animate-breathe shadow-lg dark:shadow-none" style={{animationDelay: '1s'}}>
                   <Cpu className="w-14 h-14 text-[#5B8BA0] dark:text-[#7BA7BC] mx-auto mb-4" strokeWidth={2} />
                   <h3 className="font-bold text-[#5B8BA0] dark:text-[#7BA7BC] mb-3 text-lg">{t('layers.technology')}</h3>
                   <p className="text-sm text-slate-900 dark:text-gray-100 leading-relaxed font-bold">{t('layers.technologyDesc')}</p>
                 </div>
-                <div className="text-center p-6 rounded-2xl bg-white dark:bg-[#8FA68E]/5 border-2 border-[#6B9070] dark:border-[#8FA68E]/20 hover:border-[#557F5A] dark:hover:border-[#8FA68E]/40 transition-all animate-breathe shadow-lg dark:shadow-none" style={{animationDelay: '2s'}}>
+                <div className="text-center p-6 rounded-2xl bg-white dark:bg-[#1B2838] border-2 border-[#6B9070] dark:border-[#8FA68E]/30 hover:border-[#557F5A] dark:hover:border-[#8FA68E]/50 transition-all animate-breathe shadow-lg dark:shadow-none" style={{animationDelay: '2s'}}>
                   <Globe className="w-14 h-14 text-[#6B9070] dark:text-[#8FA68E] mx-auto mb-4" strokeWidth={2} />
                   <h3 className="font-bold text-[#6B9070] dark:text-[#8FA68E] mb-3 text-lg">{t('layers.connection')}</h3>
                   <p className="text-sm text-slate-900 dark:text-gray-100 leading-relaxed font-bold">{t('layers.connectionDesc')}</p>
                 </div>
               </div>
-              <div className="text-center p-6 rounded-xl bg-gradient-to-r from-[#9B8FD9]/20 to-[#7BA7BC]/20 dark:bg-[#9B8FD9]/5 border-2 border-[#8B7AC7] dark:border-[#9B8FD9]/10">
+              <div className="text-center p-6 rounded-xl bg-gradient-to-r from-[#9B8FD9]/20 to-[#7BA7BC]/20 dark:bg-gradient-to-r dark:from-[#2a3f54] dark:to-[#1B2838] border-2 border-[#8B7AC7] dark:border-[#9B8FD9]/30">
                 <p className="text-[#2C5F7A] dark:text-white text-lg leading-relaxed italic font-bold">
                   "{t('layers.quote')}"
                 </p>

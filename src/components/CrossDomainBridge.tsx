@@ -35,8 +35,8 @@ export function CrossDomainBridge({ type, context, className = '' }: CrossDomain
       className={`
         relative overflow-hidden rounded-2xl border-2 p-8 backdrop-blur-sm shadow-xl dark:shadow-none
         ${isToFoundation
-          ? 'bg-white/80 dark:bg-gradient-to-br dark:from-[#E8B4B8]/5 dark:to-transparent border-[#D97B8F] dark:border-[#E8B4B8]/30'
-          : 'bg-white/80 dark:bg-gradient-to-br dark:from-[#7BA7BC]/5 dark:to-transparent border-[#5B8BA0] dark:border-[#7BA7BC]/30'
+          ? 'bg-white/80 dark:bg-[#1B2838] border-[#D97B8F] dark:border-[#E8B4B8]/30'
+          : 'bg-white/80 dark:bg-[#1B2838] border-[#5B8BA0] dark:border-[#7BA7BC]/30'
         }
         ${className}
       `}

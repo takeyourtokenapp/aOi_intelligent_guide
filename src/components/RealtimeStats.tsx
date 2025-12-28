@@ -162,10 +162,10 @@ interface StatCardProps {
 
 function StatCard({ icon, label, value, subtext, color, borderColor, bgColor, trend }: StatCardProps) {
   return (
-    <div className={`bg-white dark:${bgColor} rounded-2xl border-2 ${borderColor} hover:border-opacity-80 p-6 transition-all duration-300 hover:scale-105 animate-breathe backdrop-blur-sm shadow-xl dark:shadow-none`}>
+    <div className={`bg-white dark:bg-[#1B2838] rounded-2xl border-2 ${borderColor} hover:border-opacity-80 p-6 transition-all duration-300 hover:scale-105 animate-breathe backdrop-blur-sm shadow-xl dark:shadow-none`}>
       <div className="flex items-center justify-between mb-4">
         <div className={color}>{icon}</div>
-        <span className="text-xs text-slate-700 dark:text-gray-500 font-bold px-2 py-1 bg-slate-200 dark:bg-gray-800/50 rounded">
+        <span className="text-xs text-slate-700 dark:text-gray-300 font-bold px-2 py-1 bg-slate-200 dark:bg-gray-800/80 rounded">
           {trend}
         </span>
       </div>
@@ -174,12 +174,12 @@ function StatCard({ icon, label, value, subtext, color, borderColor, bgColor, tr
         <div className={`text-3xl font-bold ${color} mb-1`}>
           {value}
         </div>
-        <div className="text-sm text-slate-700 dark:text-gray-400 font-bold">
+        <div className="text-sm text-slate-700 dark:text-gray-200 font-bold">
           {label}
         </div>
       </div>
 
-      <div className="text-xs text-slate-600 dark:text-gray-500 pt-2 border-t border-slate-300 dark:border-gray-700/50 font-medium">
+      <div className="text-xs text-slate-600 dark:text-gray-300 pt-2 border-t border-slate-300 dark:border-gray-700 font-bold">
         {subtext}
       </div>
     </div>
