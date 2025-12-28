@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { BookOpen, Users, Target, FileText, ExternalLink, Sparkles, Heart } from 'lucide-react';
+import { BookOpen, Users, Target, FileText, ExternalLink, Sparkles, Heart, ArrowLeft } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { AoiAvatar } from '../components/AoiAvatar';
 import { FoundationStats } from '../components/FoundationStats';
 import { DonationWidget } from '../components/DonationWidget';
+import { parseMarkdownToHTML } from '../utils/markdownParser';
 
 interface ResearchPost {
   id: string;
@@ -28,25 +29,37 @@ export default function FoundationPage() {
   const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'about' | 'research' | 'manifesto' | 'updates'>('about');
   const [manifestoPost, setManifestoPost] = useState<ResearchPost | null>(null);
+  const [researchPosts, setResearchPosts] = useState<ResearchPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadManifesto();
+    loadContent();
   }, []);
 
-  const loadManifesto = async () => {
+  const loadContent = async () => {
     try {
-      const { data, error } = await supabase
-        .from('research_posts')
-        .select('*')
-        .eq('post_type', 'manifesto')
-        .eq('featured', true)
-        .maybeSingle();
+      const [manifestoResult, researchResult] = await Promise.all([
+        supabase
+          .from('research_posts')
+          .select('*')
+          .eq('post_type', 'manifesto')
+          .eq('featured', true)
+          .maybeSingle(),
+        supabase
+          .from('research_posts')
+          .select('*')
+          .eq('post_type', 'research')
+          .eq('featured', true)
+          .order('published_at', { ascending: false })
+      ]);
 
-      if (error) throw error;
-      setManifestoPost(data);
+      if (manifestoResult.error) throw manifestoResult.error;
+      if (researchResult.error) throw researchResult.error;
+
+      setManifestoPost(manifestoResult.data);
+      setResearchPosts(researchResult.data || []);
     } catch (error) {
-      console.error('Error loading manifesto:', error);
+      console.error('Error loading content:', error);
     } finally {
       setLoading(false);
     }
@@ -113,7 +126,7 @@ export default function FoundationPage() {
 
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden">
           {activeTab === 'about' && <AboutSection />}
-          {activeTab === 'research' && <ResearchSection />}
+          {activeTab === 'research' && <ResearchSection posts={researchPosts} loading={loading} />}
           {activeTab === 'manifesto' && <ManifestoSection post={manifestoPost} loading={loading} />}
           {activeTab === 'updates' && <UpdatesSection />}
         </div>
@@ -187,8 +200,76 @@ function AboutSection() {
   );
 }
 
-function ResearchSection() {
+function ResearchSection({ posts, loading }: { posts: ResearchPost[]; loading: boolean }) {
   const { language } = useLanguage();
+  const [selectedPost, setSelectedPost] = useState<ResearchPost | null>(null);
+
+  if (loading) {
+    return (
+      <div className="p-8 flex items-center justify-center min-h-96">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-600 dark:text-slate-400">
+            {language === 'en' ? 'Loading research papers...' : 'Загрузка исследований...'}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (selectedPost) {
+    const title = language === 'en' ? selectedPost.title_en : selectedPost.title_ru;
+    const subtitle = language === 'en' ? selectedPost.subtitle_en : selectedPost.subtitle_ru;
+    const content = language === 'en' ? selectedPost.content_en : selectedPost.content_ru;
+
+    return (
+      <div className="p-8 space-y-6">
+        <button
+          onClick={() => setSelectedPost(null)}
+          className="text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          {language === 'en' ? 'Back to research papers' : 'Назад к исследованиям'}
+        </button>
+
+        <div>
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+            {title}
+          </h2>
+          {subtitle && (
+            <p className="text-lg text-slate-600 dark:text-slate-400 mb-4">
+              {subtitle}
+            </p>
+          )}
+          <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6">
+            <span>{selectedPost.author}</span>
+            <span>•</span>
+            <span>{new Date(selectedPost.published_at).toLocaleDateString(language === 'en' ? 'en-US' : 'ru-RU')}</span>
+            {selectedPost.tags && selectedPost.tags.length > 0 && (
+              <>
+                <span>•</span>
+                <div className="flex gap-2">
+                  {selectedPost.tags.slice(0, 3).map((tag, i) => (
+                    <span key={i} className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        <div className="prose prose-slate dark:prose-invert max-w-none">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: parseMarkdownToHTML(content)
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
 
   const focusAreas = [
     {
@@ -245,6 +326,54 @@ function ResearchSection() {
           </div>
         ))}
       </div>
+
+      {posts.length > 0 && (
+        <div className="mt-12">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+            {language === 'en' ? 'Research Papers & Position Papers' : 'Исследовательские работы'}
+          </h3>
+          <div className="space-y-4">
+            {posts.map((post) => {
+              const title = language === 'en' ? post.title_en : post.title_ru;
+              const excerpt = language === 'en' ? post.excerpt_en : post.excerpt_ru;
+              return (
+                <div
+                  key={post.id}
+                  className="p-6 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl border-2 border-purple-200 dark:border-purple-800 hover:shadow-xl transition-all cursor-pointer"
+                  onClick={() => setSelectedPost(post)}
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <h4 className="text-xl font-bold text-slate-900 dark:text-white flex-1">
+                      {title}
+                    </h4>
+                    <FileText className="w-6 h-6 text-purple-600 dark:text-purple-400 flex-shrink-0 ml-4" />
+                  </div>
+                  {excerpt && (
+                    <p className="text-slate-600 dark:text-slate-300 mb-4">
+                      {excerpt}
+                    </p>
+                  )}
+                  <div className="flex items-center gap-4 text-sm">
+                    <span className="text-slate-500 dark:text-slate-400">{post.author}</span>
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex gap-2">
+                        {post.tags.slice(0, 4).map((tag, i) => (
+                          <span key={i} className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <span className="ml-auto text-purple-600 dark:text-purple-400 font-medium">
+                      {language === 'en' ? 'Read full paper →' : 'Читать полностью →'}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
