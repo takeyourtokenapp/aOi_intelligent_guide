@@ -7,8 +7,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 interface NavigationProps {
   onAoiClick?: () => void;
-  onNavigate?: (page: 'home' | 'foundation') => void;
-  currentPage?: 'home' | 'foundation';
+  onNavigate?: (page: 'home' | 'foundation' | 'academy') => void;
+  currentPage?: 'home' | 'foundation' | 'academy';
 }
 
 export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationProps) {
@@ -28,12 +28,16 @@ export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationPr
           </button>
 
           <nav className="hidden md:flex items-center gap-4">
-            <a
-              href={`${DOMAIN_CONFIG.app.baseUrl}/academy`}
-              className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
+            <button
+              onClick={() => onNavigate?.('academy')}
+              className={`text-sm font-medium transition-colors ${
+                currentPage === 'academy'
+                  ? 'text-[#7BA7BC]'
+                  : 'text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC]'
+              }`}
             >
               {t('nav.academy')}
-            </a>
+            </button>
             <button
               onClick={() => onNavigate?.('foundation')}
               className={`text-sm font-medium transition-colors ${
@@ -111,13 +115,19 @@ export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationPr
               </div>
             </button>
 
-            <a
-              href={`${DOMAIN_CONFIG.app.baseUrl}/academy`}
-              className="block py-2 text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+            <button
+              onClick={() => {
+                onNavigate?.('academy');
+                setMobileMenuOpen(false);
+              }}
+              className={`block w-full text-left py-2 transition-colors ${
+                currentPage === 'academy'
+                  ? 'text-[#7BA7BC]'
+                  : 'text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC]'
+              }`}
             >
               {t('nav.academy')}
-            </a>
+            </button>
             <button
               onClick={() => {
                 onNavigate?.('foundation');

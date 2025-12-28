@@ -3,12 +3,13 @@ import { CrossDomainBridge } from '../components/CrossDomainBridge';
 import { RealtimeStats } from '../components/RealtimeStats';
 import { ActivityFeed } from '../components/ActivityFeed';
 import { HeroSection } from '../components/HeroSection';
+import { AcademyStats } from '../components/AcademyStats';
 import { DOMAIN_CONFIG } from '../config/navigation';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface HomePageProps {
   onAoiClick: () => void;
-  onNavigate?: (page: 'home' | 'foundation') => void;
+  onNavigate?: (page: 'home' | 'foundation' | 'academy') => void;
 }
 
 export default function HomePage({ onAoiClick, onNavigate }: HomePageProps) {
@@ -47,10 +48,17 @@ export default function HomePage({ onAoiClick, onNavigate }: HomePageProps) {
           </div>
         </div>
 
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 text-center">
+            {t('academy.yourProgress') || 'Your Learning Progress'}
+          </h2>
+          <AcademyStats />
+        </div>
+
         <div className="grid md:grid-cols-3 gap-6 mb-12">
-          <a
-            href={`${DOMAIN_CONFIG.app.baseUrl}/academy`}
-            className="group relative bg-white dark:bg-gradient-to-br dark:from-[#1B2838] dark:to-[#2a3f54] p-8 rounded-2xl border-2 border-[#5B8BA0] dark:border-[#7BA7BC]/30 hover:border-[#3E7C9A] dark:hover:border-[#7BA7BC]/60 transition-all duration-300 hover:scale-105 animate-breathe shadow-2xl dark:shadow-none"
+          <button
+            onClick={() => onNavigate?.('academy')}
+            className="group relative bg-white dark:bg-gradient-to-br dark:from-[#1B2838] dark:to-[#2a3f54] p-8 rounded-2xl border-2 border-[#5B8BA0] dark:border-[#7BA7BC]/30 hover:border-[#3E7C9A] dark:hover:border-[#7BA7BC]/60 transition-all duration-300 hover:scale-105 animate-breathe shadow-2xl dark:shadow-none text-left w-full"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#7BA7BC]/15 dark:from-[#7BA7BC]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
             <div className="relative z-10">
@@ -64,7 +72,7 @@ export default function HomePage({ onAoiClick, onNavigate }: HomePageProps) {
                 <ArrowRight className="w-5 h-5" />
               </div>
             </div>
-          </a>
+          </button>
 
           <a
             href={`${DOMAIN_CONFIG.foundation.baseUrl}/knowledge`}

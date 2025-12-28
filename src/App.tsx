@@ -7,17 +7,20 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import HomePage from './pages/HomePage';
 import FoundationPage from './pages/FoundationPage';
+import AcademyPage from './pages/AcademyPage';
+
+type PageType = 'home' | 'foundation' | 'academy';
 
 function AppContent() {
   const [aoiOpen, setAoiOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState<'home' | 'foundation'>('home');
+  const [currentPage, setCurrentPage] = useState<PageType>('home');
   const { t } = useLanguage();
 
   const handleAoiClick = () => {
     setAoiOpen(true);
   };
 
-  const handleNavigate = (page: 'home' | 'foundation') => {
+  const handleNavigate = (page: PageType) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -33,6 +36,7 @@ function AppContent() {
 
         {currentPage === 'home' && <HomePage onAoiClick={handleAoiClick} onNavigate={handleNavigate} />}
         {currentPage === 'foundation' && <FoundationPage />}
+        {currentPage === 'academy' && <AcademyPage />}
 
         <footer className="container mx-auto px-6 py-12 border-t-2 border-[#9B8FD9]/40 dark:border-[#9B8FD9]/20">
           <div className="text-center text-slate-600 dark:text-gray-300 text-sm space-y-3">
