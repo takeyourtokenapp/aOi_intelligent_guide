@@ -125,18 +125,18 @@ export function ActivityFeed() {
 
   if (loading) {
     return (
-      <div className="bg-[#9B8FD9]/5 rounded-3xl border border-[#9B8FD9]/20 p-6 backdrop-blur-sm">
+      <div className="bg-white/80 dark:bg-[#9B8FD9]/5 rounded-3xl border-2 border-[#8B7AC7]/40 dark:border-[#9B8FD9]/20 p-6 backdrop-blur-sm shadow-xl dark:shadow-none">
         <div className="flex items-center gap-2 mb-4">
-          <Sparkles className="w-5 h-5 text-[#9B8FD9]" />
-          <h3 className="text-xl font-bold text-[#A8DADC]">Live Ecosystem Activity</h3>
+          <Sparkles className="w-5 h-5 text-[#8B7AC7] dark:text-[#9B8FD9]" />
+          <h3 className="text-xl font-bold text-slate-800 dark:text-[#A8DADC]">Live Ecosystem Activity</h3>
         </div>
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="flex items-center gap-4 p-4 bg-[#1B2838]/30 rounded-xl animate-pulse">
-              <div className="w-8 h-8 bg-[#9B8FD9]/20 rounded"></div>
+            <div key={i} className="flex items-center gap-4 p-4 bg-slate-100 dark:bg-[#1B2838]/30 rounded-xl animate-pulse">
+              <div className="w-8 h-8 bg-slate-300 dark:bg-[#9B8FD9]/20 rounded"></div>
               <div className="flex-1">
-                <div className="h-4 bg-[#7BA7BC]/20 rounded w-3/4 mb-2"></div>
-                <div className="h-3 bg-[#8FA68E]/20 rounded w-1/4"></div>
+                <div className="h-4 bg-slate-300 dark:bg-[#7BA7BC]/20 rounded w-3/4 mb-2"></div>
+                <div className="h-3 bg-slate-200 dark:bg-[#8FA68E]/20 rounded w-1/4"></div>
               </div>
             </div>
           ))}
@@ -147,17 +147,17 @@ export function ActivityFeed() {
 
   if (activities.length === 0) {
     return (
-      <div className="bg-[#9B8FD9]/5 rounded-3xl border border-[#9B8FD9]/20 p-6 backdrop-blur-sm">
+      <div className="bg-white/80 dark:bg-[#9B8FD9]/5 rounded-3xl border-2 border-[#8B7AC7]/40 dark:border-[#9B8FD9]/20 p-6 backdrop-blur-sm shadow-xl dark:shadow-none">
         <div className="flex items-center gap-2 mb-4">
-          <Sparkles className="w-5 h-5 text-[#9B8FD9]" />
-          <h3 className="text-xl font-bold text-[#A8DADC]">Live Ecosystem Activity</h3>
+          <Sparkles className="w-5 h-5 text-[#8B7AC7] dark:text-[#9B8FD9]" />
+          <h3 className="text-xl font-bold text-slate-800 dark:text-[#A8DADC]">Live Ecosystem Activity</h3>
         </div>
         <div className="text-center py-12 px-4">
-          <div className="inline-block p-4 rounded-full bg-[#9B8FD9]/10 mb-4">
-            <Sparkles className="w-8 h-8 text-[#9B8FD9]" />
+          <div className="inline-block p-4 rounded-full bg-[#9B8FD9]/20 dark:bg-[#9B8FD9]/10 mb-4">
+            <Sparkles className="w-8 h-8 text-[#8B7AC7] dark:text-[#9B8FD9]" />
           </div>
-          <p className="text-[#A8DADC] mb-2 font-medium">No activity yet</p>
-          <p className="text-sm text-gray-400">
+          <p className="text-slate-700 dark:text-[#A8DADC] mb-2 font-bold">No activity yet</p>
+          <p className="text-sm text-slate-600 dark:text-gray-400 font-medium">
             Be the first to grow this ecosystem! 🌱
           </p>
         </div>
@@ -166,11 +166,11 @@ export function ActivityFeed() {
   }
 
   return (
-    <div className="bg-[#9B8FD9]/5 rounded-3xl border border-[#9B8FD9]/20 p-6 hover:border-[#9B8FD9]/40 transition-all backdrop-blur-sm">
+    <div className="bg-white/80 dark:bg-[#9B8FD9]/5 rounded-3xl border-2 border-[#8B7AC7]/40 dark:border-[#9B8FD9]/20 p-6 hover:border-[#8B7AC7]/70 dark:hover:border-[#9B8FD9]/40 transition-all backdrop-blur-sm shadow-xl dark:shadow-none">
       <div className="flex items-center gap-2 mb-6">
-        <Sparkles className="w-5 h-5 text-[#9B8FD9]" />
-        <h3 className="text-xl font-bold text-[#A8DADC]">Live Ecosystem Activity</h3>
-        <span className="ml-auto text-xs text-gray-400 px-3 py-1 bg-[#8FA68E]/10 text-[#8FA68E] rounded-full animate-pulse-soft border border-[#8FA68E]/30">
+        <Sparkles className="w-5 h-5 text-[#8B7AC7] dark:text-[#9B8FD9]" />
+        <h3 className="text-xl font-bold text-slate-800 dark:text-[#A8DADC]">Live Ecosystem Activity</h3>
+        <span className="ml-auto text-xs px-3 py-1 bg-[#6B9070]/20 dark:bg-[#8FA68E]/10 text-[#6B9070] dark:text-[#8FA68E] rounded-full animate-pulse-soft border-2 border-[#6B9070] dark:border-[#8FA68E]/30 font-bold">
           ● Live
         </span>
       </div>
@@ -179,17 +179,17 @@ export function ActivityFeed() {
         {activities.map((activity) => (
           <div
             key={activity.id}
-            className="flex items-start gap-4 p-4 bg-[#1B2838]/50 rounded-xl hover:bg-[#1B2838]/70 transition-all border border-[#9B8FD9]/10 hover:border-[#9B8FD9]/30 backdrop-blur-sm"
+            className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-[#1B2838]/50 rounded-xl hover:bg-slate-100 dark:hover:bg-[#1B2838]/70 transition-all border-2 border-slate-200 dark:border-[#9B8FD9]/10 hover:border-slate-300 dark:hover:border-[#9B8FD9]/30 backdrop-blur-sm"
           >
             <div className={`${activity.color} flex-shrink-0 mt-1`}>
               {activity.icon}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-gray-200 text-sm mb-1">{activity.message}</p>
-              <p className="text-xs text-gray-400">{activity.timeAgo}</p>
+              <p className="text-slate-800 dark:text-gray-200 text-sm font-medium mb-1">{activity.message}</p>
+              <p className="text-xs text-slate-600 dark:text-gray-400 font-medium">{activity.timeAgo}</p>
               {activity.aoiComment && (
-                <div className="mt-2 text-xs text-[#A8DADC] italic bg-[#9B8FD9]/8 px-3 py-2 rounded-lg border border-[#9B8FD9]/20">
-                  <span className="font-semibold text-[#9B8FD9]">aOi (葵): </span>
+                <div className="mt-2 text-xs text-slate-700 dark:text-[#A8DADC] italic bg-[#9B8FD9]/15 dark:bg-[#9B8FD9]/8 px-3 py-2 rounded-lg border-2 border-[#8B7AC7]/40 dark:border-[#9B8FD9]/20">
+                  <span className="font-bold text-[#8B7AC7] dark:text-[#9B8FD9]">aOi (葵): </span>
                   {activity.aoiComment}
                 </div>
               )}

@@ -91,9 +91,9 @@ export function RealtimeStats() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="bg-[#1a2332]/30 rounded-2xl border border-[#D2A44C]/20 p-6 animate-pulse">
-            <div className="h-4 bg-gray-700 rounded w-1/2 mb-2"></div>
-            <div className="h-8 bg-gray-700 rounded w-3/4"></div>
+          <div key={i} className="bg-white/50 dark:bg-[#1a2332]/30 rounded-2xl border-2 border-slate-300 dark:border-[#D2A44C]/20 p-6 animate-pulse shadow-lg dark:shadow-none">
+            <div className="h-4 bg-slate-300 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
+            <div className="h-8 bg-slate-300 dark:bg-gray-700 rounded w-3/4"></div>
           </div>
         ))}
       </div>
@@ -162,10 +162,10 @@ interface StatCardProps {
 
 function StatCard({ icon, label, value, subtext, color, borderColor, bgColor, trend }: StatCardProps) {
   return (
-    <div className={`${bgColor} rounded-2xl border ${borderColor} p-6 hover:border-opacity-60 transition-all duration-300 hover:scale-105 animate-breathe backdrop-blur-sm`}>
+    <div className={`bg-white dark:${bgColor} rounded-2xl border-2 ${borderColor} hover:border-opacity-80 p-6 transition-all duration-300 hover:scale-105 animate-breathe backdrop-blur-sm shadow-xl dark:shadow-none`}>
       <div className="flex items-center justify-between mb-4">
         <div className={color}>{icon}</div>
-        <span className="text-xs text-gray-500 font-medium px-2 py-1 bg-gray-800/50 rounded">
+        <span className="text-xs text-slate-700 dark:text-gray-500 font-bold px-2 py-1 bg-slate-200 dark:bg-gray-800/50 rounded">
           {trend}
         </span>
       </div>
@@ -174,12 +174,12 @@ function StatCard({ icon, label, value, subtext, color, borderColor, bgColor, tr
         <div className={`text-3xl font-bold ${color} mb-1`}>
           {value}
         </div>
-        <div className="text-sm text-gray-400 font-medium">
+        <div className="text-sm text-slate-700 dark:text-gray-400 font-bold">
           {label}
         </div>
       </div>
 
-      <div className="text-xs text-gray-500 pt-2 border-t border-gray-700/50">
+      <div className="text-xs text-slate-600 dark:text-gray-500 pt-2 border-t border-slate-300 dark:border-gray-700/50 font-medium">
         {subtext}
       </div>
     </div>

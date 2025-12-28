@@ -5,22 +5,21 @@ import { CrossDomainBridge } from './components/CrossDomainBridge';
 import { AoiAssistant } from './components/AoiAssistant';
 import { RealtimeStats } from './components/RealtimeStats';
 import { ActivityFeed } from './components/ActivityFeed';
+import { HeroSection } from './components/HeroSection';
 import { DOMAIN_CONFIG } from './config/navigation';
 import { UserProgressProvider } from './contexts/UserProgressContext';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { LanguageProvider } from './contexts/LanguageContext';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 
-function App() {
+function AppContent() {
   const [aoiOpen, setAoiOpen] = useState(false);
+  const { t } = useLanguage();
 
   const handleAoiClick = () => {
     setAoiOpen(true);
   };
 
   return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <UserProgressProvider>
           <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-[#0A0F1A] dark:via-[#1a1f2e] dark:to-[#0A0F1A] text-gray-900 dark:text-white overflow-hidden relative">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(155,143,217,0.12),transparent_60%)] animate-breathe"></div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_80%,rgba(143,166,142,0.08),transparent_60%)] animate-pulse-soft" style={{animationDelay: '2s'}}></div>
@@ -247,7 +246,7 @@ function App() {
         <footer className="container mx-auto px-6 py-12 border-t border-[#9B8FD9]/30 dark:border-[#9B8FD9]/20">
           <div className="text-center text-gray-500 dark:text-gray-400 text-sm space-y-3">
             <p className="text-[#5DADE2] dark:text-[#A8DADC] font-medium text-base">
-              Two domains • One living intelligence • Connected by aOi (葵)
+              {t('footer.tagline')}
             </p>
             <div className="flex items-center justify-center gap-4 text-sm">
               <a href={DOMAIN_CONFIG.app.baseUrl} className="hover:text-[#7BA7BC] transition-colors">
@@ -259,14 +258,23 @@ function App() {
               </a>
             </div>
             <p className="text-xs text-gray-400 dark:text-gray-500 mt-4">
-              Where Web3 Infrastructure Grows with Medical Research • 🌱 🌊 🧠
+              {t('footer.mission2')}
             </p>
           </div>
         </footer>
       </div>
 
           <AoiAssistant isOpen={aoiOpen} onOpenChange={setAoiOpen} />
-          </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <LanguageProvider>
+        <UserProgressProvider>
+          <AppContent />
         </UserProgressProvider>
       </LanguageProvider>
     </ThemeProvider>
