@@ -126,6 +126,15 @@ const translations: Record<Language, Record<string, string>> = {
 
     'footer.tagline': 'Two domains • One living intelligence • Connected by aOi (葵)',
     'footer.mission2': 'Where Web3 Infrastructure Grows with Medical Research • 🌱 🌊 🧠',
+
+    'bridge.toFoundation.title': 'Explore the Science',
+    'bridge.toFoundation.desc': 'Learn why this research matters and how Web3 enables medical breakthroughs',
+    'bridge.toFoundation.button': 'Visit TYT Foundation',
+    'bridge.toApp.title': 'Learn the Tools',
+    'bridge.toApp.desc': 'Master Web3, blockchain, and crypto infrastructure through hands-on courses',
+    'bridge.toApp.button': 'Open Academy',
+    'bridge.context': 'Context:',
+    'bridge.connection': 'aOi connects both domains seamlessly',
   },
   ru: {
     'nav.academy': 'Академия',
@@ -223,6 +232,15 @@ const translations: Record<Language, Record<string, string>> = {
 
     'footer.tagline': 'Два домена • Один живой интеллект • Связаны через aOi (葵)',
     'footer.mission2': 'Где Web3 инфраструктура растёт вместе с медицинскими исследованиями • 🌱 🌊 🧠',
+
+    'bridge.toFoundation.title': 'Исследуйте науку',
+    'bridge.toFoundation.desc': 'Узнайте, почему это исследование важно и как Web3 позволяет делать медицинские прорывы',
+    'bridge.toFoundation.button': 'Посетить TYT Foundation',
+    'bridge.toApp.title': 'Изучайте инструменты',
+    'bridge.toApp.desc': 'Освойте Web3, блокчейн и крипто-инфраструктуру через практические курсы',
+    'bridge.toApp.button': 'Открыть Академию',
+    'bridge.context': 'Контекст:',
+    'bridge.connection': 'aOi бесшовно соединяет оба домена',
   },
   he: {
     'nav.academy': 'אקדמיה',
@@ -320,6 +338,15 @@ const translations: Record<Language, Record<string, string>> = {
 
     'footer.tagline': 'שני דומיינים • אינטליגנציה חיה אחת • מחוברת על ידי aOi (葵)',
     'footer.mission2': 'היכן תשתית Web3 צומחת עם מחקר רפואי • 🌱 🌊 🧠',
+
+    'bridge.toFoundation.title': 'חקור את המדע',
+    'bridge.toFoundation.desc': 'למד מדוע מחקר זה חשוב וכיצד Web3 מאפשר פריצות דרך רפואיות',
+    'bridge.toFoundation.button': 'בקר ב-TYT Foundation',
+    'bridge.toApp.title': 'למד את הכלים',
+    'bridge.toApp.desc': 'שלוט ב-Web3, בלוקצ\'יין ותשתית קריפטו דרך קורסים מעשיים',
+    'bridge.toApp.button': 'פתח אקדמיה',
+    'bridge.context': 'הקשר:',
+    'bridge.connection': 'aOi מחברת את שני התחומים בצורה חלקה',
   },
 };
 

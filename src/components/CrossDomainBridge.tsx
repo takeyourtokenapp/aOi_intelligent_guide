@@ -1,5 +1,6 @@
 import { ExternalLink, ArrowRight } from 'lucide-react';
 import { DOMAIN_CONFIG } from '../config/navigation';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface CrossDomainBridgeProps {
   type: 'to-foundation' | 'to-app';
@@ -8,31 +9,34 @@ interface CrossDomainBridgeProps {
 }
 
 export function CrossDomainBridge({ type, context, className = '' }: CrossDomainBridgeProps) {
+  const { t } = useLanguage();
   const isToFoundation = type === 'to-foundation';
 
   const config = isToFoundation
     ? {
-        title: 'Explore the Science',
-        description: 'Learn why this research matters and how Web3 enables medical breakthroughs',
+        title: t('bridge.toFoundation.title'),
+        description: t('bridge.toFoundation.desc'),
         url: `${DOMAIN_CONFIG.foundation.baseUrl}/knowledge`,
-        buttonText: 'Visit TYT Foundation',
-        color: '#FF00FF',
+        buttonText: t('bridge.toFoundation.button'),
+        color: '#E8B4B8',
+        lightColor: '#D97B8F',
       }
     : {
-        title: 'Learn the Tools',
-        description: 'Master Web3, blockchain, and crypto infrastructure through hands-on courses',
+        title: t('bridge.toApp.title'),
+        description: t('bridge.toApp.desc'),
         url: `${DOMAIN_CONFIG.app.baseUrl}/academy`,
-        buttonText: 'Open Academy',
-        color: '#00F0FF',
+        buttonText: t('bridge.toApp.button'),
+        color: '#7BA7BC',
+        lightColor: '#5B8BA0',
       };
 
   return (
     <div
       className={`
-        relative overflow-hidden rounded-2xl border p-8
+        relative overflow-hidden rounded-2xl border-2 p-8 backdrop-blur-sm shadow-xl dark:shadow-none
         ${isToFoundation
-          ? 'bg-gradient-to-br from-[#FF00FF]/5 to-transparent border-[#FF00FF]/30'
-          : 'bg-gradient-to-br from-[#00F0FF]/5 to-transparent border-[#00F0FF]/30'
+          ? 'bg-white/80 dark:bg-gradient-to-br dark:from-[#E8B4B8]/5 dark:to-transparent border-[#D97B8F] dark:border-[#E8B4B8]/30'
+          : 'bg-white/80 dark:bg-gradient-to-br dark:from-[#7BA7BC]/5 dark:to-transparent border-[#5B8BA0] dark:border-[#7BA7BC]/30'
         }
         ${className}
       `}
@@ -40,23 +44,26 @@ export function CrossDomainBridge({ type, context, className = '' }: CrossDomain
       <div className="absolute top-4 right-4">
         <ExternalLink
           size={20}
-          style={{ color: config.color }}
-          className="opacity-50"
+          style={{ color: isToFoundation ? config.lightColor : config.lightColor }}
+          className="opacity-50 dark:opacity-100"
         />
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-2xl font-bold text-white">
+        <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
           {config.title}
         </h3>
 
-        <p className="text-gray-400 leading-relaxed">
+        <p className="text-slate-700 dark:text-gray-400 leading-relaxed font-medium">
           {config.description}
         </p>
 
         {context && (
-          <p className="text-sm text-gray-500 italic border-l-2 pl-4" style={{ borderColor: config.color }}>
-            Context: {context}
+          <p
+            className="text-sm text-slate-600 dark:text-gray-500 italic border-l-4 pl-4 font-medium"
+            style={{ borderColor: isToFoundation ? config.lightColor : config.lightColor }}
+          >
+            {t('bridge.context')} {context}
           </p>
         )}
 
@@ -64,25 +71,24 @@ export function CrossDomainBridge({ type, context, className = '' }: CrossDomain
           href={config.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all hover:scale-105"
-          style={{
-            background: `${config.color}20`,
-            color: config.color,
-            border: `1px solid ${config.color}40`,
-          }}
+          className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 shadow-md ${
+            isToFoundation
+              ? 'bg-[#E8B4B8]/20 dark:bg-[#E8B4B8]/20 text-[#D97B8F] dark:text-[#E8B4B8] border-2 border-[#D97B8F] dark:border-[#E8B4B8]/40 hover:bg-[#E8B4B8]/30 dark:hover:bg-[#E8B4B8]/30'
+              : 'bg-[#7BA7BC]/20 dark:bg-[#7BA7BC]/20 text-[#5B8BA0] dark:text-[#7BA7BC] border-2 border-[#5B8BA0] dark:border-[#7BA7BC]/40 hover:bg-[#7BA7BC]/30 dark:hover:bg-[#7BA7BC]/30'
+          }`}
         >
           <span>{config.buttonText}</span>
           <ArrowRight size={18} />
         </a>
       </div>
 
-      <div className="mt-6 pt-6 border-t border-gray-800">
-        <div className="flex items-center gap-2 text-xs text-gray-500">
+      <div className="mt-6 pt-6 border-t-2 border-slate-300 dark:border-gray-800">
+        <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-500 font-medium">
           <div
             className="w-2 h-2 rounded-full animate-pulse"
-            style={{ backgroundColor: config.color }}
+            style={{ backgroundColor: isToFoundation ? config.lightColor : config.lightColor }}
           />
-          <span>aOi connects both domains seamlessly</span>
+          <span>{t('bridge.connection')}</span>
         </div>
       </div>
     </div>
