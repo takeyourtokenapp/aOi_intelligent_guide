@@ -125,11 +125,11 @@ function AppContent() {
               <CrossDomainBridge type="to-foundation" />
             </div>
 
-            <div className="bg-white/90 dark:bg-gradient-to-br dark:from-[#9B8FD9]/8 dark:via-[#7BA7BC]/8 dark:to-[#8FA68E]/8 p-10 rounded-3xl border-2 border-[#8B7AC7] dark:border-[#9B8FD9]/30 backdrop-blur-sm shadow-2xl dark:shadow-none">
+            <div className="bg-white/90 dark:bg-gradient-to-br dark:from-[#1B2838] dark:via-[#2a3f54] dark:to-[#1B2838] p-10 rounded-3xl border-2 border-[#8B7AC7] dark:border-[#9B8FD9]/30 backdrop-blur-sm shadow-2xl dark:shadow-none">
               <div className="flex items-start gap-6">
                 <div className="flex-shrink-0">
                   <div className="relative">
-                    <div className="absolute inset-0 bg-[#9B8FD9]/30 rounded-full blur-xl animate-pulse-soft"></div>
+                    <div className="absolute inset-0 bg-[#9B8FD9]/30 dark:bg-[#9B8FD9]/20 rounded-full blur-xl animate-pulse-soft"></div>
                     <Shield className="w-20 h-20 text-[#8B7AC7] dark:text-[#9B8FD9] relative z-10" strokeWidth={2} />
                   </div>
                 </div>
@@ -167,7 +167,7 @@ function AppContent() {
                       </p>
                     </div>
                   </div>
-                  <div className="p-4 rounded-xl bg-[#E8B4B8]/30 dark:bg-[#E8B4B8]/10 border-2 border-[#D97B8F] dark:border-[#E8B4B8]/20">
+                  <div className="p-4 rounded-xl bg-[#E8B4B8]/30 dark:bg-[#1B2838] border-2 border-[#D97B8F] dark:border-[#E8B4B8]/30">
                     <p className="text-sm text-slate-900 dark:text-gray-100 leading-relaxed font-bold">
                       <span className="font-black text-[#C7637A] dark:text-[#E8B4B8]">{t('role.disclaimerLabel')}</span> {t('role.disclaimer')}
                     </p>

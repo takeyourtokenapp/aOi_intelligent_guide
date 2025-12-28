@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { DOMAIN_CONFIG } from '../config/navigation';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface NavigationProps {
   onAoiClick?: () => void;
@@ -10,6 +11,7 @@ interface NavigationProps {
 
 export function Navigation({ onAoiClick }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <header className="sticky top-0 z-50 bg-white/90 dark:bg-[#050810]/95 backdrop-blur-lg border-b border-gray-200 dark:border-[#D2A44C]/20 shadow-sm dark:shadow-none">
@@ -28,19 +30,19 @@ export function Navigation({ onAoiClick }: NavigationProps) {
               href={`${DOMAIN_CONFIG.app.baseUrl}/academy`}
               className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
             >
-              Academy
+              {t('nav.academy')}
             </a>
             <a
               href={`${DOMAIN_CONFIG.foundation.baseUrl}/foundation`}
               className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#D2A44C] transition-colors"
             >
-              Foundation
+              {t('nav.foundation')}
             </a>
             <a
               href={`${DOMAIN_CONFIG.app.baseUrl}/dashboard`}
               className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
             >
-              Dashboard
+              {t('nav.dashboard')}
             </a>
 
             <button
@@ -99,7 +101,7 @@ export function Navigation({ onAoiClick }: NavigationProps) {
               </div>
               <div className="text-left">
                 <div className="text-sm font-bold text-white">aOi - AI Guide</div>
-                <div className="text-xs text-gray-400 dark:text-gray-500">Ask me anything</div>
+                <div className="text-xs text-gray-400 dark:text-gray-500">{t('aoi.ask')}</div>
               </div>
             </button>
 
@@ -108,21 +110,21 @@ export function Navigation({ onAoiClick }: NavigationProps) {
               className="block py-2 text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Academy
+              {t('nav.academy')}
             </a>
             <a
               href={`${DOMAIN_CONFIG.foundation.baseUrl}/foundation`}
               className="block py-2 text-gray-700 dark:text-gray-300 hover:text-[#D2A44C] transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Foundation
+              {t('nav.foundation')}
             </a>
             <a
               href={`${DOMAIN_CONFIG.app.baseUrl}/dashboard`}
               className="block py-2 text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Dashboard
+              {t('nav.dashboard')}
             </a>
           </div>
         )}

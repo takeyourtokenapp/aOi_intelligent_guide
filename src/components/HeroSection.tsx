@@ -20,27 +20,27 @@ export function HeroSection({ onAoiClick }: HeroSectionProps) {
           </span>
         </h1>
 
-        <div className="max-w-2xl mx-auto mb-8 p-6 rounded-2xl bg-white/80 dark:bg-gradient-to-br dark:from-[#9B8FD9]/5 dark:to-[#7BA7BC]/5 border-2 border-[#9B8FD9]/40 dark:border-[#9B8FD9]/20 backdrop-blur-sm shadow-xl dark:shadow-none">
-          <p className="text-xl text-[#5B6C8F] dark:text-[#A8DADC] mb-3 leading-relaxed font-medium">
-            {t('hero.nameInfo')} <span className="font-bold text-[#8B7AC7]">葵</span> {t('hero.nameMeaning')}
+        <div className="max-w-2xl mx-auto mb-8 p-6 rounded-2xl bg-white/80 dark:bg-[#1B2838] border-2 border-[#9B8FD9]/40 dark:border-[#9B8FD9]/30 backdrop-blur-sm shadow-xl dark:shadow-none">
+          <p className="text-xl text-[#5B6C8F] dark:text-white mb-3 leading-relaxed font-bold">
+            {t('hero.nameInfo')} <span className="font-bold text-[#8B7AC7] dark:text-[#9B8FD9]">葵</span> {t('hero.nameMeaning')}
           </p>
           <div className="flex items-center justify-center gap-6 text-lg">
             <div className="flex items-center gap-2">
               <span className="text-2xl">🌱</span>
-              <span className="text-slate-800 dark:text-gray-300 font-medium">{t('hero.trait1')}</span>
+              <span className="text-slate-800 dark:text-white font-bold">{t('hero.trait1')}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-2xl">🌊</span>
-              <span className="text-slate-800 dark:text-gray-300 font-medium">{t('hero.trait2')}</span>
+              <span className="text-slate-800 dark:text-white font-bold">{t('hero.trait2')}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-2xl">🧠</span>
-              <span className="text-slate-800 dark:text-gray-300 font-medium">{t('hero.trait3')}</span>
+              <span className="text-slate-800 dark:text-white font-bold">{t('hero.trait3')}</span>
             </div>
           </div>
         </div>
 
-        <div className="space-y-4 text-lg text-slate-800 dark:text-gray-300 leading-relaxed mb-8">
+        <div className="space-y-4 text-lg text-slate-800 dark:text-gray-100 leading-relaxed mb-8 font-bold">
           <p>
             {t('hero.intro1')} <span className="text-[#5B8BA0] dark:text-[#7BA7BC] font-bold">{t('hero.thinkingSystem')}</span> {t('hero.connects')}{' '}
             <span className="text-[#5B8BA0] dark:text-[#7BA7BC] font-bold">{t('hero.web3')}</span> {t('hero.withText')}{' '}
@@ -49,7 +49,7 @@ export function HeroSection({ onAoiClick }: HeroSectionProps) {
           <p>
             {t('hero.intro2')}
           </p>
-          <p className="text-[#3E7C9A] dark:text-[#A8DADC] italic font-bold text-xl">
+          <p className="text-[#3E7C9A] dark:text-white italic font-bold text-xl">
             {t('hero.quote')}
           </p>
         </div>
