@@ -10,18 +10,23 @@ import FoundationPage from './pages/FoundationPage';
 import AcademyPage from './pages/AcademyPage';
 
 type PageType = 'home' | 'foundation' | 'academy';
+type FoundationTab = 'about' | 'research' | 'manifesto' | 'updates';
 
 function AppContent() {
   const [aoiOpen, setAoiOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<PageType>('home');
+  const [foundationTab, setFoundationTab] = useState<FoundationTab>('about');
   const { t } = useLanguage();
 
   const handleAoiClick = () => {
     setAoiOpen(true);
   };
 
-  const handleNavigate = (page: PageType) => {
+  const handleNavigate = (page: PageType, tab?: FoundationTab) => {
     setCurrentPage(page);
+    if (page === 'foundation' && tab) {
+      setFoundationTab(tab);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -35,7 +40,7 @@ function AppContent() {
         <Navigation onAoiClick={handleAoiClick} onNavigate={handleNavigate} currentPage={currentPage} />
 
         {currentPage === 'home' && <HomePage onAoiClick={handleAoiClick} onNavigate={handleNavigate} />}
-        {currentPage === 'foundation' && <FoundationPage />}
+        {currentPage === 'foundation' && <FoundationPage initialTab={foundationTab} />}
         {currentPage === 'academy' && <AcademyPage />}
 
         <footer className="container mx-auto px-6 py-12 border-t-2 border-[#9B8FD9]/40 dark:border-[#9B8FD9]/20">

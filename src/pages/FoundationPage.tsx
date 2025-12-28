@@ -25,12 +25,20 @@ interface ResearchPost {
   featured: boolean;
 }
 
-export default function FoundationPage() {
+interface FoundationPageProps {
+  initialTab?: 'about' | 'research' | 'manifesto' | 'updates';
+}
+
+export default function FoundationPage({ initialTab = 'about' }: FoundationPageProps) {
   const { language, t } = useLanguage();
-  const [activeTab, setActiveTab] = useState<'about' | 'research' | 'manifesto' | 'updates'>('about');
+  const [activeTab, setActiveTab] = useState<'about' | 'research' | 'manifesto' | 'updates'>(initialTab);
   const [manifestoPost, setManifestoPost] = useState<ResearchPost | null>(null);
   const [researchPosts, setResearchPosts] = useState<ResearchPost[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
 
   useEffect(() => {
     loadContent();
