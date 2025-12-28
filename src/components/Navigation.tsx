@@ -1,6 +1,8 @@
 import { Shield, Menu, X, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { DOMAIN_CONFIG } from '../config/navigation';
+import { ThemeSwitcher } from './ThemeSwitcher';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface NavigationProps {
   onAoiClick?: () => void;
@@ -10,18 +12,18 @@ export function Navigation({ onAoiClick }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0A1122]/95 backdrop-blur-lg border-b border-[#D2A44C]/20">
+    <header className="sticky top-0 z-50 bg-[#0A1122]/95 dark:bg-[#050810]/95 backdrop-blur-lg border-b border-[#D2A44C]/20">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           <a href="/" className="flex items-center gap-3">
             <Shield className="w-10 h-10 text-[#D2A44C]" strokeWidth={1.5} />
             <div>
               <h1 className="text-xl font-bold text-[#D2A44C]">TakeYourToken</h1>
-              <p className="text-xs text-gray-400">Owl Warrior Platform</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">Owl Warrior Platform</p>
             </div>
           </a>
 
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-4">
             <a
               href={`${DOMAIN_CONFIG.app.baseUrl}/academy`}
               className="text-sm font-medium text-gray-300 hover:text-[#00F0FF] transition-colors"
@@ -56,9 +58,14 @@ export function Navigation({ onAoiClick }: NavigationProps) {
                   aOi
                   <div className="w-2 h-2 rounded-full bg-[#00FF00] animate-pulse" />
                 </div>
-                <div className="text-xs text-gray-400">AI Guide</div>
+                <div className="text-xs text-gray-400 dark:text-gray-500">AI Guide</div>
               </div>
             </button>
+
+            <div className="flex items-center gap-3 ml-2 border-l border-[#D2A44C]/20 pl-4">
+              <LanguageSwitcher />
+              <ThemeSwitcher />
+            </div>
           </nav>
 
           <button
@@ -71,6 +78,15 @@ export function Navigation({ onAoiClick }: NavigationProps) {
 
         {mobileMenuOpen && (
           <div className="md:hidden py-6 space-y-4 border-t border-[#D2A44C]/20">
+            <div className="flex gap-2 mb-4">
+              <div className="flex-1">
+                <LanguageSwitcher />
+              </div>
+            </div>
+            <div className="mb-4">
+              <ThemeSwitcher />
+            </div>
+
             <button
               onClick={() => {
                 onAoiClick?.();
@@ -83,7 +99,7 @@ export function Navigation({ onAoiClick }: NavigationProps) {
               </div>
               <div className="text-left">
                 <div className="text-sm font-bold text-white">aOi - AI Guide</div>
-                <div className="text-xs text-gray-400">Ask me anything</div>
+                <div className="text-xs text-gray-400 dark:text-gray-500">Ask me anything</div>
               </div>
             </button>
 

@@ -7,6 +7,8 @@ import { RealtimeStats } from './components/RealtimeStats';
 import { ActivityFeed } from './components/ActivityFeed';
 import { DOMAIN_CONFIG } from './config/navigation';
 import { UserProgressProvider } from './contexts/UserProgressContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 function App() {
   const [aoiOpen, setAoiOpen] = useState(false);
@@ -16,8 +18,10 @@ function App() {
   };
 
   return (
-    <UserProgressProvider>
-      <div className="min-h-screen bg-gradient-to-br from-[#1B2838] via-[#2a3f54] to-[#1B2838] text-white overflow-hidden relative">
+    <ThemeProvider>
+      <LanguageProvider>
+        <UserProgressProvider>
+          <div className="min-h-screen bg-gradient-to-br from-[#1B2838] via-[#2a3f54] to-[#1B2838] dark:from-[#0A0F1A] dark:via-[#1a1f2e] dark:to-[#0A0F1A] text-white overflow-hidden relative">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(155,143,217,0.08),transparent_60%)] animate-breathe"></div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_80%,rgba(143,166,142,0.06),transparent_60%)] animate-pulse-soft" style={{animationDelay: '2s'}}></div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(123,167,188,0.06),transparent_60%)] animate-pulse-soft" style={{animationDelay: '4s'}}></div>
@@ -261,9 +265,11 @@ function App() {
         </footer>
       </div>
 
-      <AoiAssistant isOpen={aoiOpen} onOpenChange={setAoiOpen} />
-      </div>
-    </UserProgressProvider>
+          <AoiAssistant isOpen={aoiOpen} onOpenChange={setAoiOpen} />
+          </div>
+        </UserProgressProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
 
