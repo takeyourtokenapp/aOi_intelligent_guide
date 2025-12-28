@@ -17,7 +17,7 @@ export function Navigation({ onAoiClick }: NavigationProps) {
     <header className="sticky top-0 z-50 bg-white/90 dark:bg-[#050810]/95 backdrop-blur-lg border-b border-gray-200 dark:border-[#D2A44C]/20 shadow-sm dark:shadow-none">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
-          <a href="/" className="flex items-center gap-3">
+          <a href="https://takeyourtoken.app" className="flex items-center gap-3">
             <Shield className="w-10 h-10 text-[#D2A44C]" strokeWidth={1.5} />
             <div>
               <h1 className="text-xl font-bold text-[#D2A44C]">TakeYourToken</h1>
