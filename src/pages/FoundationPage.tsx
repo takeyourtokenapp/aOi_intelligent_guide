@@ -12,12 +12,16 @@ interface ResearchPost {
   slug: string;
   title_en: string;
   title_ru: string;
+  title_he?: string | null;
   subtitle_en: string | null;
   subtitle_ru: string | null;
+  subtitle_he?: string | null;
   content_en: string;
   content_ru: string;
+  content_he?: string | null;
   excerpt_en: string | null;
   excerpt_ru: string | null;
+  excerpt_he?: string | null;
   post_type: string;
   tags: string[];
   published_at: string;
@@ -28,6 +32,15 @@ interface ResearchPost {
 interface FoundationPageProps {
   initialTab?: 'about' | 'research' | 'manifesto' | 'updates';
 }
+
+const translations = {
+  authoredByAoi: { en: 'Authored by aOi', ru: 'Автор: aOi', he: 'נכתב על ידי aOi' },
+  keyThemes: { en: 'Key Themes', ru: 'Ключевые темы', he: 'נושאים מרכזיים' },
+  loadingManifesto: { en: 'Loading manifesto...', ru: 'Загрузка манифеста...', he: 'טוען מניפסט...' },
+  manifestoNotAvailable: { en: 'Manifesto not available', ru: 'Манифест недоступен', he: 'מניפסט לא זמין' },
+};
+
+const tr = (key: keyof typeof translations, lang: Language) => translations[key][lang];
 
 export default function FoundationPage({ initialTab = 'about' }: FoundationPageProps) {
   const { language, t } = useLanguage();
@@ -396,7 +409,7 @@ function ManifestoSection({ post, loading }: { post: ResearchPost | null; loadin
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-slate-600 dark:text-slate-400">
-            {language === 'en' ? 'Loading manifesto...' : 'Загрузка манифеста...'}
+            {tr('loadingManifesto', language)}
           </p>
         </div>
       </div>
@@ -407,34 +420,61 @@ function ManifestoSection({ post, loading }: { post: ResearchPost | null; loadin
     return (
       <div className="p-8 text-center">
         <p className="text-slate-600 dark:text-slate-400">
-          {language === 'en' ? 'Manifesto not available' : 'Манифест недоступен'}
+          {tr('manifestoNotAvailable', language)}
         </p>
       </div>
     );
   }
 
-  const title = language === 'en' ? post.title_en : post.title_ru;
-  const subtitle = language === 'en' ? post.subtitle_en : post.subtitle_ru;
-  const excerpt = language === 'en' ? post.excerpt_en : post.excerpt_ru;
-  const content = language === 'en' ? post.content_en : post.content_ru;
+  const getContent = (field: 'title' | 'subtitle' | 'excerpt' | 'content') => {
+    const fieldName = `${field}_${language}` as keyof ResearchPost;
+    const fallbackField = `${field}_ru` as keyof ResearchPost;
+
+    const value = post[fieldName] as string | null;
+    const fallback = post[fallbackField] as string | null;
+
+    if (value && value.length > 50) return value;
+    return fallback || value || '';
+  };
+
+  const title = getContent('title');
+  const subtitle = getContent('subtitle');
+  const excerpt = getContent('excerpt');
+  const content = getContent('content');
+
+  const isUsingFallback = language !== 'ru' && (!post[`content_${language}` as keyof ResearchPost] ||
+    (post[`content_${language}` as keyof ResearchPost] as string)?.length < 500);
 
   if (viewingFull && content) {
     return (
       <div className="p-8 space-y-6">
-        <button
-          onClick={() => setViewingFull(false)}
-          className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span>{language === 'en' ? 'Back to overview' : 'Назад к обзору'}</span>
-        </button>
+        <div className="flex items-center justify-between gap-4">
+          <button
+            onClick={() => setViewingFull(false)}
+            className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>{language === 'en' ? 'Back to overview' : language === 'he' ? 'חזרה למבט כללי' : 'Назад к обзору'}</span>
+          </button>
+
+          {isUsingFallback && (
+            <div className="flex items-center gap-2 px-4 py-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-sm text-amber-800 dark:text-amber-200">
+              <Sparkles className="w-4 h-4" />
+              <span>
+                {language === 'en'
+                  ? 'Full translation coming soon. Showing Russian version.'
+                  : 'תרגום מלא בקרוב. מציג גרסה רוסית.'}
+              </span>
+            </div>
+          )}
+        </div>
 
         <div className="flex items-start gap-6 mb-8">
           <AoiAvatar size="lg" emotion="thinking" level="guardian" showKanji={true} />
           <div className="flex-1">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full text-xs font-medium text-blue-700 dark:text-blue-300 mb-4">
               <Sparkles className="w-3 h-3" />
-              <span>{language === 'en' ? 'Authored by aOi' : 'Автор: aOi'}</span>
+              <span>{tr('authoredByAoi', language)}</span>
             </div>
 
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">
@@ -512,7 +552,7 @@ function ManifestoSection({ post, loading }: { post: ResearchPost | null; loadin
 
       <div className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
         <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
-          {language === 'en' ? 'Key Themes' : 'Ключевые темы'}
+          {tr('keyThemes', language)}
         </h3>
         <ul className="space-y-3">
           <li className="flex items-start gap-3">
@@ -556,7 +596,9 @@ function ManifestoSection({ post, loading }: { post: ResearchPost | null; loadin
           className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl font-medium hover:shadow-lg transition-shadow"
         >
           <FileText className="w-5 h-5" />
-          <span>{language === 'en' ? 'Read Full Manifesto' : 'Читать полный манифест'}</span>
+          <span>
+            {language === 'en' ? 'Read Full Manifesto' : language === 'he' ? 'קרא מניפסט מלא' : 'Читать полный манифест'}
+          </span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
