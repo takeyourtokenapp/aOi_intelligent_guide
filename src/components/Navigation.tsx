@@ -7,9 +7,11 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 interface NavigationProps {
   onAoiClick?: () => void;
+  onNavigate?: (page: 'home' | 'foundation') => void;
+  currentPage?: 'home' | 'foundation';
 }
 
-export function Navigation({ onAoiClick }: NavigationProps) {
+export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useLanguage();
 
@@ -17,13 +19,13 @@ export function Navigation({ onAoiClick }: NavigationProps) {
     <header className="sticky top-0 z-50 bg-white/90 dark:bg-[#050810]/95 backdrop-blur-lg border-b border-gray-200 dark:border-[#D2A44C]/20 shadow-sm dark:shadow-none">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
-          <a href="https://takeyourtoken.app" className="flex items-center gap-3">
+          <button onClick={() => onNavigate?.('home')} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <Shield className="w-10 h-10 text-[#D2A44C]" strokeWidth={1.5} />
             <div>
               <h1 className="text-xl font-bold text-[#D2A44C]">TakeYourToken</h1>
               <p className="text-xs text-gray-500 dark:text-gray-500">Owl Warrior Platform</p>
             </div>
-          </a>
+          </button>
 
           <nav className="hidden md:flex items-center gap-4">
             <a
@@ -32,12 +34,16 @@ export function Navigation({ onAoiClick }: NavigationProps) {
             >
               {t('nav.academy')}
             </a>
-            <a
-              href={`${DOMAIN_CONFIG.foundation.baseUrl}/foundation`}
-              className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#D2A44C] transition-colors"
+            <button
+              onClick={() => onNavigate?.('foundation')}
+              className={`text-sm font-medium transition-colors ${
+                currentPage === 'foundation'
+                  ? 'text-[#D2A44C]'
+                  : 'text-gray-700 dark:text-gray-300 hover:text-[#D2A44C]'
+              }`}
             >
               {t('nav.foundation')}
-            </a>
+            </button>
             <a
               href={`${DOMAIN_CONFIG.app.baseUrl}/dashboard`}
               className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
@@ -112,13 +118,19 @@ export function Navigation({ onAoiClick }: NavigationProps) {
             >
               {t('nav.academy')}
             </a>
-            <a
-              href={`${DOMAIN_CONFIG.foundation.baseUrl}/foundation`}
-              className="block py-2 text-gray-700 dark:text-gray-300 hover:text-[#D2A44C] transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+            <button
+              onClick={() => {
+                onNavigate?.('foundation');
+                setMobileMenuOpen(false);
+              }}
+              className={`block w-full text-left py-2 transition-colors ${
+                currentPage === 'foundation'
+                  ? 'text-[#D2A44C]'
+                  : 'text-gray-700 dark:text-gray-300 hover:text-[#D2A44C]'
+              }`}
             >
               {t('nav.foundation')}
-            </a>
+            </button>
             <a
               href={`${DOMAIN_CONFIG.app.baseUrl}/dashboard`}
               className="block py-2 text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC] transition-colors"
