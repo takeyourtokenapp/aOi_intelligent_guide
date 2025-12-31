@@ -172,7 +172,7 @@ interface StatCardProps {
 
 function StatCard({ icon, label, value, subtext, color, borderColor, trend }: StatCardProps) {
   return (
-    <div className={`group relative bg-gradient-to-br from-white via-slate-50 to-white dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 rounded-3xl border-2 ${borderColor} hover:border-opacity-100 p-6 transition-all duration-500 hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 backdrop-blur-sm overflow-hidden cursor-pointer`}>
+    <div className={`group relative bg-gradient-to-br from-white via-slate-50 to-white dark:from-slate-800 dark:via-slate-850 dark:to-slate-900 rounded-3xl border-2 ${borderColor} hover:border-opacity-100 p-6 transition-all duration-500 hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/10 backdrop-blur-sm overflow-hidden cursor-pointer`}>
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
       <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-400/10 dark:bg-blue-500/5 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
 
@@ -184,7 +184,7 @@ function StatCard({ icon, label, value, subtext, color, borderColor, trend }: St
               {icon}
             </div>
           </div>
-          <span className="flex items-center gap-1 text-xs font-bold px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-slate-700 dark:to-slate-800 text-blue-700 dark:text-blue-400 rounded-full border border-blue-200 dark:border-blue-500/30 group-hover:scale-110 transition-transform">
+          <span className="flex items-center gap-1 text-xs font-bold px-3 py-1.5 bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 text-slate-700 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-600 group-hover:scale-110 transition-transform">
             {trend === 'Live' && <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>}
             {trend === '+Growth' && <TrendingUp className="w-3 h-3" />}
             {trend === 'Real-time' && <Activity className="w-3 h-3 animate-pulse" />}
@@ -197,12 +197,12 @@ function StatCard({ icon, label, value, subtext, color, borderColor, trend }: St
           <div className={`text-3xl md:text-4xl font-bold ${color} mb-2 group-hover:scale-105 transition-transform`}>
             {value}
           </div>
-          <div className="text-sm font-semibold text-slate-700 dark:text-gray-300">
+          <div className="text-sm font-semibold text-slate-700 dark:text-slate-300">
             {label}
           </div>
         </div>
 
-        <div className="text-xs text-slate-600 dark:text-gray-400 pt-3 border-t border-slate-200 dark:border-slate-700 group-hover:text-slate-700 dark:group-hover:text-gray-300 transition-colors">
+        <div className="text-xs text-slate-600 dark:text-slate-400 pt-3 border-t border-slate-200 dark:border-slate-700 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
           {subtext}
         </div>
       </div>
