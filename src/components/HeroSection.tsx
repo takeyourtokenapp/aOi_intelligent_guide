@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { DOMAIN_CONFIG } from '../config/navigation';
-import { AoiCharacter } from './AoiCharacter';
+import { AoiCharacterHero } from './AoiCharacterFull';
 
 interface HeroSectionProps {
   onAoiClick: () => void;
@@ -14,17 +14,11 @@ export function HeroSection({ onAoiClick }: HeroSectionProps) {
     <div className="text-center mb-16 max-w-4xl mx-auto">
       <div className="mb-12">
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
-          <div className="flex-shrink-0">
-            <AoiCharacter
-              variant="hero"
-              size="lg"
-              animate={true}
-              className="cursor-pointer"
-              onClick={onAoiClick}
-            />
+          <div className="flex-shrink-0 cursor-pointer" onClick={onAoiClick}>
+            <AoiCharacterHero size="md" />
           </div>
 
-          <div className="flex-1">
+          <div className="flex-1 text-center md:text-left">
             <h1 className="text-5xl md:text-7xl font-light mb-6 leading-tight">
               <span className="text-slate-600 dark:text-[#F8F9FA]/60">{t('hero.greeting')}</span>
               <br />

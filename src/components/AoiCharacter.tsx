@@ -33,17 +33,17 @@ export function AoiCharacter({
   };
 
   const sizeClasses = {
-    sm: 'w-16 h-16',
-    md: 'w-32 h-32',
-    lg: 'w-48 h-48',
-    xl: 'w-64 h-64'
+    sm: 'w-20 h-auto max-h-96',
+    md: 'w-36 h-auto max-h-[32rem]',
+    lg: 'w-52 h-auto max-h-[40rem]',
+    xl: 'w-72 h-auto max-h-[48rem]'
   };
 
   const containerSizeClasses = {
     sm: 'max-w-[80px]',
-    md: 'max-w-[150px]',
-    lg: 'max-w-[220px]',
-    xl: 'max-w-[300px]'
+    md: 'max-w-[144px]',
+    lg: 'max-w-[208px]',
+    xl: 'max-w-[288px]'
   };
 
   return (
@@ -55,7 +55,7 @@ export function AoiCharacter({
     >
       <div className={`relative ${animate ? 'transition-transform hover:scale-105' : ''}`}>
         {animate && (
-          <div className="absolute inset-0 bg-gradient-to-br from-[#9B8FD9]/20 to-[#7BA7BC]/20 rounded-full blur-2xl animate-pulse" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#9B8FD9]/20 to-[#7BA7BC]/20 blur-3xl animate-pulse" />
         )}
 
         <img
