@@ -1,0 +1,88 @@
+<svg width="400" height="800" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fullBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9B8FD9;stop-opacity:0.15" />
+      <stop offset="50%" style="stop-color:#7BA7BC;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#8FA68E;stop-opacity:0.15" />
+    </linearGradient>
+    <linearGradient id="hoodieGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#A79FE0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7BA7BC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="800" fill="url(#fullBg)" rx="20"/>
+
+  <!-- Glow around character -->
+  <ellipse cx="200" cy="350" rx="120" ry="200" fill="#00F0FF" opacity="0.1" filter="blur(50px)"/>
+
+  <!-- Full body character -->
+  <g transform="translate(200, 180)">
+    <!-- Head -->
+    <ellipse cx="0" cy="0" rx="55" ry="65" fill="#E8E4F3"/>
+
+    <!-- Hair outline (simple) -->
+    <path d="M -55,-10 Q -60,-40 -45,-60 Q -20,-75 0,-80 Q 20,-75 45,-60 Q 60,-40 55,-10"
+          fill="#9B8FD9" opacity="0.7"/>
+
+    <!-- Eyes (big expressive) -->
+    <ellipse cx="-20" cy="-5" rx="11" ry="16" fill="#FFFFFF"/>
+    <ellipse cx="20" cy="-5" rx="11" ry="16" fill="#FFFFFF"/>
+    <circle cx="-20" cy="-3" r="6" fill="#5B6C8F"/>
+    <circle cx="20" cy="-3" r="6" fill="#5B6C8F"/>
+
+    <!-- Gentle confident smile -->
+    <path d="M -18,20 Q 0,27 18,20" stroke="#9B8FD9" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+    <!-- Neck -->
+    <rect x="-15" y="55" width="30" height="25" fill="#E8E4F3"/>
+
+    <!-- Hoodie/Light Jacket -->
+    <path d="M -70,80 L -75,150 L -65,280 L -50,420 L 50,420 L 65,280 L 75,150 L 70,80 Z"
+          fill="url(#hoodieGrad)" opacity="0.9"/>
+
+    <!-- Hood outline -->
+    <path d="M -70,80 Q -85,65 -80,40 Q -65,20 0,10 Q 65,20 80,40 Q 85,65 70,80"
+          stroke="#9B8FD9" stroke-width="3" fill="none" opacity="0.5"/>
+
+    <!-- Badge on hoodie -->
+    <circle cx="50" cy="140" r="12" fill="#D2A44C"/>
+    <text x="50" y="146" font-size="14" fill="#FFFFFF" text-anchor="middle" font-weight="bold">葵</text>
+
+    <!-- Bracelet/Tech detail -->
+    <rect x="-75" y="250" width="15" height="8" rx="2" fill="#00F0FF" opacity="0.7"/>
+    <circle cx="-67" cy="254" r="2" fill="#FFFFFF">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Interface glow elements -->
+    <circle cx="-55" cy="180" r="4" fill="#00F0FF" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="-45" cy="200" r="3" fill="#D2A44C" opacity="0.5">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="-50" cy="220" r="2" fill="#00F0FF" opacity="0.4">
+      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Arms (simplified) -->
+    <path d="M -70,120 L -85,180 L -90,240 L -85,290" stroke="#7BA7BC" stroke-width="20"
+          fill="none" stroke-linecap="round" opacity="0.9"/>
+    <path d="M 70,120 L 85,180 L 90,240 L 85,290" stroke="#7BA7BC" stroke-width="20"
+          fill="none" stroke-linecap="round" opacity="0.9"/>
+
+    <!-- Hands -->
+    <ellipse cx="-85" cy="295" rx="12" ry="14" fill="#E8E4F3"/>
+    <ellipse cx="85" cy="295" rx="12" ry="14" fill="#E8E4F3"/>
+
+    <!-- Lower body (simple) -->
+    <path d="M -50,420 L -45,520 L -40,600 L 40,600 L 45,520 L 50,420 Z" fill="#8FA68E" opacity="0.8"/>
+  </g>
+
+  <!-- Text labels -->
+  <text x="200" y="720" font-size="36" fill="#9B8FD9" text-anchor="middle" font-weight="bold">aOi (葵)</text>
+  <text x="200" y="755" font-size="18" fill="#7BA7BC" text-anchor="middle">Soft + Tech + Academic</text>
+  <text x="200" y="780" font-size="16" fill="#8FA68E" text-anchor="middle" opacity="0.8">AI Guide & Protector</text>
+</svg>

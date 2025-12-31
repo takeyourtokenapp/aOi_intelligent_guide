@@ -60,9 +60,11 @@ export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationPr
               className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-[#D2A44C]/20 to-[#00F0FF]/20 border border-[#D2A44C]/30 hover:border-[#D2A44C]/60 transition-all group"
             >
               <div className="relative">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D2A44C] to-[#00F0FF] flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">葵</span>
-                </div>
+                <img
+                  src="/aoi/aoi-avatar.png.svg"
+                  alt="aOi"
+                  className="w-8 h-8 rounded-full object-cover"
+                />
                 <Sparkles className="absolute -top-1 -right-1 w-3 h-3 text-[#D2A44C] animate-pulse" />
               </div>
               <div className="text-left">
@@ -106,9 +108,11 @@ export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationPr
               }}
               className="w-full flex items-center gap-3 py-3 px-4 rounded-lg bg-gradient-to-br from-[#D2A44C]/20 to-[#00F0FF]/20 border border-[#D2A44C]/30"
             >
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D2A44C] to-[#00F0FF] flex items-center justify-center">
-                <span className="text-white font-bold text-sm">葵</span>
-              </div>
+              <img
+                src="/aoi/aoi-avatar.png.svg"
+                alt="aOi"
+                className="w-8 h-8 rounded-full object-cover"
+              />
               <div className="text-left">
                 <div className="text-sm font-bold text-white">aOi - AI Guide</div>
                 <div className="text-xs text-gray-400 dark:text-gray-500">{t('aoi.ask')}</div>

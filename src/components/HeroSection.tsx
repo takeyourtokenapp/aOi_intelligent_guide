@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { DOMAIN_CONFIG } from '../config/navigation';
+import { AoiCharacter } from './AoiCharacter';
 
 interface HeroSectionProps {
   onAoiClick: () => void;
@@ -12,13 +13,27 @@ export function HeroSection({ onAoiClick }: HeroSectionProps) {
   return (
     <div className="text-center mb-16 max-w-4xl mx-auto">
       <div className="mb-12">
-        <h1 className="text-5xl md:text-7xl font-light mb-6 leading-tight">
-          <span className="text-slate-600 dark:text-[#F8F9FA]/60">{t('hero.greeting')}</span>
-          <br />
-          <span className="bg-gradient-to-r from-[#9B8FD9] via-[#7BA7BC] to-[#8FA68E] bg-clip-text text-transparent font-bold">
-            {t('hero.name')}
-          </span>
-        </h1>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
+          <div className="flex-shrink-0">
+            <AoiCharacter
+              variant="hero"
+              size="lg"
+              animate={true}
+              className="cursor-pointer"
+              onClick={onAoiClick}
+            />
+          </div>
+
+          <div className="flex-1">
+            <h1 className="text-5xl md:text-7xl font-light mb-6 leading-tight">
+              <span className="text-slate-600 dark:text-[#F8F9FA]/60">{t('hero.greeting')}</span>
+              <br />
+              <span className="bg-gradient-to-r from-[#9B8FD9] via-[#7BA7BC] to-[#8FA68E] bg-clip-text text-transparent font-bold">
+                {t('hero.name')}
+              </span>
+            </h1>
+          </div>
+        </div>
 
         <div className="max-w-2xl mx-auto mb-8 p-6 rounded-2xl bg-white/80 dark:bg-[#1B2838] border-2 border-[#9B8FD9]/40 dark:border-[#9B8FD9]/30 backdrop-blur-sm shadow-xl dark:shadow-none">
           <p className="text-xl text-[#5B6C8F] dark:text-white mb-3 leading-relaxed font-bold">

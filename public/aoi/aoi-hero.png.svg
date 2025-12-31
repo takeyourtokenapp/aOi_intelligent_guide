@@ -1,0 +1,57 @@
+<svg width="600" height="600" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9B8FD9;stop-opacity:0.2" />
+      <stop offset="50%" style="stop-color:#7BA7BC;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#8FA68E;stop-opacity:0.2" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00F0FF;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#D2A44C;stop-opacity:0.4" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="600" fill="url(#bgGrad)" rx="20"/>
+
+  <!-- Glow effect -->
+  <circle cx="300" cy="280" r="150" fill="url(#glowGrad)" opacity="0.3" filter="blur(40px)"/>
+
+  <!-- Character silhouette (modern anime style) -->
+  <g transform="translate(300, 300)">
+    <!-- Head -->
+    <ellipse cx="0" cy="-80" rx="70" ry="85" fill="#9B8FD9" opacity="0.8"/>
+
+    <!-- Body (hoodie) -->
+    <path d="M -60,-20 L -70,40 L -50,120 L 50,120 L 70,40 L 60,-20 Z" fill="#7BA7BC" opacity="0.8"/>
+
+    <!-- Hood outline -->
+    <path d="M -70,-30 Q -90,-50 -80,-80 Q -60,-100 0,-110 Q 60,-100 80,-80 Q 90,-50 70,-30"
+          stroke="#9B8FD9" stroke-width="3" fill="none" opacity="0.6"/>
+
+    <!-- Eyes (big expressive) -->
+    <ellipse cx="-25" cy="-85" rx="12" ry="18" fill="#FFFFFF" opacity="0.9"/>
+    <ellipse cx="25" cy="-85" rx="12" ry="18" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="-25" cy="-83" r="6" fill="#5B6C8F"/>
+    <circle cx="25" cy="-83" r="6" fill="#5B6C8F"/>
+
+    <!-- Gentle smile -->
+    <path d="M -20,-60 Q 0,-55 20,-60" stroke="#5B6C8F" stroke-width="2" fill="none" opacity="0.8"/>
+
+    <!-- Tech detail - small badge -->
+    <circle cx="45" cy="10" r="8" fill="#D2A44C" opacity="0.7"/>
+    <text x="45" y="14" font-size="10" fill="#FFFFFF" text-anchor="middle" font-weight="bold">葵</text>
+
+    <!-- Interface glow -->
+    <circle cx="-50" cy="20" r="5" fill="#00F0FF" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="-40" cy="35" r="3" fill="#00F0FF" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Text label -->
+  <text x="300" y="540" font-size="32" fill="#9B8FD9" text-anchor="middle" font-weight="bold">aOi</text>
+  <text x="300" y="570" font-size="16" fill="#7BA7BC" text-anchor="middle">AI Guide & Mentor</text>
+</svg>
