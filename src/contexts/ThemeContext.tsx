@@ -10,13 +10,6 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-function getSystemTheme(): 'light' | 'dark' {
-  if (typeof window !== 'undefined' && window.matchMedia) {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-  return 'light';
-}
-
 function getTimeBasedTheme(): 'light' | 'dark' {
   const hour = new Date().getHours();
   return (hour >= 6 && hour < 18) ? 'light' : 'dark';

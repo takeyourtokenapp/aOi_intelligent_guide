@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Trophy, BookOpen, Heart, Sparkles, Award } from 'lucide-react';
+import { Trophy, Heart, Sparkles, Award } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface Activity {

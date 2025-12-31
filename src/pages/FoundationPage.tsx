@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useLanguage } from '../contexts/LanguageContext';
-import { BookOpen, Users, Target, FileText, ExternalLink, Sparkles, Heart, ArrowLeft, ArrowRight } from 'lucide-react';
+import { useLanguage, Language } from '../contexts/LanguageContext';
+import { BookOpen, Users, Target, FileText, Sparkles, ArrowLeft, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { AoiAvatar } from '../components/AoiAvatar';
 import { FoundationStats } from '../components/FoundationStats';
@@ -43,7 +43,7 @@ const translations = {
 const tr = (key: keyof typeof translations, lang: Language) => translations[key][lang];
 
 export default function FoundationPage({ initialTab = 'about' }: FoundationPageProps) {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<'about' | 'research' | 'manifesto' | 'updates'>(initialTab);
   const [manifestoPost, setManifestoPost] = useState<ResearchPost | null>(null);
   const [researchPosts, setResearchPosts] = useState<ResearchPost[]>([]);

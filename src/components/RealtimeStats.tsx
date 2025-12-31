@@ -25,10 +25,9 @@ export function RealtimeStats() {
 
   const loadStats = async () => {
     try {
-      const [profilesResult, progressResult, achievementsResult, fundResult] = await Promise.all([
+      const [profilesResult, progressResult, fundResult] = await Promise.all([
         supabase.from('profiles').select('id', { count: 'exact', head: true }),
         supabase.from('user_progress').select('courses_completed, certificates_earned'),
-        supabase.from('achievements').select('id', { count: 'exact', head: true }),
         supabase.from('fund_transparency').select('amount_usd, created_at')
       ]);
 
@@ -160,7 +159,7 @@ interface StatCardProps {
   trend: string;
 }
 
-function StatCard({ icon, label, value, subtext, color, borderColor, bgColor, trend }: StatCardProps) {
+function StatCard({ icon, label, value, subtext, color, borderColor, trend }: StatCardProps) {
   return (
     <div className={`bg-white dark:bg-[#1B2838] rounded-2xl border-2 ${borderColor} hover:border-opacity-80 p-6 transition-all duration-300 hover:scale-105 animate-breathe backdrop-blur-sm shadow-xl dark:shadow-none`}>
       <div className="flex items-center justify-between mb-4">

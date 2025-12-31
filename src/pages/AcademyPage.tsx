@@ -44,7 +44,7 @@ export default function AcademyPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-4 mb-6">
-            <AoiAvatar size="lg" emotion="thinking" level="academic" showKanji={true} />
+            <AoiAvatar size="lg" emotion="thinking" level="builder" showKanji={true} />
             <div className="text-left">
               <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-2">
                 {language === 'en' ? 'Crypto Academia' : 'Крипто Академия'}
