@@ -175,14 +175,14 @@ export default function HomePage({ onAoiClick, onNavigate }: HomePageProps) {
             <div className="flex-shrink-0">
               <div className="relative group cursor-pointer">
                 <div className="absolute inset-0 bg-purple-400/30 dark:bg-purple-500/20 rounded-2xl blur-2xl group-hover:blur-3xl transition-all"></div>
-                <div className="relative z-10 bg-gradient-to-br from-purple-50/80 to-blue-50/80 dark:from-slate-700/50 dark:to-slate-800/50 rounded-2xl p-2 border-2 border-purple-300 dark:border-purple-500/50 group-hover:scale-105 transition-all duration-300 backdrop-blur-sm">
+                <div className="relative z-10 bg-gradient-to-br from-purple-50/80 to-blue-50/80 dark:from-slate-700/50 dark:to-slate-800/50 rounded-2xl p-3 border-2 border-purple-300 dark:border-purple-500/50 group-hover:scale-105 transition-all duration-300 backdrop-blur-sm">
                   <img
-                    src="/aoi/image copy copy copy copy copy copy copy copy copy copy copy copy.png"
-                    alt="aOi Full Body"
-                    className="w-32 h-auto md:w-40 object-contain group-hover:scale-105 transition-transform"
+                    src="/aoi/aoi-fullbody.png"
+                    alt="aOi - AI Guide"
+                    className="w-24 h-auto md:w-32 object-contain group-hover:scale-105 transition-transform"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = '/aoi/aoi-portrait.png';
+                      target.src = '/aoi/explorer-thinking.png';
                     }}
                   />
                 </div>
