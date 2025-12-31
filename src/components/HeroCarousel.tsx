@@ -126,7 +126,7 @@ export function HeroCarousel({ onAoiClick, onNavigate }: HeroCarouselProps) {
               : "Вам не нужно быть врачом или разработчиком, чтобы понять. Позвольте мне объяснить, как всё связано."}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 md:gap-4">
+          <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 md:gap-4 mb-4 sm:mb-5 md:mb-6">
             <button
               onClick={onAoiClick}
               className="px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 bg-[#9B8FD9] hover:bg-[#8B7AC7] rounded-lg sm:rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-sm sm:text-base shadow-lg hover:shadow-xl hover:shadow-purple-500/30"
@@ -140,6 +140,18 @@ export function HeroCarousel({ onAoiClick, onNavigate }: HeroCarouselProps) {
             >
               {language === 'en' ? 'Learn About Foundation' : 'Узнать о Фонде'}
             </button>
+          </div>
+
+          <div className="mt-4 sm:mt-6 md:mt-8 rounded-xl md:rounded-2xl overflow-hidden border-2 border-[#9B8FD9]/30 bg-[#2a3f54]/50 backdrop-blur-sm">
+            <img
+              src="/aoi/aoi-portrait.png"
+              alt="aOi Portrait"
+              className="w-full h-auto object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+              }}
+            />
           </div>
         </div>
       </div>
