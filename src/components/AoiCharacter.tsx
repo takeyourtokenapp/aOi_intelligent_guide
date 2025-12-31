@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 interface AoiCharacterProps {
   variant?: 'hero' | 'avatar' | 'full';
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -15,7 +17,16 @@ export function AoiCharacter({
   animate = true,
   onClick
 }: AoiCharacterProps) {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   const imagePaths = {
+    hero: '/aoi/explorer-thinking.png',
+    avatar: '/aoi/beginner-neutral.png',
+    full: '/aoi/guardian-neutral.png'
+  };
+
+  const fallbackPaths = {
     hero: '/aoi/aoi-hero.png.svg',
     avatar: '/aoi/aoi-avatar.png.svg',
     full: '/aoi/aoi-full.png.svg'
@@ -48,9 +59,18 @@ export function AoiCharacter({
         )}
 
         <img
-          src={imagePaths[variant]}
+          src={imageError ? fallbackPaths[variant] : imagePaths[variant]}
           alt="aOi - AI Guide and Mentor"
-          className={`relative z-10 ${sizeClasses[size]} object-contain drop-shadow-2xl`}
+          className={`relative z-10 ${sizeClasses[size]} object-contain drop-shadow-2xl transition-opacity duration-300 ${
+            imageLoaded || imageError ? 'opacity-100' : 'opacity-0'
+          }`}
+          onLoad={() => setImageLoaded(true)}
+          onError={() => {
+            if (!imageError) {
+              setImageError(true);
+              setImageLoaded(true);
+            }
+          }}
         />
 
         {animate && (
