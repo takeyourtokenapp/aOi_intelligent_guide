@@ -174,15 +174,15 @@ export default function HomePage({ onAoiClick, onNavigate }: HomePageProps) {
           <div className="relative z-10 flex flex-col md:flex-row items-start gap-8">
             <div className="flex-shrink-0">
               <div className="relative group cursor-pointer">
-                <div className="absolute inset-0 bg-purple-400/30 dark:bg-purple-500/20 rounded-full blur-2xl group-hover:blur-3xl transition-all"></div>
-                <div className="relative z-10 w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-purple-100 to-blue-100 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center border-4 border-purple-300 dark:border-purple-500/50 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                <div className="absolute inset-0 bg-purple-400/30 dark:bg-purple-500/20 rounded-2xl blur-2xl group-hover:blur-3xl transition-all"></div>
+                <div className="relative z-10 bg-gradient-to-br from-purple-50/80 to-blue-50/80 dark:from-slate-700/50 dark:to-slate-800/50 rounded-2xl p-2 border-2 border-purple-300 dark:border-purple-500/50 group-hover:scale-105 transition-all duration-300 backdrop-blur-sm">
                   <img
-                    src="/aoi/aoi-hero.png"
-                    alt="aOi"
-                    className="w-20 h-20 md:w-24 md:h-24 object-contain group-hover:scale-105 transition-transform"
+                    src="/aoi/image copy copy copy copy copy copy copy copy copy copy copy copy.png"
+                    alt="aOi Full Body"
+                    className="w-32 h-auto md:w-40 object-contain group-hover:scale-105 transition-transform"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = '/aoi/aoi-main.png';
+                      target.src = '/aoi/aoi-portrait.png';
                     }}
                   />
                 </div>
