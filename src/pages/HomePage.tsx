@@ -3,6 +3,7 @@ import { CrossDomainBridge } from '../components/CrossDomainBridge';
 import { RealtimeStats } from '../components/RealtimeStats';
 import { ActivityFeed } from '../components/ActivityFeed';
 import { HeroSection } from '../components/HeroSection';
+import { HeroCarousel } from '../components/HeroCarousel';
 import { AcademyStats } from '../components/AcademyStats';
 import { DOMAIN_CONFIG } from '../config/navigation';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -19,6 +20,8 @@ export default function HomePage({ onAoiClick, onNavigate }: HomePageProps) {
     <main className="container mx-auto px-6 py-20">
       <div className="max-w-6xl mx-auto">
         <HeroSection onAoiClick={onAoiClick} />
+
+        <HeroCarousel />
 
         <RealtimeStats />
 
