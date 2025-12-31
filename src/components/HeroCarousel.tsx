@@ -11,6 +11,11 @@ interface Slide {
   descRu?: string;
 }
 
+interface HeroCarouselProps {
+  onAoiClick?: () => void;
+  onNavigate?: (page: 'home' | 'foundation' | 'academy', tab?: 'about' | 'research' | 'manifesto' | 'updates') => void;
+}
+
 const slides: Slide[] = [
   {
     id: 1,
@@ -34,7 +39,7 @@ const slides: Slide[] = [
   }
 ];
 
-export function HeroCarousel() {
+export function HeroCarousel({ onAoiClick, onNavigate }: HeroCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const { language } = useLanguage();
@@ -72,17 +77,17 @@ export function HeroCarousel() {
   const renderWelcomeSlide = () => (
     <div className="relative bg-gradient-to-br from-[#1B2838] via-[#2a3f54] to-[#1B2838] rounded-3xl p-12 min-h-[600px] flex items-center justify-center border-2 border-[#9B8FD9]/30">
       <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl w-full">
-        <div className="relative">
+        <div className="relative flex items-center justify-center">
           <img
-            src="/aoi/image copy copy copy copy.png"
+            src="/aoi/image.png"
             alt="aOi AI Guide"
-            className="w-full max-w-md mx-auto drop-shadow-2xl"
+            className="w-full max-w-sm mx-auto drop-shadow-2xl object-contain"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = '/aoi/beginner-neutral.png';
             }}
           />
-          <div className="absolute top-8 right-8 w-4 h-4 bg-green-400 rounded-full animate-pulse"></div>
+          <div className="absolute top-4 right-4 w-4 h-4 bg-green-400 rounded-full animate-pulse"></div>
         </div>
 
         <div className="text-white">
@@ -122,11 +127,17 @@ export function HeroCarousel() {
           </p>
 
           <div className="flex gap-4">
-            <button className="px-6 py-3 bg-[#9B8FD9] hover:bg-[#8B7AC7] rounded-xl font-bold transition-colors flex items-center gap-2">
+            <button
+              onClick={onAoiClick}
+              className="px-6 py-3 bg-[#9B8FD9] hover:bg-[#8B7AC7] rounded-xl font-bold transition-colors flex items-center gap-2"
+            >
               {language === 'en' ? 'Talk with aOi' : 'Поговорить с aOi'}
               <ArrowRight className="w-4 h-4" />
             </button>
-            <button className="px-6 py-3 border-2 border-[#9B8FD9] hover:bg-[#9B8FD9]/10 rounded-xl font-bold transition-colors">
+            <button
+              onClick={() => onNavigate?.('foundation')}
+              className="px-6 py-3 border-2 border-[#9B8FD9] hover:bg-[#9B8FD9]/10 rounded-xl font-bold transition-colors"
+            >
               {language === 'en' ? 'Learn About the Foundation' : 'Узнать о Фонде'}
             </button>
           </div>
@@ -182,7 +193,10 @@ export function HeroCarousel() {
               </div>
             </div>
 
-            <button className="ml-auto px-6 py-2 bg-[#9B8FD9] hover:bg-[#8B7AC7] text-white rounded-xl font-bold transition-colors flex items-center gap-2">
+            <button
+              onClick={() => onNavigate?.('foundation', 'manifesto')}
+              className="ml-auto px-6 py-2 bg-[#9B8FD9] hover:bg-[#8B7AC7] text-white rounded-xl font-bold transition-colors flex items-center gap-2"
+            >
               {language === 'en' ? 'Read Full Paper' : 'Читать полностью'}
               <ArrowRight className="w-4 h-4" />
             </button>
