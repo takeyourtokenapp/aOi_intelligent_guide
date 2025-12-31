@@ -61,7 +61,7 @@ tyt.foundation serves as the **knowledge and medical research hub** of the TYT e
 ### Pages & Routes
 
 ```
-/                          # Landing page - aOi introduction
+/                          # Home - aOi's permanent residence
 ├── /knowledge             # Knowledge Hub (CNS research education)
 │   ├── /school            # School Level (ages 13-15)
 │   ├── /student           # Student Level (ages 16-18)

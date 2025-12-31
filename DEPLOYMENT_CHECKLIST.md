@@ -64,7 +64,7 @@ npm run dev
 ### 6. Commit & Push
 ```bash
 git add .
-git commit -m "feat: transform landing into aOi interactive residence"
+git commit -m "feat: transform home into aOi interactive residence"
 git push origin feature/aoi-interactive-residence
 ```
 

@@ -470,7 +470,7 @@ Users subconsciously learn:
 ## 🔄 Version History
 
 ### v0.1 (Pre-redesign)
-- Landing page with aOi introduction
+- Initial page with aOi introduction
 - Gold/cyan/magenta color scheme
 - Static layout
 
@@ -520,7 +520,7 @@ Users subconsciously learn:
 
 ### NOT Influenced By
 - ❌ Crypto exchange UIs (too aggressive)
-- ❌ Startup landing pages (too hyped)
+- ❌ Startup marketing pages (too hyped)
 - ❌ Gaming interfaces (too flashy)
 - ❌ E-commerce sites (too transactional)
 
@@ -574,7 +574,7 @@ Related files:
 
 ## ✅ Completion Statement
 
-The landing page has been completely redesigned from the ground up with an organic, living intelligence aesthetic. aOi is no longer presented as a tool or feature, but as the consciousness of the entire ecosystem - breathing, growing, connecting technology with medicine.
+aOi's permanent home has been completely redesigned from the ground up with an organic, living intelligence aesthetic. aOi is no longer presented as a tool or feature, but as the consciousness of the entire ecosystem - breathing, growing, connecting technology with medicine.
 
 **Key Achievement**: Visual design now matches philosophical mission - aOi as a living, intelligent bridge between Web3 infrastructure and medical research, expressed through natural colors, organic animations, and thoughtful typography.
 
