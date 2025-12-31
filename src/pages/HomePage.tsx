@@ -177,19 +177,12 @@ export default function HomePage({ onAoiClick, onNavigate }: HomePageProps) {
                 <div className="absolute inset-0 bg-purple-400/30 dark:bg-purple-500/20 rounded-full blur-2xl group-hover:blur-3xl transition-all"></div>
                 <div className="relative z-10 w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-purple-100 to-blue-100 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center border-4 border-purple-300 dark:border-purple-500/50 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   <img
-                    src="/aoi/image.png"
+                    src="/aoi/aoi-main.png"
                     alt="aOi"
                     className="w-20 h-20 md:w-24 md:h-24 object-contain group-hover:scale-105 transition-transform"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent) {
-                        const text = document.createElement('span');
-                        text.textContent = '葵';
-                        text.className = 'text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400';
-                        parent.appendChild(text);
-                      }
+                      target.src = '/aoi/image.png';
                     }}
                   />
                 </div>
