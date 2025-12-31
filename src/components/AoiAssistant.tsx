@@ -307,8 +307,19 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
       <div className="bg-gradient-to-r from-[#D2A44C]/20 to-[#00F0FF]/20 p-4 flex items-center justify-between border-b border-[#D2A44C]/30">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#D2A44C] to-[#00F0FF] flex items-center justify-center">
-              <span className="text-white font-bold text-lg">葵</span>
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#9b87f5] to-[#00F0FF] flex items-center justify-center overflow-hidden ring-2 ring-[#D2A44C]/30">
+              <img
+                src="/aoi/explorer-thinking.png"
+                alt="aOi"
+                className="w-full h-full object-cover object-top scale-150"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
+              <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg">
+                葵
+              </span>
             </div>
             <div className={`absolute -bottom-1 -right-1 w-3 h-3 border-2 border-[#0A1122] rounded-full ${isOnline ? 'bg-[#00FF00]' : 'bg-[#FF6600] animate-pulse'}`} />
           </div>

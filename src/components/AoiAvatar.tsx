@@ -55,7 +55,7 @@ export function AoiAvatar({
           <img
             src={asset.path}
             alt={asset.description}
-            className={`w-full h-full object-cover transition-opacity duration-300 ${
+            className={`w-full h-full object-cover object-top scale-150 transition-opacity duration-300 ${
               imageLoaded && !imageError ? 'opacity-100' : 'opacity-0'
             }`}
             onLoad={() => setImageLoaded(true)}
