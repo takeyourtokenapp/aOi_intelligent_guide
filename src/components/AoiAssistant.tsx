@@ -289,13 +289,13 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-gradient-to-br from-[#D2A44C] to-[#00F0FF] flex items-center justify-center shadow-2xl hover:scale-110 transition-transform group"
+        className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 via-purple-600 to-purple-700 flex items-center justify-center shadow-2xl hover:scale-110 transition-transform group"
       >
         <MessageCircle className="w-7 h-7 text-white" strokeWidth={2} />
-        <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full animate-pulse ${isOnline ? 'bg-[#00FF00]' : 'bg-[#FF6600]'}`} />
+        <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full animate-pulse ${isOnline ? 'bg-green-400' : 'bg-orange-500'}`} />
 
-        <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-[#0A1122] border border-[#D2A44C]/30 rounded-lg text-sm text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-          <Sparkles className="w-3 h-3 inline mr-1 text-[#D2A44C]" />
+        <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-slate-800 border border-purple-500/30 rounded-lg text-sm text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+          <Sparkles className="w-3 h-3 inline mr-1 text-purple-400" />
           Ask aOi
         </div>
       </button>
@@ -303,86 +303,99 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-96 h-[600px] bg-[#0A1122] border border-[#D2A44C]/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-      <div className="bg-gradient-to-r from-[#D2A44C]/20 to-[#00F0FF]/20 p-4 flex items-center justify-between border-b border-[#D2A44C]/30">
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#9b87f5] to-[#00F0FF] flex items-center justify-center overflow-hidden ring-2 ring-[#D2A44C]/30">
-              <img
-                src="/aoi/explorer-thinking.png"
-                alt="aOi"
-                className="w-full h-full object-cover object-top scale-150"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }}
-              />
-              <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg">
-                葵
-              </span>
+    <div className="fixed bottom-6 right-6 z-50 w-[32rem] h-[600px] bg-slate-900 border border-purple-500/20 rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+      <div className="bg-gradient-to-r from-blue-500 via-purple-600 to-purple-700 p-4">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center overflow-hidden ring-2 ring-white/20">
+                <img
+                  src="/aoi/image.png"
+                  alt="aOi"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
+                />
+                <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg">
+                  葵
+                </span>
+              </div>
+              <div className={`absolute -bottom-1 -right-1 w-3 h-3 border-2 border-purple-600 rounded-full ${isOnline ? 'bg-green-400' : 'bg-orange-500 animate-pulse'}`} />
             </div>
-            <div className={`absolute -bottom-1 -right-1 w-3 h-3 border-2 border-[#0A1122] rounded-full ${isOnline ? 'bg-[#00FF00]' : 'bg-[#FF6600] animate-pulse'}`} />
+            <div>
+              <h3 className="font-bold text-white flex items-center gap-2 text-lg">
+                aOi (葵)
+              </h3>
+              <p className="text-xs text-white/80 flex items-center gap-1">
+                <Sparkles className="w-3 h-3" />
+                AI Guide & Platform Controller
+              </p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-bold text-white flex items-center gap-2">
-              aOi
-              {isOnline ? (
-                <Wifi size={14} className="text-[#00FF00]" />
-              ) : (
-                <WifiOff size={14} className="text-[#FF6600]" />
-              )}
-            </h3>
-            <p className="text-xs text-gray-400">
-              {isOnline ? '🟢 Foundation Connected' : '🟡 Basic Mode'}
-            </p>
+          <div className="flex items-center gap-2">
+            {!isOnline && (
+              <button
+                onClick={handleRetry}
+                disabled={isRetrying}
+                className="text-white/60 hover:text-white transition-colors disabled:opacity-50"
+                title="Retry connection"
+              >
+                <RefreshCw size={16} className={isRetrying ? 'animate-spin' : ''} />
+              </button>
+            )}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-white/60 hover:text-white transition-colors"
+            >
+              <X size={20} />
+            </button>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          {!isOnline && (
-            <button
-              onClick={handleRetry}
-              disabled={isRetrying}
-              className="text-gray-400 hover:text-white transition-colors disabled:opacity-50"
-              title="Retry connection"
-            >
-              <RefreshCw size={16} className={isRetrying ? 'animate-spin' : ''} />
-            </button>
+
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2 flex items-center gap-2 text-white text-sm">
+          <span className="text-pink-300">💗</span>
+          <span className="font-medium">Connecting Technology & Medicine for Children</span>
+          {isOnline ? (
+            <Wifi size={14} className="text-green-300 ml-auto" />
+          ) : (
+            <WifiOff size={14} className="text-orange-300 ml-auto" />
           )}
-          <button
-            onClick={() => setIsOpen(false)}
-            className="text-gray-400 hover:text-white transition-colors"
-          >
-            <X size={20} />
-          </button>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-800/50">
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} items-start gap-2`}
           >
+            {message.role === 'aoi' && (
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mt-1">
+                <Sparkles className="w-4 h-4" />
+              </div>
+            )}
             <div
               className={`
-                max-w-[80%] p-3 rounded-2xl
+                max-w-[75%] p-4 rounded-2xl
                 ${message.role === 'user'
-                  ? 'bg-[#D2A44C]/20 text-white rounded-br-none'
-                  : 'bg-[#00F0FF]/10 text-gray-200 rounded-bl-none border border-[#00F0FF]/20'
+                  ? 'bg-purple-600/30 text-white rounded-tr-none border border-purple-500/30'
+                  : 'bg-slate-700/80 text-gray-100 rounded-tl-none border border-slate-600/50'
                 }
               `}
             >
               <p className="text-sm leading-relaxed whitespace-pre-line">{message.content}</p>
 
               {message.relatedLinks && message.relatedLinks.length > 0 && (
-                <div className="mt-3 pt-3 border-t border-[#00F0FF]/20 space-y-2">
+                <div className="mt-3 pt-3 border-t border-slate-600/50 space-y-2">
                   {message.relatedLinks.map((link, idx) => (
                     <a
                       key={idx}
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block text-xs text-[#00F0FF] hover:text-[#00F0FF]/80 transition-colors"
+                      className="block text-xs text-purple-400 hover:text-purple-300 transition-colors"
                     >
                       → {link.label}
                     </a>
@@ -390,19 +403,22 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
                 </div>
               )}
 
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-xs text-gray-400 mt-2">
                 {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </p>
             </div>
           </div>
         ))}
         {isLoading && (
-          <div className="flex justify-start">
-            <div className="bg-[#00F0FF]/10 text-gray-200 p-3 rounded-2xl rounded-bl-none border border-[#00F0FF]/20">
+          <div className="flex justify-start items-start gap-2">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <div className="bg-slate-700/80 text-gray-100 p-4 rounded-2xl rounded-tl-none border border-slate-600/50">
               <div className="flex gap-2">
-                <div className="w-2 h-2 bg-[#00F0FF] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                <div className="w-2 h-2 bg-[#00F0FF] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-2 h-2 bg-[#00F0FF] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
             </div>
           </div>
@@ -410,28 +426,80 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="p-4 border-t border-[#D2A44C]/30">
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSend()}
-            placeholder="Ask aOi anything..."
-            disabled={isLoading}
-            className="flex-1 px-4 py-2 bg-[#1a2744] border border-[#00F0FF]/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#00F0FF]/60 disabled:opacity-50"
-          />
-          <button
-            onClick={handleSend}
-            disabled={!input.trim() || isLoading}
-            className="px-4 py-2 bg-[#D2A44C] text-white rounded-lg hover:bg-[#D2A44C]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Send size={18} />
-          </button>
+      <div className="bg-slate-800 border-t border-slate-700">
+        {messages.length <= 1 && (
+          <div className="p-3 border-b border-slate-700">
+            <p className="text-xs text-gray-400 mb-2">Quick replies:</p>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => {
+                  setInput('How do I buy a miner?');
+                  setTimeout(() => handleSend(), 100);
+                }}
+                className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-white text-xs rounded-lg border border-slate-600 transition-colors"
+              >
+                How do I buy a miner?
+              </button>
+              <button
+                onClick={() => {
+                  setInput('What are the fees?');
+                  setTimeout(() => handleSend(), 100);
+                }}
+                className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-white text-xs rounded-lg border border-slate-600 transition-colors"
+              >
+                What are the fees?
+              </button>
+              <button
+                onClick={() => {
+                  setInput('How do withdrawals work?');
+                  setTimeout(() => handleSend(), 100);
+                }}
+                className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-white text-xs rounded-lg border border-slate-600 transition-colors"
+              >
+                How do withdrawals work?
+              </button>
+              <button
+                onClick={() => {
+                  setInput('Tell me about the Foundation');
+                  setTimeout(() => handleSend(), 100);
+                }}
+                className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-white text-xs rounded-lg border border-slate-600 transition-colors"
+              >
+                Tell me about the Foundation
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className="p-4">
+          <div className="flex items-center gap-2 text-gray-400 text-xs mb-3">
+            <Sparkles className="w-3 h-3 text-purple-400" />
+            <span>Ask aOi anything</span>
+          </div>
+
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSend()}
+              placeholder="Type your question..."
+              disabled={isLoading}
+              className="flex-1 px-4 py-3 bg-slate-700 border border-slate-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 disabled:opacity-50 transition-all"
+            />
+            <button
+              onClick={handleSend}
+              disabled={!input.trim() || isLoading}
+              className="px-4 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-purple-500/50"
+            >
+              <Send size={18} />
+            </button>
+          </div>
+
+          <p className="text-xs text-gray-500 mt-3 text-center">
+            aOi guides, but doesn't give medical or financial advice
+          </p>
         </div>
-        <p className="text-xs text-gray-500 mt-2 text-center">
-          aOi guides, but doesn't give medical or financial advice
-        </p>
       </div>
     </div>
   );
