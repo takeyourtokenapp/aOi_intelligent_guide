@@ -203,6 +203,27 @@ aOi teaches by:
 
 ---
 
+## 📊 Demo Statistics (Lead Generation)
+
+The platform displays **realistic placeholder statistics** when the database is empty. These values serve as a lead generation hook and reflect a realistic trajectory for a project launched in Winter 2024.
+
+**Demo Values:**
+- 127 active learners
+- 423 total users
+- 89 courses completed
+- 43 certificates earned
+- $8,250 foundation contributions
+- $2,847 this month
+
+**Behavior:**
+- ✅ Automatically replaced by real data when users join
+- ✅ No manual intervention needed
+- ✅ Serves as social proof for early adopters
+
+See `DEMO_STATS_CONFIG.md` for full details and marketing context.
+
+---
+
 ## 📄 License
 
 TYT Foundation - Educational AI Project
