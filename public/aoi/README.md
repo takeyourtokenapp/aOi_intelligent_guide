@@ -2,6 +2,14 @@
 
 This directory contains visual assets for aOi (葵), the AI navigation assistant.
 
+## Quick Status Check
+
+Run `./check-images.sh` to see which images are present.
+
+## Current Status
+
+The app works perfectly without images — it shows beautiful gradient circles with the 葵 kanji as fallback. When you add PNG images here, they will automatically appear in the interface.
+
 ## Asset Requirements
 
 All images should follow the master prompt guidelines:
