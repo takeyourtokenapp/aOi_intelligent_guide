@@ -8,8 +8,9 @@ import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import HomePage from './pages/HomePage';
 import FoundationPage from './pages/FoundationPage';
 import AcademyPage from './pages/AcademyPage';
+import ContactPage from './pages/ContactPage';
 
-type PageType = 'home' | 'foundation' | 'academy';
+type PageType = 'home' | 'foundation' | 'academy' | 'contact';
 type FoundationTab = 'about' | 'research' | 'manifesto' | 'updates';
 
 function AppContent() {
@@ -42,6 +43,7 @@ function AppContent() {
         {currentPage === 'home' && <HomePage onAoiClick={handleAoiClick} onNavigate={handleNavigate} />}
         {currentPage === 'foundation' && <FoundationPage initialTab={foundationTab} />}
         {currentPage === 'academy' && <AcademyPage />}
+        {currentPage === 'contact' && <ContactPage />}
 
         <footer className="container mx-auto px-6 py-12 border-t-2 border-[#9B8FD9]/40 dark:border-[#9B8FD9]/20">
           <div className="text-center text-slate-600 dark:text-gray-300 text-sm space-y-3">

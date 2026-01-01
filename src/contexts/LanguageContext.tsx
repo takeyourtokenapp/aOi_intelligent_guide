@@ -35,6 +35,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.knowledge': 'Knowledge',
     'nav.foundation': 'Foundation',
     'nav.transparency': 'Transparency',
+    'nav.contact': 'Contact',
     'nav.dashboard': 'Dashboard',
 
     'hero.title': 'Web3 Mining Platform',
@@ -141,6 +142,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.knowledge': 'Знания',
     'nav.foundation': 'Фонд',
     'nav.transparency': 'Прозрачность',
+    'nav.contact': 'Контакты',
     'nav.dashboard': 'Панель',
 
     'hero.title': 'Web3 Майнинг Платформа',

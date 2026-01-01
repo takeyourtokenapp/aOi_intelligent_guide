@@ -7,8 +7,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 interface NavigationProps {
   onAoiClick?: () => void;
-  onNavigate?: (page: 'home' | 'foundation' | 'academy') => void;
-  currentPage?: 'home' | 'foundation' | 'academy';
+  onNavigate?: (page: 'home' | 'foundation' | 'academy' | 'contact') => void;
+  currentPage?: 'home' | 'foundation' | 'academy' | 'contact';
 }
 
 export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationProps) {
@@ -58,6 +58,16 @@ export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationPr
               }`}
             >
               {t('nav.foundation')}
+            </button>
+            <button
+              onClick={() => onNavigate?.('contact')}
+              className={`text-sm font-medium transition-colors ${
+                currentPage === 'contact'
+                  ? 'text-[#7BA7BC]'
+                  : 'text-gray-700 dark:text-gray-300 hover:text-[#7BA7BC]'
+              }`}
+            >
+              {t('nav.contact')}
             </button>
             <a
               href={`${DOMAIN_CONFIG.app.baseUrl}/dashboard`}
