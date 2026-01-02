@@ -304,12 +304,78 @@ Deno.serve(async (req: Request) => {
       });
     }
 
+    // 3. Send Telegram notification to admins (if configured)
+    let telegramSent = false;
+    const telegramBotToken = Deno.env.get("TELEGRAM_BOT_TOKEN");
+    const telegramChatId = Deno.env.get("TELEGRAM_ADMIN_CHAT_ID");
+
+    if (telegramBotToken && telegramChatId) {
+      try {
+        const priorityEmoji = {
+          urgent: "🚨",
+          high: "⚠️",
+          normal: "📬",
+          low: "📝"
+        }[record.priority] || "📬";
+
+        const typeEmoji = {
+          general_inquiry: "💬",
+          support_request: "🆘",
+          partnership_proposal: "🤝",
+          donation_inquiry: "💰",
+          research_collaboration: "🔬",
+          media_inquiry: "📰",
+          volunteer: "🙋",
+          technical_issue: "⚙️",
+          feedback: "💭"
+        }[record.submission_type] || "📬";
+
+        const telegramMessage = `${priorityEmoji} *New Contact Submission*\n\n` +
+          `${typeEmoji} *Type:* ${record.submission_type.replace(/_/g, ' ').toUpperCase()}\n` +
+          `👤 *From:* ${record.sender_name}\n` +
+          `📧 *Email:* ${record.sender_email}\n` +
+          (record.sender_organization ? `🏢 *Organization:* ${record.sender_organization}\n` : '') +
+          `\n📋 *Subject:* ${record.subject}\n\n` +
+          `💬 *Message:*\n${record.message.substring(0, 500)}${record.message.length > 500 ? '...' : ''}\n\n` +
+          `🔗 *ID:* \`${record.id.substring(0, 8)}\`\n` +
+          `⏰ ${new Date(record.created_at).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}\n\n` +
+          `📊 [View in Dashboard](https://xshwjuwyuwrrxbrzccka.supabase.co)`;
+
+        const telegramResponse = await fetch(
+          `https://api.telegram.org/bot${telegramBotToken}/sendMessage`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chat_id: telegramChatId,
+              text: telegramMessage,
+              parse_mode: "Markdown",
+              disable_web_page_preview: true,
+            }),
+          }
+        );
+
+        if (telegramResponse.ok) {
+          telegramSent = true;
+          console.log("Telegram notification sent successfully");
+        } else {
+          const errorData = await telegramResponse.json();
+          console.error("Telegram API error:", errorData);
+        }
+      } catch (telegramError) {
+        console.error("Telegram notification failed:", telegramError);
+      }
+    } else {
+      console.log("Telegram not configured (TELEGRAM_BOT_TOKEN or TELEGRAM_ADMIN_CHAT_ID missing)");
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
         message: "Notifications sent",
         confirmationSent: confirmationResult.success,
         adminAlertsSent: adminEmails.length || 1,
+        telegramSent: telegramSent,
       }),
       {
         status: 200,
