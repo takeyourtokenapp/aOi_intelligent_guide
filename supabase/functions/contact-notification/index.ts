@@ -19,11 +19,21 @@ interface ContactSubmission {
   created_at: string;
 }
 
+interface ContactInfo {
+  primary_email: string;
+  support_email: string | null;
+  partnerships_email: string | null;
+  press_email: string | null;
+  primary_phone: string | null;
+  whatsapp_number: string | null;
+  telegram_username: string | null;
+}
+
 const emailTemplates = {
   en: {
     confirmation: {
       subject: "We received your message - TYT Foundation",
-      html: (data: ContactSubmission) => `
+      html: (data: ContactSubmission, contactInfo: ContactInfo) => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,8 +63,9 @@ const emailTemplates = {
 
     <p>If you have urgent matters or questions, please don't hesitate to contact us directly at:</p>
     <ul style="list-style: none; padding: 0;">
-      <li>📧 <a href="mailto:contact@tyt.foundation" style="color: #667eea;">contact@tyt.foundation</a></li>
-      <li>💼 <a href="mailto:partnerships@tyt.foundation" style="color: #667eea;">partnerships@tyt.foundation</a></li>
+      <li>📧 <a href="mailto:${contactInfo.primary_email}" style="color: #667eea;">${contactInfo.primary_email}</a></li>
+      ${contactInfo.support_email ? `<li>🆘 <a href="mailto:${contactInfo.support_email}" style="color: #667eea;">${contactInfo.support_email}</a></li>` : ''}
+      ${contactInfo.partnerships_email ? `<li>💼 <a href="mailto:${contactInfo.partnerships_email}" style="color: #667eea;">${contactInfo.partnerships_email}</a></li>` : ''}
     </ul>
 
     <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
@@ -148,7 +159,7 @@ const emailTemplates = {
   ru: {
     confirmation: {
       subject: "Мы получили ваше сообщение - TYT Foundation",
-      html: (data: ContactSubmission) => `
+      html: (data: ContactSubmission, contactInfo: ContactInfo) => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -178,8 +189,9 @@ const emailTemplates = {
 
     <p>Если у вас срочные вопросы, свяжитесь с нами напрямую:</p>
     <ul style="list-style: none; padding: 0;">
-      <li>📧 <a href="mailto:contact@tyt.foundation" style="color: #667eea;">contact@tyt.foundation</a></li>
-      <li>💼 <a href="mailto:partnerships@tyt.foundation" style="color: #667eea;">partnerships@tyt.foundation</a></li>
+      <li>📧 <a href="mailto:${contactInfo.primary_email}" style="color: #667eea;">${contactInfo.primary_email}</a></li>
+      ${contactInfo.support_email ? `<li>🆘 <a href="mailto:${contactInfo.support_email}" style="color: #667eea;">${contactInfo.support_email}</a></li>` : ''}
+      ${contactInfo.partnerships_email ? `<li>💼 <a href="mailto:${contactInfo.partnerships_email}" style="color: #667eea;">${contactInfo.partnerships_email}</a></li>` : ''}
     </ul>
 
     <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
@@ -229,6 +241,40 @@ Deno.serve(async (req: Request) => {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseFunctionUrl = `${supabaseUrl}/functions/v1/send-email`;
     const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+
+    // Fetch contact info from database with NULL safety
+    const contactInfoResponse = await fetch(
+      `${supabaseUrl}/rest/v1/foundation_contact_info?select=primary_email,support_email,partnerships_email,press_email,primary_phone,whatsapp_number,telegram_username&is_active=eq.true&limit=1`,
+      {
+        headers: {
+          "apikey": supabaseAnonKey,
+          "Authorization": `Bearer ${supabaseAnonKey}`,
+        },
+      }
+    );
+
+    const contactInfoData = await contactInfoResponse.json();
+    const contactInfo: ContactInfo = contactInfoData[0] || {
+      primary_email: 'contact@tyt.foundation',
+      support_email: null,
+      partnerships_email: null,
+      press_email: null,
+      primary_phone: null,
+      whatsapp_number: null,
+      telegram_username: null,
+    };
+
+    // Ensure NULL safety with fallbacks
+    const safeContactInfo: ContactInfo = {
+      primary_email: contactInfo.primary_email || 'contact@tyt.foundation',
+      support_email: contactInfo.support_email || null,
+      partnerships_email: contactInfo.partnerships_email || null,
+      press_email: contactInfo.press_email || null,
+      primary_phone: contactInfo.primary_phone || null,
+      whatsapp_number: contactInfo.whatsapp_number || null,
+      telegram_username: contactInfo.telegram_username || null,
+    };
 
     const language = record.language || 'en';
     const template = emailTemplates[language as keyof typeof emailTemplates] || emailTemplates.en;
@@ -243,7 +289,7 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify({
         to: record.sender_email,
         subject: template.confirmation.subject,
-        html: template.confirmation.html(record),
+        html: template.confirmation.html(record, safeContactInfo),
         submissionId: record.id,
       }),
     });
@@ -252,9 +298,7 @@ Deno.serve(async (req: Request) => {
     console.log("Confirmation email result:", confirmationResult);
 
     // 2. Send alert to admins
-    // Get admin emails from database
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-
+    // Get admin emails from database with NULL safety
     const adminsResponse = await fetch(
       `${supabaseUrl}/rest/v1/admin_users?select=contact_email&is_active=eq.true`,
       {
@@ -267,8 +311,8 @@ Deno.serve(async (req: Request) => {
 
     const admins = await adminsResponse.json();
     const adminEmails = admins
-      .map((admin: { contact_email: string }) => admin.contact_email)
-      .filter((email: string) => email);
+      .map((admin: { contact_email: string | null }) => admin.contact_email)
+      .filter((email: string | null): email is string => !!email && email.trim() !== '');
 
     // Send to all admins
     for (const adminEmail of adminEmails) {
@@ -296,7 +340,7 @@ Deno.serve(async (req: Request) => {
           "Authorization": `Bearer ${supabaseAnonKey}`,
         },
         body: JSON.stringify({
-          to: "contact@tyt.foundation",
+          to: safeContactInfo.primary_email,
           subject: emailTemplates.en.adminAlert.subject(record),
           html: emailTemplates.en.adminAlert.html(record),
           submissionId: record.id,
@@ -331,14 +375,14 @@ Deno.serve(async (req: Request) => {
         }[record.submission_type] || "📬";
 
         const telegramMessage = `${priorityEmoji} *New Contact Submission*\n\n` +
-          `${typeEmoji} *Type:* ${record.submission_type.replace(/_/g, ' ').toUpperCase()}\n` +
-          `👤 *From:* ${record.sender_name}\n` +
-          `📧 *Email:* ${record.sender_email}\n` +
+          `${typeEmoji} *Type:* ${(record.submission_type || 'unknown').replace(/_/g, ' ').toUpperCase()}\n` +
+          `👤 *From:* ${record.sender_name || 'Anonymous'}\n` +
+          `📧 *Email:* ${record.sender_email || 'N/A'}\n` +
           (record.sender_organization ? `🏢 *Organization:* ${record.sender_organization}\n` : '') +
-          `\n📋 *Subject:* ${record.subject}\n\n` +
-          `💬 *Message:*\n${record.message.substring(0, 500)}${record.message.length > 500 ? '...' : ''}\n\n` +
-          `🔗 *ID:* \`${record.id.substring(0, 8)}\`\n` +
-          `⏰ ${new Date(record.created_at).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}\n\n` +
+          `\n📋 *Subject:* ${record.subject || 'No subject'}\n\n` +
+          `💬 *Message:*\n${(record.message || 'No message').substring(0, 500)}${(record.message || '').length > 500 ? '...' : ''}\n\n` +
+          `🔗 *ID:* \`${(record.id || 'unknown').substring(0, 8)}\`\n` +
+          `⏰ ${new Date(record.created_at || Date.now()).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}\n\n` +
           `📊 [View in Dashboard](https://xshwjuwyuwrrxbrzccka.supabase.co)`;
 
         const telegramResponse = await fetch(
