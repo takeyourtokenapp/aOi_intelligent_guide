@@ -7,16 +7,16 @@ const corsHeaders = {
 };
 
 interface ContactSubmission {
-  id: string;
-  submission_type: string;
-  sender_name: string;
-  sender_email: string;
+  id?: string;
+  submission_type?: string;
+  sender_name?: string;
+  sender_email?: string;
   sender_organization?: string;
-  subject: string;
-  message: string;
-  language: string;
-  priority: string;
-  created_at: string;
+  subject?: string;
+  message?: string;
+  language?: string;
+  priority?: string;
+  created_at?: string;
 }
 
 interface ContactInfo {
@@ -49,16 +49,16 @@ const emailTemplates = {
   <div style="background: white; padding: 30px; border-radius: 0 0 10px 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <h2 style="color: #667eea; margin-top: 0;">Thank you for contacting us!</h2>
 
-    <p>Dear ${data.sender_name},</p>
+    <p>Dear ${data.sender_name || 'friend'},</p>
 
     <p>We have received your message and will respond within <strong>24-48 hours</strong>.</p>
 
     <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
       <h3 style="margin-top: 0; color: #333;">Your Message Details:</h3>
-      <p style="margin: 8px 0;"><strong>Subject:</strong> ${data.subject}</p>
-      <p style="margin: 8px 0;"><strong>Type:</strong> ${data.submission_type.replace(/_/g, ' ')}</p>
-      <p style="margin: 8px 0;"><strong>Priority:</strong> ${data.priority}</p>
-      <p style="margin: 8px 0;"><strong>Reference ID:</strong> <code>${data.id.substring(0, 8)}</code></p>
+      <p style="margin: 8px 0;"><strong>Subject:</strong> ${data.subject || 'No subject'}</p>
+      <p style="margin: 8px 0;"><strong>Type:</strong> ${(data.submission_type || 'general').replace(/_/g, ' ')}</p>
+      <p style="margin: 8px 0;"><strong>Priority:</strong> ${data.priority || 'normal'}</p>
+      <p style="margin: 8px 0;"><strong>Reference ID:</strong> <code>${(data.id || '').substring(0, 8)}</code></p>
     </div>
 
     <p>If you have urgent matters or questions, please don't hesitate to contact us directly at:</p>
@@ -89,7 +89,7 @@ const emailTemplates = {
       `,
     },
     adminAlert: {
-      subject: (data: ContactSubmission) => `🔔 New ${data.priority.toUpperCase()} Contact: ${data.submission_type}`,
+      subject: (data: ContactSubmission) => `🔔 New ${(data.priority || 'normal').toUpperCase()} Contact: ${data.submission_type || 'general'}`,
       html: (data: ContactSubmission) => `
 <!DOCTYPE html>
 <html>
@@ -97,9 +97,9 @@ const emailTemplates = {
   <meta charset="utf-8">
 </head>
 <body style="font-family: monospace; line-height: 1.6; color: #333; max-width: 700px; margin: 0 auto; padding: 20px;">
-  <div style="background: ${data.priority === 'urgent' ? '#dc3545' : data.priority === 'high' ? '#fd7e14' : '#0d6efd'}; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+  <div style="background: ${(data.priority || 'normal') === 'urgent' ? '#dc3545' : (data.priority || 'normal') === 'high' ? '#fd7e14' : '#0d6efd'}; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
     <h2 style="margin: 0;">🔔 New Contact Submission</h2>
-    <p style="margin: 10px 0 0 0; opacity: 0.9;">Priority: <strong>${data.priority.toUpperCase()}</strong></p>
+    <p style="margin: 10px 0 0 0; opacity: 0.9;">Priority: <strong>${(data.priority || 'normal').toUpperCase()}</strong></p>
   </div>
 
   <table style="width: 100%; border-collapse: collapse; background: #f8f9fa; border-radius: 8px; overflow: hidden;">
@@ -109,31 +109,31 @@ const emailTemplates = {
     </tr>
     <tr>
       <td style="padding: 12px; font-weight: bold;">Type</td>
-      <td style="padding: 12px;">${data.submission_type.replace(/_/g, ' ').toUpperCase()}</td>
+      <td style="padding: 12px;">${(data.submission_type || 'general').replace(/_/g, ' ').toUpperCase()}</td>
     </tr>
     <tr style="background: #e9ecef;">
       <td style="padding: 12px; font-weight: bold;">From</td>
       <td style="padding: 12px;">
-        <strong>${data.sender_name}</strong><br>
-        <a href="mailto:${data.sender_email}">${data.sender_email}</a>
+        <strong>${data.sender_name || 'Anonymous'}</strong><br>
+        <a href="mailto:${data.sender_email || 'no-email@example.com'}">${data.sender_email || 'no-email@example.com'}</a>
         ${data.sender_organization ? `<br>🏢 ${data.sender_organization}` : ''}
       </td>
     </tr>
     <tr>
       <td style="padding: 12px; font-weight: bold;">Subject</td>
-      <td style="padding: 12px;"><strong>${data.subject}</strong></td>
+      <td style="padding: 12px;"><strong>${data.subject || 'No subject'}</strong></td>
     </tr>
     <tr style="background: #e9ecef;">
       <td style="padding: 12px; font-weight: bold; vertical-align: top;">Message</td>
-      <td style="padding: 12px; white-space: pre-wrap;">${data.message}</td>
+      <td style="padding: 12px; white-space: pre-wrap;">${data.message || 'No message'}</td>
     </tr>
     <tr>
       <td style="padding: 12px; font-weight: bold;">Language</td>
-      <td style="padding: 12px;">${data.language.toUpperCase()}</td>
+      <td style="padding: 12px;">${(data.language || 'en').toUpperCase()}</td>
     </tr>
     <tr style="background: #e9ecef;">
       <td style="padding: 12px; font-weight: bold;">Received</td>
-      <td style="padding: 12px;">${new Date(data.created_at).toLocaleString('en-US', {
+      <td style="padding: 12px;">${new Date(data.created_at || Date.now()).toLocaleString('en-US', {
         dateStyle: 'full',
         timeStyle: 'short'
       })}</td>
@@ -175,16 +175,16 @@ const emailTemplates = {
   <div style="background: white; padding: 30px; border-radius: 0 0 10px 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <h2 style="color: #667eea; margin-top: 0;">Спасибо за обращение!</h2>
 
-    <p>Уважаемый(ая) ${data.sender_name},</p>
+    <p>Уважаемый(ая) ${data.sender_name || 'друг'},</p>
 
     <p>Мы получили ваше сообщение и ответим в течение <strong>24-48 часов</strong>.</p>
 
     <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
       <h3 style="margin-top: 0; color: #333;">Детали вашего сообщения:</h3>
-      <p style="margin: 8px 0;"><strong>Тема:</strong> ${data.subject}</p>
-      <p style="margin: 8px 0;"><strong>Тип:</strong> ${data.submission_type.replace(/_/g, ' ')}</p>
-      <p style="margin: 8px 0;"><strong>Приоритет:</strong> ${data.priority}</p>
-      <p style="margin: 8px 0;"><strong>ID обращения:</strong> <code>${data.id.substring(0, 8)}</code></p>
+      <p style="margin: 8px 0;"><strong>Тема:</strong> ${data.subject || 'Без темы'}</p>
+      <p style="margin: 8px 0;"><strong>Тип:</strong> ${(data.submission_type || 'general').replace(/_/g, ' ')}</p>
+      <p style="margin: 8px 0;"><strong>Приоритет:</strong> ${data.priority || 'normal'}</p>
+      <p style="margin: 8px 0;"><strong>ID обращения:</strong> <code>${(data.id || '').substring(0, 8)}</code></p>
     </div>
 
     <p>Если у вас срочные вопросы, свяжитесь с нами напрямую:</p>
@@ -226,17 +226,39 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    const { record }: { record: ContactSubmission } = await req.json();
+    const body = await req.json();
 
-    if (!record || !record.id) {
+    // Handle both webhook format (has 'record' field) and direct API call
+    const record: ContactSubmission = body.record || body;
+
+    // Validate essential fields
+    if (!record || !record.sender_email || !record.subject) {
+      console.error("Invalid payload received:", JSON.stringify(body));
       return new Response(
-        JSON.stringify({ error: "Invalid payload" }),
+        JSON.stringify({
+          error: "Invalid payload - missing required fields (sender_email, subject)",
+          received: body
+        }),
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         }
       );
     }
+
+    // Add default values for optional fields to ensure templates work
+    const safeRecord: ContactSubmission = {
+      id: record.id || crypto.randomUUID(),
+      submission_type: record.submission_type || 'general_inquiry',
+      sender_name: record.sender_name || 'Anonymous',
+      sender_email: record.sender_email,
+      sender_organization: record.sender_organization,
+      subject: record.subject,
+      message: record.message || 'No message provided',
+      language: record.language || 'en',
+      priority: record.priority || 'normal',
+      created_at: record.created_at || new Date().toISOString(),
+    };
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseFunctionUrl = `${supabaseUrl}/functions/v1/send-email`;
@@ -276,7 +298,7 @@ Deno.serve(async (req: Request) => {
       telegram_username: contactInfo.telegram_username || null,
     };
 
-    const language = record.language || 'en';
+    const language = safeRecord.language || 'en';
     const template = emailTemplates[language as keyof typeof emailTemplates] || emailTemplates.en;
 
     // 1. Send confirmation email to user
@@ -287,10 +309,10 @@ Deno.serve(async (req: Request) => {
         "Authorization": `Bearer ${supabaseAnonKey}`,
       },
       body: JSON.stringify({
-        to: record.sender_email,
+        to: safeRecord.sender_email,
         subject: template.confirmation.subject,
-        html: template.confirmation.html(record, safeContactInfo),
-        submissionId: record.id,
+        html: template.confirmation.html(safeRecord, safeContactInfo),
+        submissionId: safeRecord.id,
       }),
     });
 
@@ -324,9 +346,9 @@ Deno.serve(async (req: Request) => {
         },
         body: JSON.stringify({
           to: adminEmail,
-          subject: emailTemplates.en.adminAlert.subject(record),
-          html: emailTemplates.en.adminAlert.html(record),
-          submissionId: record.id,
+          subject: emailTemplates.en.adminAlert.subject(safeRecord),
+          html: emailTemplates.en.adminAlert.html(safeRecord),
+          submissionId: safeRecord.id,
         }),
       });
     }
@@ -341,9 +363,9 @@ Deno.serve(async (req: Request) => {
         },
         body: JSON.stringify({
           to: safeContactInfo.primary_email,
-          subject: emailTemplates.en.adminAlert.subject(record),
-          html: emailTemplates.en.adminAlert.html(record),
-          submissionId: record.id,
+          subject: emailTemplates.en.adminAlert.subject(safeRecord),
+          html: emailTemplates.en.adminAlert.html(safeRecord),
+          submissionId: safeRecord.id,
         }),
       });
     }
@@ -360,7 +382,7 @@ Deno.serve(async (req: Request) => {
           high: "⚠️",
           normal: "📬",
           low: "📝"
-        }[record.priority] || "📬";
+        }[safeRecord.priority || 'normal'] || "📬";
 
         const typeEmoji = {
           general_inquiry: "💬",
@@ -372,17 +394,17 @@ Deno.serve(async (req: Request) => {
           volunteer: "🙋",
           technical_issue: "⚙️",
           feedback: "💭"
-        }[record.submission_type] || "📬";
+        }[safeRecord.submission_type || 'general_inquiry'] || "📬";
 
         const telegramMessage = `${priorityEmoji} *New Contact Submission*\n\n` +
-          `${typeEmoji} *Type:* ${(record.submission_type || 'unknown').replace(/_/g, ' ').toUpperCase()}\n` +
-          `👤 *From:* ${record.sender_name || 'Anonymous'}\n` +
-          `📧 *Email:* ${record.sender_email || 'N/A'}\n` +
-          (record.sender_organization ? `🏢 *Organization:* ${record.sender_organization}\n` : '') +
-          `\n📋 *Subject:* ${record.subject || 'No subject'}\n\n` +
-          `💬 *Message:*\n${(record.message || 'No message').substring(0, 500)}${(record.message || '').length > 500 ? '...' : ''}\n\n` +
-          `🔗 *ID:* \`${(record.id || 'unknown').substring(0, 8)}\`\n` +
-          `⏰ ${new Date(record.created_at || Date.now()).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}\n\n` +
+          `${typeEmoji} *Type:* ${(safeRecord.submission_type || 'unknown').replace(/_/g, ' ').toUpperCase()}\n` +
+          `👤 *From:* ${safeRecord.sender_name || 'Anonymous'}\n` +
+          `📧 *Email:* ${safeRecord.sender_email || 'N/A'}\n` +
+          (safeRecord.sender_organization ? `🏢 *Organization:* ${safeRecord.sender_organization}\n` : '') +
+          `\n📋 *Subject:* ${safeRecord.subject || 'No subject'}\n\n` +
+          `💬 *Message:*\n${(safeRecord.message || 'No message').substring(0, 500)}${(safeRecord.message || '').length > 500 ? '...' : ''}\n\n` +
+          `🔗 *ID:* \`${(safeRecord.id || 'unknown').substring(0, 8)}\`\n` +
+          `⏰ ${new Date(safeRecord.created_at || Date.now()).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}\n\n` +
           `📊 [View in Dashboard](https://xshwjuwyuwrrxbrzccka.supabase.co)`;
 
         const telegramResponse = await fetch(
