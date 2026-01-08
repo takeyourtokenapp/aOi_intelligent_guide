@@ -1,8 +1,10 @@
-# 📊 Полный Анализ Проекта aOi AI Guide Landing Page
+# 📊 Полный Анализ Проекта aOi AI Guide • TYT Foundation
 
 **Дата**: 2024-12-26
 **Статус**: ✅ **Production Ready**
 **Версия**: 1.0.0
+
+**Концепция**: tyt.foundation - это web версия aOi интегрированная в foundation от проекта takeyourtoken.app и обучающаяся на наращиваемой базе знаний takeyourtoken.app со всеми вложенными структурами и системами
 
 ---
 

@@ -471,7 +471,7 @@ const ASSET_SPECS = {
   hero: {
     size: '1920x1080px',
     format: 'PNG or WebP',
-    usage: 'Hero sections, landing pages'
+    usage: 'Hero sections, main web interface'
   },
   thumbnail: {
     size: '256x256px',

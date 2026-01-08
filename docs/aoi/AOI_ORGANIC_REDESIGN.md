@@ -103,7 +103,7 @@ Purpose: Gentle pulsation, non-aggressive
 ### 1. Hero Section - "aOi's Presence"
 
 **Before**:
-- Static landing page
+- Static web interface
 - "Welcome to aOi's Residence"
 - Gold button + magenta button
 - Simple avatar
