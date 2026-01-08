@@ -143,7 +143,7 @@ const emailTemplates = {
   <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
     <p style="margin: 0; font-weight: bold;">⚡ Action Required</p>
     <p style="margin: 10px 0 0 0;">
-      Log in to <a href="https://xshwjuwyuwrrxbrzccka.supabase.co" style="color: #0d6efd;">Supabase Dashboard</a> to respond.
+      Log in to Supabase Dashboard to respond.
     </p>
   </div>
 
@@ -227,11 +227,8 @@ Deno.serve(async (req: Request) => {
 
   try {
     const body = await req.json();
-
-    // Handle both webhook format (has 'record' field) and direct API call
     const record: ContactSubmission = body.record || body;
 
-    // Validate essential fields
     if (!record || !record.sender_email || !record.subject) {
       console.error("Invalid payload received:", JSON.stringify(body));
       return new Response(
@@ -246,7 +243,6 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Add default values for optional fields to ensure templates work
     const safeRecord: ContactSubmission = {
       id: record.id || crypto.randomUUID(),
       submission_type: record.submission_type || 'general_inquiry',
@@ -265,7 +261,6 @@ Deno.serve(async (req: Request) => {
     const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-    // Fetch contact info from database with NULL safety
     const contactInfoResponse = await fetch(
       `${supabaseUrl}/rest/v1/foundation_contact_info?select=primary_email,support_email,partnerships_email,press_email,primary_phone,whatsapp_number,telegram_username&is_active=eq.true&limit=1`,
       {
@@ -287,7 +282,6 @@ Deno.serve(async (req: Request) => {
       telegram_username: null,
     };
 
-    // Ensure NULL safety with fallbacks
     const safeContactInfo: ContactInfo = {
       primary_email: contactInfo.primary_email || 'contact@tyt.foundation',
       support_email: contactInfo.support_email || null,
@@ -301,7 +295,6 @@ Deno.serve(async (req: Request) => {
     const language = safeRecord.language || 'en';
     const template = emailTemplates[language as keyof typeof emailTemplates] || emailTemplates.en;
 
-    // 1. Send confirmation email to user
     const confirmationResponse = await fetch(supabaseFunctionUrl, {
       method: "POST",
       headers: {
@@ -319,8 +312,6 @@ Deno.serve(async (req: Request) => {
     const confirmationResult = await confirmationResponse.json();
     console.log("Confirmation email result:", confirmationResult);
 
-    // 2. Send alert to admins
-    // Get admin emails from database with NULL safety
     const adminsResponse = await fetch(
       `${supabaseUrl}/rest/v1/admin_users?select=contact_email&is_active=eq.true`,
       {
@@ -336,7 +327,6 @@ Deno.serve(async (req: Request) => {
       .map((admin: { contact_email: string | null }) => admin.contact_email)
       .filter((email: string | null): email is string => !!email && email.trim() !== '');
 
-    // Send to all admins
     for (const adminEmail of adminEmails) {
       await fetch(supabaseFunctionUrl, {
         method: "POST",
@@ -353,7 +343,6 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    // If no admins found, send to default admin email
     if (adminEmails.length === 0) {
       await fetch(supabaseFunctionUrl, {
         method: "POST",
@@ -370,7 +359,6 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    // 3. Send Telegram notification to admins (if configured)
     let telegramSent = false;
     const telegramBotToken = Deno.env.get("TELEGRAM_BOT_TOKEN");
     const telegramChatId = Deno.env.get("TELEGRAM_ADMIN_CHAT_ID");
@@ -404,8 +392,7 @@ Deno.serve(async (req: Request) => {
           `\n📋 *Subject:* ${safeRecord.subject || 'No subject'}\n\n` +
           `💬 *Message:*\n${(safeRecord.message || 'No message').substring(0, 500)}${(safeRecord.message || '').length > 500 ? '...' : ''}\n\n` +
           `🔗 *ID:* \`${(safeRecord.id || 'unknown').substring(0, 8)}\`\n` +
-          `⏰ ${new Date(safeRecord.created_at || Date.now()).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}\n\n` +
-          `📊 [View in Dashboard](https://xshwjuwyuwrrxbrzccka.supabase.co)`;
+          `⏰ ${new Date(safeRecord.created_at || Date.now()).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}`;
 
         const telegramResponse = await fetch(
           `https://api.telegram.org/bot${telegramBotToken}/sendMessage`,

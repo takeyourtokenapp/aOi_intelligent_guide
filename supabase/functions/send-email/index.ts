@@ -27,7 +27,6 @@ Deno.serve(async (req: Request) => {
   try {
     const { to, subject, html, text, from, replyTo, submissionId }: EmailRequest = await req.json();
 
-    // Validate required fields
     if (!to || !subject || !html) {
       return new Response(
         JSON.stringify({ error: "Missing required fields: to, subject, html" }),
@@ -38,17 +37,15 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Use Resend API (you need to set RESEND_API_KEY in Supabase secrets)
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
 
     if (!resendApiKey) {
       console.error("RESEND_API_KEY not set");
 
-      // Log to database instead if API key not configured
       const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
       const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-      const logResponse = await fetch(`${supabaseUrl}/rest/v1/email_notifications`, {
+      await fetch(`${supabaseUrl}/rest/v1/email_notifications`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +77,6 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Send email via Resend
     const resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -102,7 +98,6 @@ Deno.serve(async (req: Request) => {
     if (!resendResponse.ok) {
       console.error("Resend API error:", resendData);
 
-      // Log failed attempt to database
       const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
       const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
@@ -134,7 +129,6 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Log successful send to database
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
