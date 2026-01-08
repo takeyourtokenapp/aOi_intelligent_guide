@@ -53,6 +53,17 @@ export function ContactForm({ defaultType = 'general_inquiry', onSuccess }: Cont
     setLoading(true);
     setError(null);
 
+    // Client-side validation
+    if (formData.message.trim().length < 3) {
+      setError(
+        language === 'en'
+          ? 'Message must be at least 3 characters long.'
+          : 'Сообщение должно содержать минимум 3 символа.'
+      );
+      setLoading(false);
+      return;
+    }
+
     try {
       const { data: insertedData, error: submitError } = await supabase
         .from('contact_submissions')
@@ -65,7 +76,16 @@ export function ContactForm({ defaultType = 'general_inquiry', onSuccess }: Cont
         .select()
         .single();
 
-      if (submitError) throw submitError;
+      if (submitError) {
+        console.error('Submit error:', submitError);
+        throw new Error(
+          submitError.message.includes('policy')
+            ? language === 'en'
+              ? 'Please check all fields are filled correctly.'
+              : 'Пожалуйста, проверьте правильность заполнения всех полей.'
+            : submitError.message
+        );
+      }
 
       // Call edge function for notifications
       try {
@@ -107,8 +127,11 @@ export function ContactForm({ defaultType = 'general_inquiry', onSuccess }: Cont
       setTimeout(() => setSuccess(false), 5000);
     } catch (err) {
       console.error('Error submitting contact form:', err);
+      const errorMessage = err instanceof Error ? err.message : String(err);
       setError(
-        language === 'en'
+        errorMessage.includes('check all fields')
+          ? errorMessage
+          : language === 'en'
           ? 'Failed to send message. Please try again or email us directly.'
           : 'Не удалось отправить сообщение. Попробуйте ещё раз или напишите нам напрямую.'
       );
@@ -234,9 +257,11 @@ export function ContactForm({ defaultType = 'general_inquiry', onSuccess }: Cont
         <textarea
           required
           rows={6}
+          minLength={3}
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent resize-none"
+          placeholder={language === 'en' ? 'Minimum 3 characters...' : 'Минимум 3 символа...'}
         />
       </div>
 
