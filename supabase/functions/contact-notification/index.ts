@@ -26,6 +26,30 @@ interface ContactInfo {
   press_email: string | null;
 }
 
+// Email routing based on submission type
+function getRecipientEmail(submissionType: string, contactInfo: ContactInfo): string {
+  const type = submissionType || 'general_inquiry';
+
+  // Route to specialized emails based on type
+  switch (type) {
+    case 'support_request':
+    case 'technical_issue':
+      return contactInfo.support_email || contactInfo.primary_email;
+
+    case 'partnership_proposal':
+    case 'research_collaboration':
+    case 'media_inquiry':
+      return contactInfo.partnerships_email || contactInfo.primary_email;
+
+    case 'general_inquiry':
+    case 'donation_inquiry':
+    case 'volunteer':
+    case 'feedback':
+    default:
+      return contactInfo.primary_email;
+  }
+}
+
 const emailTemplates = {
   en: {
     confirmation: {
@@ -238,7 +262,30 @@ Deno.serve(async (req: Request) => {
       console.error("❌ Confirmation failed:", error);
     }
 
-    // 2. Send alerts to admins
+    // 2. Route and send notification to appropriate department
+    const recipientEmail = getRecipientEmail(safeRecord.submission_type, contactInfo);
+    console.log(`📧 Routing ${safeRecord.submission_type} to: ${recipientEmail}`);
+
+    try {
+      await fetch(sendEmailUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${supabaseAnonKey}`,
+        },
+        body: JSON.stringify({
+          to: recipientEmail,
+          subject: emailTemplates.en.adminAlert.subject(safeRecord),
+          html: emailTemplates.en.adminAlert.html(safeRecord),
+          submissionId: safeRecord.id,
+        }),
+      });
+      console.log(`✅ Department notification sent to: ${recipientEmail}`);
+    } catch (error) {
+      console.error(`❌ Failed to send department notification:`, error);
+    }
+
+    // 3. Also send to active admins (as CC / backup)
     console.log("🔍 Fetching active admins...");
     const adminsResponse = await fetch(
       `${supabaseUrl}/rest/v1/admin_users?select=contact_email&is_active=eq.true`,
@@ -248,49 +295,35 @@ Deno.serve(async (req: Request) => {
     const admins = await adminsResponse.json();
     const adminEmails = admins
       .map((admin: { contact_email: string | null }) => admin.contact_email)
-      .filter((email: string | null): email is string => !!email && email.trim() !== '');
+      .filter((email: string | null): email is string =>
+        !!email && email.trim() !== '' && email !== recipientEmail // Don't duplicate to same email
+      );
 
-    console.log(`👥 Found ${adminEmails.length} active admin(s):`, adminEmails);
+    console.log(`👥 Found ${adminEmails.length} additional admin(s):`, adminEmails);
 
-    // Send to all admins
-    const emailPromises = adminEmails.map(adminEmail => 
-      fetch(sendEmailUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${supabaseAnonKey}`,
-        },
-        body: JSON.stringify({
-          to: adminEmail,
-          subject: emailTemplates.en.adminAlert.subject(safeRecord),
-          html: emailTemplates.en.adminAlert.html(safeRecord),
-          submissionId: safeRecord.id,
-        }),
-      }).then(() => console.log(`✅ Alert sent to: ${adminEmail}`))
-        .catch(err => console.error(`❌ Failed to send to ${adminEmail}:`, err))
-    );
+    // Send to all unique admins
+    if (adminEmails.length > 0) {
+      const emailPromises = adminEmails.map(adminEmail =>
+        fetch(sendEmailUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${supabaseAnonKey}`,
+          },
+          body: JSON.stringify({
+            to: adminEmail,
+            subject: emailTemplates.en.adminAlert.subject(safeRecord),
+            html: emailTemplates.en.adminAlert.html(safeRecord),
+            submissionId: safeRecord.id,
+          }),
+        }).then(() => console.log(`✅ Admin copy sent to: ${adminEmail}`))
+          .catch(err => console.error(`❌ Failed to send to ${adminEmail}:`, err))
+      );
 
-    await Promise.allSettled(emailPromises);
-
-    // Fallback if no admins
-    if (adminEmails.length === 0) {
-      console.log("⚠️ No admins found, sending to primary email");
-      await fetch(sendEmailUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${supabaseAnonKey}`,
-        },
-        body: JSON.stringify({
-          to: contactInfo.primary_email,
-          subject: emailTemplates.en.adminAlert.subject(safeRecord),
-          html: emailTemplates.en.adminAlert.html(safeRecord),
-          submissionId: safeRecord.id,
-        }),
-      });
+      await Promise.allSettled(emailPromises);
     }
 
-    // 3. Optional Telegram notification
+    // 4. Optional Telegram notification
     const telegramBotToken = Deno.env.get("TELEGRAM_BOT_TOKEN");
     const telegramChatId = Deno.env.get("TELEGRAM_ADMIN_CHAT_ID");
     let telegramSent = false;
@@ -331,7 +364,10 @@ Deno.serve(async (req: Request) => {
       JSON.stringify({
         success: true,
         message: "Notifications sent",
-        adminAlertsSent: adminEmails.length || 1,
+        routedTo: recipientEmail,
+        departmentNotificationSent: 1,
+        adminCopiesSent: adminEmails.length,
+        totalRecipients: 1 + adminEmails.length,
         telegramSent,
       }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }

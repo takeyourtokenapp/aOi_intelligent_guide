@@ -22,10 +22,17 @@ export default function ContactPage() {
   const { language } = useLanguage();
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     loadContactInfo();
+    checkAuth();
   }, []);
+
+  const checkAuth = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    setIsAuthenticated(!!session);
+  };
 
   const loadContactInfo = async () => {
     try {
@@ -86,79 +93,111 @@ export default function ContactPage() {
               ) : (
                 <div className="space-y-4">
                   {contactInfo?.primary_email && (
-                    <a
-                      href={`mailto:${contactInfo.primary_email}`}
-                      className="flex items-center gap-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors group"
-                    >
-                      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="flex items-center gap-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 rounded-xl flex items-center justify-center">
                         <Mail className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                       </div>
                       <div className="flex-1">
                         <p className="text-sm text-slate-600 dark:text-slate-400">
                           {language === 'en' ? 'General Inquiries' : 'Общие вопросы'}
                         </p>
-                        <p className="font-semibold text-slate-900 dark:text-white">
-                          {contactInfo.primary_email}
-                        </p>
+                        {isAuthenticated ? (
+                          <a
+                            href={`mailto:${contactInfo.primary_email}`}
+                            className="font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                          >
+                            {contactInfo.primary_email}
+                          </a>
+                        ) : (
+                          <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+                            {language === 'en'
+                              ? 'Use the contact form to reach us'
+                              : 'Используйте форму связи для обращения'}
+                          </p>
+                        )}
                       </div>
-                    </a>
+                    </div>
                   )}
 
                   {contactInfo?.support_email && (
-                    <a
-                      href={`mailto:${contactInfo.support_email}`}
-                      className="flex items-center gap-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-xl hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
-                    >
-                      <div className="w-12 h-12 bg-green-100 dark:bg-green-900/40 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="flex items-center gap-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-xl">
+                      <div className="w-12 h-12 bg-green-100 dark:bg-green-900/40 rounded-xl flex items-center justify-center">
                         <MessageCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
                       </div>
                       <div className="flex-1">
                         <p className="text-sm text-slate-600 dark:text-slate-400">
                           {language === 'en' ? 'Technical Support' : 'Техническая поддержка'}
                         </p>
-                        <p className="font-semibold text-slate-900 dark:text-white">
-                          {contactInfo.support_email}
-                        </p>
+                        {isAuthenticated ? (
+                          <a
+                            href={`mailto:${contactInfo.support_email}`}
+                            className="font-semibold text-green-600 dark:text-green-400 hover:underline"
+                          >
+                            {contactInfo.support_email}
+                          </a>
+                        ) : (
+                          <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+                            {language === 'en'
+                              ? 'Use the contact form to reach us'
+                              : 'Используйте форму связи для обращения'}
+                          </p>
+                        )}
                       </div>
-                    </a>
+                    </div>
                   )}
 
                   {contactInfo?.partnerships_email && (
-                    <a
-                      href={`mailto:${contactInfo.partnerships_email}`}
-                      className="flex items-center gap-4 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors group"
-                    >
-                      <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/40 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="flex items-center gap-4 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                      <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/40 rounded-xl flex items-center justify-center">
                         <Globe className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                       </div>
                       <div className="flex-1">
                         <p className="text-sm text-slate-600 dark:text-slate-400">
                           {language === 'en' ? 'Partnerships' : 'Партнёрства'}
                         </p>
-                        <p className="font-semibold text-slate-900 dark:text-white">
-                          {contactInfo.partnerships_email}
-                        </p>
+                        {isAuthenticated ? (
+                          <a
+                            href={`mailto:${contactInfo.partnerships_email}`}
+                            className="font-semibold text-purple-600 dark:text-purple-400 hover:underline"
+                          >
+                            {contactInfo.partnerships_email}
+                          </a>
+                        ) : (
+                          <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+                            {language === 'en'
+                              ? 'Use the contact form to reach us'
+                              : 'Используйте форму связи для обращения'}
+                          </p>
+                        )}
                       </div>
-                    </a>
+                    </div>
                   )}
 
                   {contactInfo?.primary_phone && (
-                    <a
-                      href={`tel:${contactInfo.primary_phone}`}
-                      className="flex items-center gap-4 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-xl hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-colors group"
-                    >
-                      <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/40 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="flex items-center gap-4 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-xl">
+                      <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/40 rounded-xl flex items-center justify-center">
                         <Phone className="w-6 h-6 text-orange-600 dark:text-orange-400" />
                       </div>
                       <div className="flex-1">
                         <p className="text-sm text-slate-600 dark:text-slate-400">
                           {language === 'en' ? 'Phone' : 'Телефон'}
                         </p>
-                        <p className="font-semibold text-slate-900 dark:text-white">
-                          {contactInfo.primary_phone}
-                        </p>
+                        {isAuthenticated ? (
+                          <a
+                            href={`tel:${contactInfo.primary_phone}`}
+                            className="font-semibold text-orange-600 dark:text-orange-400 hover:underline"
+                          >
+                            {contactInfo.primary_phone}
+                          </a>
+                        ) : (
+                          <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+                            {language === 'en'
+                              ? 'Available for registered users'
+                              : 'Доступно для зарегистрированных пользователей'}
+                          </p>
+                        )}
                       </div>
-                    </a>
+                    </div>
                   )}
                 </div>
               )}
