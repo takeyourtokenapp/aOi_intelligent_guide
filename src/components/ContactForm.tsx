@@ -54,16 +54,41 @@ export function ContactForm({ defaultType = 'general_inquiry', onSuccess }: Cont
     setError(null);
 
     try {
-      const { error: submitError } = await supabase
+      const { data: insertedData, error: submitError } = await supabase
         .from('contact_submissions')
         .insert([{
           ...formData,
           ip_address: window.location.hostname,
           user_agent: navigator.userAgent,
           referrer_url: document.referrer,
-        }]);
+        }])
+        .select()
+        .single();
 
       if (submitError) throw submitError;
+
+      // Call edge function for notifications
+      try {
+        await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/contact-notification`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+            },
+            body: JSON.stringify({
+              type: 'INSERT',
+              table: 'contact_submissions',
+              record: insertedData,
+              old_record: null
+            })
+          }
+        );
+      } catch (notificationError) {
+        console.error('Notification failed:', notificationError);
+        // Don't fail the whole submission if notifications fail
+      }
 
       setSuccess(true);
       setFormData({
