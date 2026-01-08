@@ -24,9 +24,6 @@ interface ContactInfo {
   support_email: string | null;
   partnerships_email: string | null;
   press_email: string | null;
-  primary_phone: string | null;
-  whatsapp_number: string | null;
-  telegram_username: string | null;
 }
 
 const emailTemplates = {
@@ -57,30 +54,18 @@ const emailTemplates = {
       <h3 style="margin-top: 0; color: #333;">Your Message Details:</h3>
       <p style="margin: 8px 0;"><strong>Subject:</strong> ${data.subject || 'No subject'}</p>
       <p style="margin: 8px 0;"><strong>Type:</strong> ${(data.submission_type || 'general').replace(/_/g, ' ')}</p>
-      <p style="margin: 8px 0;"><strong>Priority:</strong> ${data.priority || 'normal'}</p>
       <p style="margin: 8px 0;"><strong>Reference ID:</strong> <code>${(data.id || '').substring(0, 8)}</code></p>
     </div>
 
-    <p>If you have urgent matters or questions, please don't hesitate to contact us directly at:</p>
+    <p>If you have urgent matters, please contact us at:</p>
     <ul style="list-style: none; padding: 0;">
       <li>📧 <a href="mailto:${contactInfo.primary_email}" style="color: #667eea;">${contactInfo.primary_email}</a></li>
       ${contactInfo.support_email ? `<li>🆘 <a href="mailto:${contactInfo.support_email}" style="color: #667eea;">${contactInfo.support_email}</a></li>` : ''}
-      ${contactInfo.partnerships_email ? `<li>💼 <a href="mailto:${contactInfo.partnerships_email}" style="color: #667eea;">${contactInfo.partnerships_email}</a></li>` : ''}
     </ul>
-
-    <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
-
-    <p style="font-size: 14px; color: #666;">
-      <strong>About TYT Foundation:</strong><br>
-      We combine Web3 technology with transparent funding to advance pediatric brain tumor research and support affected families.
-    </p>
 
     <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
       <p style="font-size: 12px; color: #999; margin: 5px 0;">
         TYT Foundation | <a href="https://tyt.foundation" style="color: #667eea;">tyt.foundation</a>
-      </p>
-      <p style="font-size: 12px; color: #999; margin: 5px 0;">
-        Every transaction supports children's brain cancer research
       </p>
     </div>
   </div>
@@ -89,20 +74,16 @@ const emailTemplates = {
       `,
     },
     adminAlert: {
-      subject: (data: ContactSubmission) => `🔔 New ${(data.priority || 'normal').toUpperCase()} Contact: ${data.submission_type || 'general'}`,
+      subject: (data: ContactSubmission) => `🔔 New Contact: ${data.submission_type || 'general'}`,
       html: (data: ContactSubmission) => `
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-</head>
 <body style="font-family: monospace; line-height: 1.6; color: #333; max-width: 700px; margin: 0 auto; padding: 20px;">
-  <div style="background: ${(data.priority || 'normal') === 'urgent' ? '#dc3545' : (data.priority || 'normal') === 'high' ? '#fd7e14' : '#0d6efd'}; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+  <div style="background: #0d6efd; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
     <h2 style="margin: 0;">🔔 New Contact Submission</h2>
-    <p style="margin: 10px 0 0 0; opacity: 0.9;">Priority: <strong>${(data.priority || 'normal').toUpperCase()}</strong></p>
   </div>
 
-  <table style="width: 100%; border-collapse: collapse; background: #f8f9fa; border-radius: 8px; overflow: hidden;">
+  <table style="width: 100%; border-collapse: collapse; background: #f8f9fa; border-radius: 8px;">
     <tr style="background: #e9ecef;">
       <td style="padding: 12px; font-weight: bold; width: 150px;">ID</td>
       <td style="padding: 12px;"><code>${data.id}</code></td>
@@ -115,7 +96,7 @@ const emailTemplates = {
       <td style="padding: 12px; font-weight: bold;">From</td>
       <td style="padding: 12px;">
         <strong>${data.sender_name || 'Anonymous'}</strong><br>
-        <a href="mailto:${data.sender_email || 'no-email@example.com'}">${data.sender_email || 'no-email@example.com'}</a>
+        <a href="mailto:${data.sender_email}">${data.sender_email}</a>
         ${data.sender_organization ? `<br>🏢 ${data.sender_organization}` : ''}
       </td>
     </tr>
@@ -127,30 +108,7 @@ const emailTemplates = {
       <td style="padding: 12px; font-weight: bold; vertical-align: top;">Message</td>
       <td style="padding: 12px; white-space: pre-wrap;">${data.message || 'No message'}</td>
     </tr>
-    <tr>
-      <td style="padding: 12px; font-weight: bold;">Language</td>
-      <td style="padding: 12px;">${(data.language || 'en').toUpperCase()}</td>
-    </tr>
-    <tr style="background: #e9ecef;">
-      <td style="padding: 12px; font-weight: bold;">Received</td>
-      <td style="padding: 12px;">${new Date(data.created_at || Date.now()).toLocaleString('en-US', {
-        dateStyle: 'full',
-        timeStyle: 'short'
-      })}</td>
-    </tr>
   </table>
-
-  <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
-    <p style="margin: 0; font-weight: bold;">⚡ Action Required</p>
-    <p style="margin: 10px 0 0 0;">
-      Log in to Supabase Dashboard to respond.
-    </p>
-  </div>
-
-  <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 4px; font-size: 12px; color: #666;">
-    <p style="margin: 0;"><strong>Quick SQL to view:</strong></p>
-    <pre style="background: white; padding: 10px; border-radius: 4px; overflow-x: auto; margin: 10px 0 0 0;">SELECT * FROM contact_submissions WHERE id = '${data.id}';</pre>
-  </div>
 </body>
 </html>
       `,
@@ -183,30 +141,18 @@ const emailTemplates = {
       <h3 style="margin-top: 0; color: #333;">Детали вашего сообщения:</h3>
       <p style="margin: 8px 0;"><strong>Тема:</strong> ${data.subject || 'Без темы'}</p>
       <p style="margin: 8px 0;"><strong>Тип:</strong> ${(data.submission_type || 'general').replace(/_/g, ' ')}</p>
-      <p style="margin: 8px 0;"><strong>Приоритет:</strong> ${data.priority || 'normal'}</p>
       <p style="margin: 8px 0;"><strong>ID обращения:</strong> <code>${(data.id || '').substring(0, 8)}</code></p>
     </div>
 
-    <p>Если у вас срочные вопросы, свяжитесь с нами напрямую:</p>
+    <p>Если у вас срочные вопросы, свяжитесь с нами:</p>
     <ul style="list-style: none; padding: 0;">
       <li>📧 <a href="mailto:${contactInfo.primary_email}" style="color: #667eea;">${contactInfo.primary_email}</a></li>
       ${contactInfo.support_email ? `<li>🆘 <a href="mailto:${contactInfo.support_email}" style="color: #667eea;">${contactInfo.support_email}</a></li>` : ''}
-      ${contactInfo.partnerships_email ? `<li>💼 <a href="mailto:${contactInfo.partnerships_email}" style="color: #667eea;">${contactInfo.partnerships_email}</a></li>` : ''}
     </ul>
-
-    <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
-
-    <p style="font-size: 14px; color: #666;">
-      <strong>О TYT Foundation:</strong><br>
-      Мы объединяем Web3-технологии с прозрачным финансированием для продвижения исследований опухолей мозга у детей и поддержки семей.
-    </p>
 
     <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
       <p style="font-size: 12px; color: #999; margin: 5px 0;">
         TYT Foundation | <a href="https://tyt.foundation" style="color: #667eea;">tyt.foundation</a>
-      </p>
-      <p style="font-size: 12px; color: #999; margin: 5px 0;">
-        Каждая транзакция поддерживает исследования опухолей мозга у детей
       </p>
     </div>
   </div>
@@ -219,27 +165,20 @@ const emailTemplates = {
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
-    return new Response(null, {
-      status: 200,
-      headers: corsHeaders,
-    });
+    return new Response(null, { status: 200, headers: corsHeaders });
   }
 
   try {
     const body = await req.json();
     const record: ContactSubmission = body.record || body;
 
+    console.log("📬 Processing contact submission:", record.id);
+
     if (!record || !record.sender_email || !record.subject) {
-      console.error("Invalid payload received:", JSON.stringify(body));
+      console.error("❌ Invalid payload:", JSON.stringify(body));
       return new Response(
-        JSON.stringify({
-          error: "Invalid payload - missing required fields (sender_email, subject)",
-          received: body
-        }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
+        JSON.stringify({ error: "Missing required fields" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
@@ -250,25 +189,21 @@ Deno.serve(async (req: Request) => {
       sender_email: record.sender_email,
       sender_organization: record.sender_organization,
       subject: record.subject,
-      message: record.message || 'No message provided',
+      message: record.message || '',
       language: record.language || 'en',
       priority: record.priority || 'normal',
       created_at: record.created_at || new Date().toISOString(),
     };
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseFunctionUrl = `${supabaseUrl}/functions/v1/send-email`;
     const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const sendEmailUrl = `${supabaseUrl}/functions/v1/send-email`;
 
+    // Get contact info
     const contactInfoResponse = await fetch(
-      `${supabaseUrl}/rest/v1/foundation_contact_info?select=primary_email,support_email,partnerships_email,press_email,primary_phone,whatsapp_number,telegram_username&is_active=eq.true&limit=1`,
-      {
-        headers: {
-          "apikey": supabaseAnonKey,
-          "Authorization": `Bearer ${supabaseAnonKey}`,
-        },
-      }
+      `${supabaseUrl}/rest/v1/foundation_contact_info?select=primary_email,support_email,partnerships_email,press_email&is_active=eq.true&limit=1`,
+      { headers: { "apikey": supabaseAnonKey, "Authorization": `Bearer ${supabaseAnonKey}` } }
     );
 
     const contactInfoData = await contactInfoResponse.json();
@@ -277,49 +212,37 @@ Deno.serve(async (req: Request) => {
       support_email: null,
       partnerships_email: null,
       press_email: null,
-      primary_phone: null,
-      whatsapp_number: null,
-      telegram_username: null,
-    };
-
-    const safeContactInfo: ContactInfo = {
-      primary_email: contactInfo.primary_email || 'contact@tyt.foundation',
-      support_email: contactInfo.support_email || null,
-      partnerships_email: contactInfo.partnerships_email || null,
-      press_email: contactInfo.press_email || null,
-      primary_phone: contactInfo.primary_phone || null,
-      whatsapp_number: contactInfo.whatsapp_number || null,
-      telegram_username: contactInfo.telegram_username || null,
     };
 
     const language = safeRecord.language || 'en';
     const template = emailTemplates[language as keyof typeof emailTemplates] || emailTemplates.en;
 
-    const confirmationResponse = await fetch(supabaseFunctionUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${supabaseAnonKey}`,
-      },
-      body: JSON.stringify({
-        to: safeRecord.sender_email,
-        subject: template.confirmation.subject,
-        html: template.confirmation.html(safeRecord, safeContactInfo),
-        submissionId: safeRecord.id,
-      }),
-    });
+    // 1. Send confirmation to sender
+    console.log("📧 Sending confirmation to:", safeRecord.sender_email);
+    try {
+      await fetch(sendEmailUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${supabaseAnonKey}`,
+        },
+        body: JSON.stringify({
+          to: safeRecord.sender_email,
+          subject: template.confirmation.subject,
+          html: template.confirmation.html(safeRecord, contactInfo),
+          submissionId: safeRecord.id,
+        }),
+      });
+      console.log("✅ Confirmation sent");
+    } catch (error) {
+      console.error("❌ Confirmation failed:", error);
+    }
 
-    const confirmationResult = await confirmationResponse.json();
-    console.log("Confirmation email result:", confirmationResult);
-
+    // 2. Send alerts to admins
+    console.log("🔍 Fetching active admins...");
     const adminsResponse = await fetch(
       `${supabaseUrl}/rest/v1/admin_users?select=contact_email&is_active=eq.true`,
-      {
-        headers: {
-          "apikey": supabaseServiceKey,
-          "Authorization": `Bearer ${supabaseServiceKey}`,
-        },
-      }
+      { headers: { "apikey": supabaseServiceKey, "Authorization": `Bearer ${supabaseServiceKey}` } }
     );
 
     const admins = await adminsResponse.json();
@@ -327,8 +250,11 @@ Deno.serve(async (req: Request) => {
       .map((admin: { contact_email: string | null }) => admin.contact_email)
       .filter((email: string | null): email is string => !!email && email.trim() !== '');
 
-    for (const adminEmail of adminEmails) {
-      await fetch(supabaseFunctionUrl, {
+    console.log(`👥 Found ${adminEmails.length} active admin(s):`, adminEmails);
+
+    // Send to all admins
+    const emailPromises = adminEmails.map(adminEmail => 
+      fetch(sendEmailUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -340,18 +266,23 @@ Deno.serve(async (req: Request) => {
           html: emailTemplates.en.adminAlert.html(safeRecord),
           submissionId: safeRecord.id,
         }),
-      });
-    }
+      }).then(() => console.log(`✅ Alert sent to: ${adminEmail}`))
+        .catch(err => console.error(`❌ Failed to send to ${adminEmail}:`, err))
+    );
 
+    await Promise.allSettled(emailPromises);
+
+    // Fallback if no admins
     if (adminEmails.length === 0) {
-      await fetch(supabaseFunctionUrl, {
+      console.log("⚠️ No admins found, sending to primary email");
+      await fetch(sendEmailUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${supabaseAnonKey}`,
         },
         body: JSON.stringify({
-          to: safeContactInfo.primary_email,
+          to: contactInfo.primary_email,
           subject: emailTemplates.en.adminAlert.subject(safeRecord),
           html: emailTemplates.en.adminAlert.html(safeRecord),
           submissionId: safeRecord.id,
@@ -359,40 +290,18 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    let telegramSent = false;
+    // 3. Optional Telegram notification
     const telegramBotToken = Deno.env.get("TELEGRAM_BOT_TOKEN");
     const telegramChatId = Deno.env.get("TELEGRAM_ADMIN_CHAT_ID");
+    let telegramSent = false;
 
     if (telegramBotToken && telegramChatId) {
       try {
-        const priorityEmoji = {
-          urgent: "🚨",
-          high: "⚠️",
-          normal: "📬",
-          low: "📝"
-        }[safeRecord.priority || 'normal'] || "📬";
-
-        const typeEmoji = {
-          general_inquiry: "💬",
-          support_request: "🆘",
-          partnership_proposal: "🤝",
-          donation_inquiry: "💰",
-          research_collaboration: "🔬",
-          media_inquiry: "📰",
-          volunteer: "🙋",
-          technical_issue: "⚙️",
-          feedback: "💭"
-        }[safeRecord.submission_type || 'general_inquiry'] || "📬";
-
-        const telegramMessage = `${priorityEmoji} *New Contact Submission*\n\n` +
-          `${typeEmoji} *Type:* ${(safeRecord.submission_type || 'unknown').replace(/_/g, ' ').toUpperCase()}\n` +
-          `👤 *From:* ${safeRecord.sender_name || 'Anonymous'}\n` +
-          `📧 *Email:* ${safeRecord.sender_email || 'N/A'}\n` +
-          (safeRecord.sender_organization ? `🏢 *Organization:* ${safeRecord.sender_organization}\n` : '') +
-          `\n📋 *Subject:* ${safeRecord.subject || 'No subject'}\n\n` +
-          `💬 *Message:*\n${(safeRecord.message || 'No message').substring(0, 500)}${(safeRecord.message || '').length > 500 ? '...' : ''}\n\n` +
-          `🔗 *ID:* \`${(safeRecord.id || 'unknown').substring(0, 8)}\`\n` +
-          `⏰ ${new Date(safeRecord.created_at || Date.now()).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}`;
+        const telegramMessage = `🔔 *New Contact*\n\n` +
+          `👤 ${safeRecord.sender_name}\n` +
+          `📧 ${safeRecord.sender_email}\n` +
+          `📋 ${safeRecord.subject}\n\n` +
+          `ID: \`${safeRecord.id.substring(0, 8)}\``;
 
         const telegramResponse = await fetch(
           `https://api.telegram.org/bot${telegramBotToken}/sendMessage`,
@@ -403,47 +312,36 @@ Deno.serve(async (req: Request) => {
               chat_id: telegramChatId,
               text: telegramMessage,
               parse_mode: "Markdown",
-              disable_web_page_preview: true,
             }),
           }
         );
 
         if (telegramResponse.ok) {
           telegramSent = true;
-          console.log("Telegram notification sent successfully");
-        } else {
-          const errorData = await telegramResponse.json();
-          console.error("Telegram API error:", errorData);
+          console.log("✅ Telegram notification sent");
         }
-      } catch (telegramError) {
-        console.error("Telegram notification failed:", telegramError);
+      } catch (error) {
+        console.error("❌ Telegram failed:", error);
       }
-    } else {
-      console.log("Telegram not configured (TELEGRAM_BOT_TOKEN or TELEGRAM_ADMIN_CHAT_ID missing)");
     }
+
+    console.log("✅ All notifications processed");
 
     return new Response(
       JSON.stringify({
         success: true,
         message: "Notifications sent",
-        confirmationSent: confirmationResult.success,
         adminAlertsSent: adminEmails.length || 1,
-        telegramSent: telegramSent,
+        telegramSent,
       }),
-      {
-        status: 200,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
 
   } catch (error) {
-    console.error("Error in contact-notification function:", error);
+    console.error("❌ Error:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 });
