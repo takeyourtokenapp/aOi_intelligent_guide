@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useLanguage, Language } from '../contexts/LanguageContext';
-import { BookOpen, Users, Target, FileText, Sparkles, ArrowLeft, ArrowRight } from 'lucide-react';
+import { BookOpen, Users, Target, FileText, Sparkles, ArrowLeft, ArrowRight, Search } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { AoiAvatar } from '../components/AoiAvatar';
 import { FoundationStats } from '../components/FoundationStats';
 import { DonationWidget } from '../components/DonationWidget';
+import { KnowledgeSearch } from '../components/KnowledgeSearch';
 import { parseMarkdownToHTML } from '../utils/markdownParser';
 
 interface ResearchPost {
@@ -30,7 +31,7 @@ interface ResearchPost {
 }
 
 interface FoundationPageProps {
-  initialTab?: 'about' | 'research' | 'manifesto' | 'updates';
+  initialTab?: 'about' | 'research' | 'manifesto' | 'knowledge' | 'updates';
 }
 
 const translations = {
@@ -44,7 +45,7 @@ const tr = (key: keyof typeof translations, lang: Language) => translations[key]
 
 export default function FoundationPage({ initialTab = 'about' }: FoundationPageProps) {
   const { language } = useLanguage();
-  const [activeTab, setActiveTab] = useState<'about' | 'research' | 'manifesto' | 'updates'>(initialTab);
+  const [activeTab, setActiveTab] = useState<'about' | 'research' | 'manifesto' | 'knowledge' | 'updates'>(initialTab);
   const [manifestoPost, setManifestoPost] = useState<ResearchPost | null>(null);
   const [researchPosts, setResearchPosts] = useState<ResearchPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -89,6 +90,7 @@ export default function FoundationPage({ initialTab = 'about' }: FoundationPageP
   const tabs = [
     { id: 'about' as const, label: language === 'en' ? 'About' : 'О фонде', icon: Target },
     { id: 'research' as const, label: language === 'en' ? 'Research Focus' : 'Исследования', icon: BookOpen },
+    { id: 'knowledge' as const, label: language === 'en' ? 'Knowledge Base' : 'База знаний', icon: Search },
     { id: 'manifesto' as const, label: language === 'en' ? 'Manifesto' : 'Манифест', icon: FileText },
     { id: 'updates' as const, label: language === 'en' ? 'Updates' : 'Обновления', icon: Sparkles },
   ];
@@ -148,6 +150,7 @@ export default function FoundationPage({ initialTab = 'about' }: FoundationPageP
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden">
           {activeTab === 'about' && <AboutSection />}
           {activeTab === 'research' && <ResearchSection posts={researchPosts} loading={loading} />}
+          {activeTab === 'knowledge' && <KnowledgeSection />}
           {activeTab === 'manifesto' && <ManifestoSection post={manifestoPost} loading={loading} />}
           {activeTab === 'updates' && <UpdatesSection />}
         </div>
@@ -601,6 +604,60 @@ function ManifestoSection({ post, loading }: { post: ResearchPost | null; loadin
           </span>
           <ArrowRight className="w-4 h-4" />
         </button>
+      </div>
+    </div>
+  );
+}
+
+function KnowledgeSection() {
+  const { language } = useLanguage();
+
+  return (
+    <div className="p-8 space-y-8">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">
+          {language === 'en' ? 'Search Medical Knowledge Base' : 'Поиск в медицинской базе знаний'}
+        </h2>
+        <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+          {language === 'en'
+            ? 'Ask aOi about pediatric brain tumors, CNS research, and medical science. Our AI-powered semantic search finds relevant information from our curated knowledge base.'
+            : 'Спросите aOi об опухолях мозга у детей, исследованиях ЦНС и медицинской науке. Наш семантический поиск на основе ИИ находит релевантную информацию из нашей базы знаний.'}
+        </p>
+      </div>
+
+      <KnowledgeSearch domain="foundation" placeholder={language === 'en' ? 'Ask about brain tumors, treatments, research...' : 'Спросите об опухолях мозга, лечении, исследованиях...'} />
+
+      <div className="grid md:grid-cols-3 gap-4 pt-8 border-t border-slate-200 dark:border-slate-700">
+        <div className="p-4 bg-pink-50 dark:bg-pink-900/10 rounded-xl border border-pink-200 dark:border-pink-800">
+          <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+            {language === 'en' ? 'Medical Topics' : 'Медицинские темы'}
+          </h4>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            {language === 'en'
+              ? 'Medulloblastoma, CNS tumors, treatment options, side effects'
+              : 'Медуллобластома, опухоли ЦНС, варианты лечения, побочные эффекты'}
+          </p>
+        </div>
+        <div className="p-4 bg-blue-50 dark:bg-blue-900/10 rounded-xl border border-blue-200 dark:border-blue-800">
+          <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+            {language === 'en' ? 'Research Areas' : 'Области исследований'}
+          </h4>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            {language === 'en'
+              ? 'Molecular subtypes, clinical trials, new therapies'
+              : 'Молекулярные подтипы, клинические испытания, новые методы'}
+          </p>
+        </div>
+        <div className="p-4 bg-purple-50 dark:bg-purple-900/10 rounded-xl border border-purple-200 dark:border-purple-800">
+          <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+            {language === 'en' ? 'Support' : 'Поддержка'}
+          </h4>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            {language === 'en'
+              ? 'Family resources, coping strategies, available help'
+              : 'Ресурсы для семей, стратегии поддержки, доступная помощь'}
+          </p>
+        </div>
       </div>
     </div>
   );

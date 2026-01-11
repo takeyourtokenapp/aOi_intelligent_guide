@@ -163,35 +163,52 @@ export class CrossDomainApi {
     userId: string,
     userLevel: string,
     context?: any
-  ): Promise<{ response: string; sources?: string }> {
+  ): Promise<{ response: string; sources?: any[]; queryType?: string; language?: string }> {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
       const currentDomain = window.location.hostname.includes('foundation') ? 'foundation' : 'app';
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/aoi-rag-query`, {
+      if (!supabaseUrl || !supabaseKey) {
+        throw new Error('Supabase configuration missing');
+      }
+
+      const response = await fetch(`${supabaseUrl}/functions/v1/aoi-rag-query`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session?.access_token}`
+          'Authorization': `Bearer ${supabaseKey}`,
+          'X-Client-Info': 'supabase-js-web'
         },
         body: JSON.stringify({
           question,
           userId,
           userLevel,
           domain: currentDomain,
+          language: 'en',
           context
         })
       });
 
       if (!response.ok) {
-        throw new Error('Failed to query aOi');
+        const errorText = await response.text();
+        console.error('aOi query failed:', response.status, errorText);
+        throw new Error(`Failed to query aOi: ${response.statusText}`);
       }
 
       const data = await response.json();
-      return data;
+      return {
+        response: data.response || 'I apologize, but I encountered an error processing your question.',
+        sources: data.sources || [],
+        queryType: data.queryType,
+        language: data.language
+      };
     } catch (error) {
       console.error('Error querying aOi:', error);
-      return { response: 'I apologize, but I encountered an error. Please try again.' };
+      return {
+        response: 'I apologize, but I\'m having trouble connecting to my knowledge base right now. Please try again in a moment.',
+        sources: []
+      };
     }
   }
 
