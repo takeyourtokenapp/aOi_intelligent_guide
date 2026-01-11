@@ -9,8 +9,10 @@ import HomePage from './pages/HomePage';
 import FoundationPage from './pages/FoundationPage';
 import AcademyPage from './pages/AcademyPage';
 import ContactPage from './pages/ContactPage';
+import GrantsPage from './pages/GrantsPage';
+import TransparencyPage from './pages/TransparencyPage';
 
-type PageType = 'home' | 'foundation' | 'academy' | 'contact';
+type PageType = 'home' | 'foundation' | 'academy' | 'contact' | 'grants' | 'transparency';
 type FoundationTab = 'about' | 'research' | 'manifesto' | 'updates';
 
 function AppContent() {
@@ -44,6 +46,8 @@ function AppContent() {
         {currentPage === 'foundation' && <FoundationPage initialTab={foundationTab} />}
         {currentPage === 'academy' && <AcademyPage />}
         {currentPage === 'contact' && <ContactPage />}
+        {currentPage === 'grants' && <GrantsPage />}
+        {currentPage === 'transparency' && <TransparencyPage />}
 
         <footer className="container mx-auto px-6 py-12 border-t-2 border-[#9B8FD9]/40 dark:border-[#9B8FD9]/20">
           <div className="text-center text-slate-600 dark:text-gray-300 text-sm space-y-3">

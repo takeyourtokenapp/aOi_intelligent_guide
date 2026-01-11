@@ -7,8 +7,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 interface NavigationProps {
   onAoiClick?: () => void;
-  onNavigate?: (page: 'home' | 'foundation' | 'academy' | 'contact') => void;
-  currentPage?: 'home' | 'foundation' | 'academy' | 'contact';
+  onNavigate?: (page: 'home' | 'foundation' | 'academy' | 'contact' | 'grants' | 'transparency') => void;
+  currentPage?: 'home' | 'foundation' | 'academy' | 'contact' | 'grants' | 'transparency';
 }
 
 export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationProps) {
@@ -58,6 +58,26 @@ export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationPr
               }`}
             >
               {t('nav.foundation')}
+            </button>
+            <button
+              onClick={() => onNavigate?.('grants')}
+              className={`text-sm font-medium transition-colors ${
+                currentPage === 'grants'
+                  ? 'text-[#D2A44C]'
+                  : 'text-gray-700 dark:text-gray-300 hover:text-[#D2A44C]'
+              }`}
+            >
+              {t('nav.grants') || (t('language') === 'en' ? 'Grants' : 'Гранты')}
+            </button>
+            <button
+              onClick={() => onNavigate?.('transparency')}
+              className={`text-sm font-medium transition-colors ${
+                currentPage === 'transparency'
+                  ? 'text-[#D2A44C]'
+                  : 'text-gray-700 dark:text-gray-300 hover:text-[#D2A44C]'
+              }`}
+            >
+              {t('nav.transparency') || (t('language') === 'en' ? 'Transparency' : 'Прозрачность')}
             </button>
             <button
               onClick={() => onNavigate?.('contact')}
