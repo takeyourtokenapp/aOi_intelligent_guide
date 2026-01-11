@@ -1,5 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "jsr:@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -40,7 +40,7 @@ Deno.serve(async (req: Request) => {
     console.log("Fetching CNS articles without embeddings...");
     const { data: cnsArticles, error: cnsError } = await supabase
       .from("knowledge_base_cns")
-      .select("id, title, content, keywords")
+      .select("id, topic, content, summary, tags")
       .is("embedding", null);
 
     if (cnsError) throw cnsError;
@@ -51,7 +51,7 @@ Deno.serve(async (req: Request) => {
     if (cnsArticles) {
       for (const article of cnsArticles) {
         try {
-          const text = `${article.title}\n\n${article.content}\n\nKeywords: ${article.keywords?.join(", ") || ""}`;
+          const text = `${article.topic}\n\n${article.content}\n\nSummary: ${article.summary || ""}\n\nTags: ${article.tags?.join(", ") || ""}`;
 
           const embeddingResponse = await fetch("https://api.openai.com/v1/embeddings", {
             method: "POST",
@@ -67,7 +67,8 @@ Deno.serve(async (req: Request) => {
           });
 
           if (!embeddingResponse.ok) {
-            throw new Error(`OpenAI API error: ${embeddingResponse.statusText}`);
+            const errorText = await embeddingResponse.text();
+            throw new Error(`OpenAI API error: ${embeddingResponse.statusText} - ${errorText}`);
           }
 
           const embeddingData = await embeddingResponse.json();
@@ -81,7 +82,7 @@ Deno.serve(async (req: Request) => {
           if (updateError) throw updateError;
 
           results.cns.processed++;
-          console.log(`Processed CNS article: ${article.title}`);
+          console.log(`Processed CNS article: ${article.topic}`);
         } catch (error) {
           results.cns.failed++;
           results.cns.errors.push({
@@ -97,7 +98,7 @@ Deno.serve(async (req: Request) => {
     console.log("Fetching Web3 articles without embeddings...");
     const { data: web3Articles, error: web3Error } = await supabase
       .from("knowledge_base_web3")
-      .select("id, title, content, keywords")
+      .select("id, topic, content, tags, practical_example")
       .is("embedding", null);
 
     if (web3Error) throw web3Error;
@@ -108,7 +109,7 @@ Deno.serve(async (req: Request) => {
     if (web3Articles) {
       for (const article of web3Articles) {
         try {
-          const text = `${article.title}\n\n${article.content}\n\nKeywords: ${article.keywords?.join(", ") || ""}`;
+          const text = `${article.topic}\n\n${article.content}\n\nPractical Example: ${article.practical_example || ""}\n\nTags: ${article.tags?.join(", ") || ""}`;
 
           const embeddingResponse = await fetch("https://api.openai.com/v1/embeddings", {
             method: "POST",
@@ -124,7 +125,8 @@ Deno.serve(async (req: Request) => {
           });
 
           if (!embeddingResponse.ok) {
-            throw new Error(`OpenAI API error: ${embeddingResponse.statusText}`);
+            const errorText = await embeddingResponse.text();
+            throw new Error(`OpenAI API error: ${embeddingResponse.statusText} - ${errorText}`);
           }
 
           const embeddingData = await embeddingResponse.json();
@@ -138,7 +140,7 @@ Deno.serve(async (req: Request) => {
           if (updateError) throw updateError;
 
           results.web3.processed++;
-          console.log(`Processed Web3 article: ${article.title}`);
+          console.log(`Processed Web3 article: ${article.topic}`);
         } catch (error) {
           results.web3.failed++;
           results.web3.errors.push({
@@ -154,7 +156,7 @@ Deno.serve(async (req: Request) => {
     console.log("Fetching lessons without embeddings...");
     const { data: lessons, error: lessonsError } = await supabase
       .from("lessons")
-      .select("id, title_en, title_ru, content_en, content_ru, objectives_en, objectives_ru")
+      .select("id, title_en, title_ru, content_en, content_ru, embedding_en, embedding_ru")
       .or("embedding_en.is.null,embedding_ru.is.null");
 
     if (lessonsError) throw lessonsError;
@@ -167,7 +169,7 @@ Deno.serve(async (req: Request) => {
         try {
           // Generate English embedding if missing
           if (!lesson.embedding_en && lesson.content_en) {
-            const textEn = `${lesson.title_en}\n\n${lesson.content_en}\n\nObjectives: ${lesson.objectives_en?.join(", ") || ""}`;
+            const textEn = `${lesson.title_en}\n\n${lesson.content_en}`;
 
             const embeddingResponseEn = await fetch("https://api.openai.com/v1/embeddings", {
               method: "POST",
@@ -183,7 +185,8 @@ Deno.serve(async (req: Request) => {
             });
 
             if (!embeddingResponseEn.ok) {
-              throw new Error(`OpenAI API error (EN): ${embeddingResponseEn.statusText}`);
+              const errorText = await embeddingResponseEn.text();
+              throw new Error(`OpenAI API error (EN): ${embeddingResponseEn.statusText} - ${errorText}`);
             }
 
             const embeddingDataEn = await embeddingResponseEn.json();
@@ -199,7 +202,7 @@ Deno.serve(async (req: Request) => {
 
           // Generate Russian embedding if missing
           if (!lesson.embedding_ru && lesson.content_ru) {
-            const textRu = `${lesson.title_ru}\n\n${lesson.content_ru}\n\nЦели: ${lesson.objectives_ru?.join(", ") || ""}`;
+            const textRu = `${lesson.title_ru}\n\n${lesson.content_ru}`;
 
             const embeddingResponseRu = await fetch("https://api.openai.com/v1/embeddings", {
               method: "POST",
@@ -215,7 +218,8 @@ Deno.serve(async (req: Request) => {
             });
 
             if (!embeddingResponseRu.ok) {
-              throw new Error(`OpenAI API error (RU): ${embeddingResponseRu.statusText}`);
+              const errorText = await embeddingResponseRu.text();
+              throw new Error(`OpenAI API error (RU): ${embeddingResponseRu.statusText} - ${errorText}`);
             }
 
             const embeddingDataRu = await embeddingResponseRu.json();
