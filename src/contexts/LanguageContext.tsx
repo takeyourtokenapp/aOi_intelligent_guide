@@ -31,10 +31,16 @@ function getStoredLanguage(): Language {
 
 const translations: Record<Language, Record<string, string>> = {
   en: {
+    'nav.home': 'Home',
     'nav.academy': 'Academy',
     'nav.knowledge': 'Knowledge',
     'nav.foundation': 'Foundation',
+    'nav.foundation.about': 'About Foundation',
+    'nav.foundation.about.desc': 'Mission & Impact',
+    'nav.grants': 'Research Grants',
+    'nav.grants.desc': 'Active projects',
     'nav.transparency': 'Transparency',
+    'nav.transparency.desc': 'Blockchain verified',
     'nav.contact': 'Contact',
     'nav.dashboard': 'Dashboard',
 
@@ -138,10 +144,16 @@ const translations: Record<Language, Record<string, string>> = {
     'bridge.connection': 'aOi connects both domains seamlessly',
   },
   ru: {
+    'nav.home': 'Главная',
     'nav.academy': 'Академия',
     'nav.knowledge': 'Знания',
     'nav.foundation': 'Фонд',
+    'nav.foundation.about': 'О Фонде',
+    'nav.foundation.about.desc': 'Миссия и влияние',
+    'nav.grants': 'Гранты',
+    'nav.grants.desc': 'Активные проекты',
     'nav.transparency': 'Прозрачность',
+    'nav.transparency.desc': 'Блокчейн верификация',
     'nav.contact': 'Контакты',
     'nav.dashboard': 'Панель',
 
@@ -245,10 +257,17 @@ const translations: Record<Language, Record<string, string>> = {
     'bridge.connection': 'aOi бесшовно соединяет оба домена',
   },
   he: {
+    'nav.home': 'בית',
     'nav.academy': 'אקדמיה',
     'nav.knowledge': 'ידע',
     'nav.foundation': 'קרן',
+    'nav.foundation.about': 'אודות הקרן',
+    'nav.foundation.about.desc': 'משימה והשפעה',
+    'nav.grants': 'מענקי מחקר',
+    'nav.grants.desc': 'פרויקטים פעילים',
     'nav.transparency': 'שקיפות',
+    'nav.transparency.desc': 'מאומת בלוקצ\'יין',
+    'nav.contact': 'צור קשר',
     'nav.dashboard': 'לוח בקרה',
 
     'hero.title': 'פלטפורמת כריית Web3',
