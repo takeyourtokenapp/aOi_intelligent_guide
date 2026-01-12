@@ -26,18 +26,28 @@ These two domains share:
 
 ### Knowledge Bases (ALL EMBEDDED - 100%)
 ```
-knowledge_base_cns:     42 articles (42/42 embeddings = 100%)
+knowledge_base_cns:     56 articles (56/56 embeddings = 100%)
 knowledge_base_web3:    29 articles (29/29 embeddings = 100%)
 lessons:                16 lessons  (16/16 embeddings EN + RU)
 ```
 
-**Total Searchable Content**: 87 items with semantic search enabled
+**Total Searchable Content**: 101 items with semantic search enabled
 
-**New Foundation-Specific Content (Added Jan 12):**
+**Foundation-Specific Content (Added Jan 12):**
 - TYT Foundation Mission and Approach
 - Supporting Families Through a Brain Tumor Diagnosis
 - Blockchain Transparency in Medical Research Funding
 - The I-QCC Initiative: Quantum Computing for Cancer Research
+
+**New Scientific Content (Added Jan 12):**
+- Current Clinical Trials for Pediatric Medulloblastoma
+- Communicating a Brain Tumor Diagnosis to Your Child
+- Supporting Siblings of Children with Brain Tumors
+- CAR-T Cell Therapy Research for Brain Tumors
+- Blood-Brain Barrier and Drug Delivery Challenges
+- Long-term Effects of Pediatric Brain Tumor Treatment
+- Artificial Intelligence in Pediatric Neuro-Oncology
+- Proton Therapy for Pediatric Brain Tumors
 
 ### Foundation-Specific Tables
 ```
@@ -136,7 +146,7 @@ app: {
 ### Status: FULLY ACTIVATED
 
 **Knowledge Base Coverage:**
-- CNS Medical: 42 articles (medulloblastoma, WHO CNS5, treatments, research, Foundation mission)
+- CNS Medical: 56 articles (medulloblastoma, WHO CNS5, treatments, research, Foundation mission, clinical trials, family support)
 - Web3/TYT: 29 articles (tokens, mining, governance, DeSci)
 - Academy: 16 lessons (EN + RU)
 
@@ -197,7 +207,7 @@ POST /functions/v1/aoi-rag-query
 - [x] HNSW indexes (1536 dimensions)
 - [x] Vector search functions
 - [x] 5 Edge Functions deployed
-- [x] 87 items with embeddings (100% coverage)
+- [x] 101 items with embeddings (100% coverage)
 - [x] aOi RAG queries working
 
 ### Phase 3: Content & Features - 80% COMPLETE
@@ -305,7 +315,7 @@ Build Time:   ~12 seconds
 ## Conclusion
 
 The TYT Foundation site is production-ready with:
-- 87 knowledge articles fully embedded and searchable
+- 101 knowledge articles fully embedded and searchable
 - aOi AI assistant activated with RAG capabilities
 - Complete foundation pages (About, Grants, Transparency, Contact)
 - Cross-domain architecture ready for takeyourtoken.app integration
