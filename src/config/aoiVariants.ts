@@ -1,4 +1,4 @@
-export type AoiVariant = 'hero' | 'pointing' | 'presenting' | 'portrait' | 'celebration';
+export type AoiVariant = 'hero' | 'pointing' | 'presenting' | 'portrait' | 'celebration' | 'guiding' | 'standing';
 export type AoiSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface AoiVariantConfig {
@@ -48,6 +48,22 @@ export const AOI_VARIANTS: Record<AoiVariant, AoiVariantConfig> = {
     path: '/assets/aoi/celebration.jpg',
     fallbackPath: '/aoi/img_5179.jpeg',
     alt: 'aOi celebrating',
+    objectPosition: 'center top',
+    scale: '1',
+  },
+  guiding: {
+    variant: 'guiding',
+    path: '/assets/aoi/guiding-left.png',
+    fallbackPath: '/aoi/img_5160.png',
+    alt: 'aOi guiding you',
+    objectPosition: 'center top',
+    scale: '1',
+  },
+  standing: {
+    variant: 'standing',
+    path: '/assets/aoi/standing-neutral.png',
+    fallbackPath: '/aoi/files_8303297-1767179378107-image.png',
+    alt: 'aOi standing',
     objectPosition: 'center top',
     scale: '1',
   },
