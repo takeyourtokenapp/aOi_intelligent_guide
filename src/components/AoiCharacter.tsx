@@ -21,15 +21,15 @@ export function AoiCharacter({
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const imagePaths = {
-    hero: '/assets/aoi/hero-welcome.png',
-    avatar: '/assets/aoi/portrait-close.png',
-    full: '/assets/aoi/aoi-fullbody-welcome.png'
+    hero: '/aoi/hero-welcome.png',
+    avatar: '/aoi/portrait-close.png',
+    full: '/aoi/aoi-fullbody-welcome.png'
   };
 
   const fallbackPaths = {
-    hero: '/assets/aoi/hero-welcome.png',
-    avatar: '/assets/aoi/portrait-close.png',
-    full: '/assets/aoi/standing-neutral.png'
+    hero: '/aoi/hero-welcome.png',
+    avatar: '/aoi/portrait-close.png',
+    full: '/aoi/standing-neutral.png'
   };
 
   const sizeClasses = {

@@ -79,12 +79,12 @@ export function HeroCarousel({ onAoiClick, onNavigate }: HeroCarouselProps) {
       <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center max-w-6xl w-full">
         <div className="relative flex items-center justify-center order-2 md:order-1">
           <img
-            src="/assets/aoi/aoi-fullbody-welcome.png"
+            src="/aoi/aoi-fullbody-welcome.png"
             alt="aOi AI Guide"
             className="w-full max-w-[200px] sm:max-w-[260px] md:max-w-sm mx-auto drop-shadow-2xl object-contain rounded-2xl"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.src = '/assets/aoi/hero-welcome.png';
+              target.src = '/aoi/hero-welcome.png';
             }}
           />
           <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>

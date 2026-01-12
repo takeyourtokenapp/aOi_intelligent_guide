@@ -1,6 +1,8 @@
 # aOi Visual Assets
 
-This directory contains visual assets for aOi (葵), the AI navigation assistant.
+This directory contains all aOi (葵) character images for the TYT platform.
+
+**Image Path in Code**: `/aoi/[filename].png`
 
 ## Quick Status Check
 
@@ -8,7 +10,24 @@ Run `./check-images.sh` to see which images are present.
 
 ## Current Status
 
-The app works perfectly without images — it shows beautiful gradient circles with the 葵 kanji as fallback. When you add PNG images here, they will automatically appear in the interface.
+All images are ready and configured. The app uses a 3-level fallback system:
+1. Primary image from `/aoi/`
+2. Alternative image (configured fallback)
+3. SVG placeholder with 葵 kanji character
+
+## Image Inventory
+
+| Filename | Usage | Component |
+|----------|-------|-----------|
+| `aoi-fullbody-welcome.png` | Main hero, welcome sections | HeroCarousel, HomePage |
+| `portrait-close.png` | Avatars, chat, navigation | All avatar components |
+| `hero-welcome.png` | Alternative hero sections | AoiCharacter hero variant |
+| `guiding-left.png` | Explorer level, tutorials | Level-based display |
+| `pointing-right.png` | Navigation, directional cues | Pointing variant |
+| `presenting-open.png` | Builder level, features | Level-based display |
+| `standing-neutral.png` | Guardian level, composed | Level-based display |
+| `celebration.jpg` | Success, achievements, 404 | Celebration states |
+| `aoi-placeholder.svg` | Ultimate fallback | All components |
 
 ## Asset Requirements
 

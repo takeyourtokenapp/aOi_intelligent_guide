@@ -136,7 +136,7 @@ export function AoiAvatarHero({ animated = true, className = '', onClick }: AoiA
         <div className="relative w-full h-full rounded-full overflow-hidden ring-4 ring-[#9B8FD9]/30 shadow-2xl shadow-[#9B8FD9]/20">
           {!imageError ? (
             <img
-              src="/assets/aoi/portrait-close.png"
+              src="/aoi/portrait-close.png"
               alt="aOi - Your AI Guide"
               loading="eager"
               className={`w-full h-full object-cover transition-opacity duration-500 ${
@@ -182,7 +182,7 @@ export function AoiChatAvatar({ size = 'sm', showSparkle = true, className = '' 
       <div className={`${sizeClass} rounded-full bg-gradient-to-br from-[#9b87f5] to-[#00F0FF] flex items-center justify-center overflow-hidden ring-2 ring-white/20`}>
         {!imageError ? (
           <img
-            src="/assets/aoi/portrait-close.png"
+            src="/aoi/portrait-close.png"
             alt="aOi"
             loading="lazy"
             className="w-full h-full object-cover object-top scale-125"
@@ -220,7 +220,7 @@ export function AoiNavigationAvatar({ onClick, className = '' }: AoiNavigationAv
         <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#9b87f5] to-[#00F0FF] flex items-center justify-center overflow-hidden ring-2 ring-[#D2A44C]/30 group-hover:ring-[#D2A44C]/50 transition-all">
           {!imageError ? (
             <img
-              src="/assets/aoi/portrait-close.png"
+              src="/aoi/portrait-close.png"
               alt="aOi"
               loading="lazy"
               className="w-full h-full object-cover object-top scale-125 group-hover:scale-[1.3] transition-transform"
@@ -261,7 +261,7 @@ export function AoiCelebration({
         <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden ring-4 ring-[#D2A44C]/40 shadow-2xl">
           {!imageError ? (
             <img
-              src="/assets/aoi/celebration.jpg"
+              src="/aoi/celebration.jpg"
               alt="aOi"
               loading="lazy"
               className={`w-full h-full object-cover object-top transition-opacity duration-500 ${
