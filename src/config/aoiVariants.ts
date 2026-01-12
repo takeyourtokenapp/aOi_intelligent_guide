@@ -10,11 +10,13 @@ export interface AoiVariantConfig {
   scale: string;
 }
 
+export const AOI_SVG_FALLBACK = '/assets/aoi/aoi-placeholder.svg';
+
 export const AOI_VARIANTS: Record<AoiVariant, AoiVariantConfig> = {
   hero: {
     variant: 'hero',
     path: '/assets/aoi/hero-welcome.png',
-    fallbackPath: '/aoi/img_5162.png',
+    fallbackPath: '/assets/aoi/aoi-fullbody-welcome.png',
     alt: 'aOi - Your AI Guide',
     objectPosition: 'center top',
     scale: '1',
@@ -22,7 +24,7 @@ export const AOI_VARIANTS: Record<AoiVariant, AoiVariantConfig> = {
   pointing: {
     variant: 'pointing',
     path: '/assets/aoi/pointing-right.png',
-    fallbackPath: '/aoi/img_5163.png',
+    fallbackPath: '/assets/aoi/presenting-open.png',
     alt: 'aOi pointing to information',
     objectPosition: 'center top',
     scale: '1',
@@ -30,7 +32,7 @@ export const AOI_VARIANTS: Record<AoiVariant, AoiVariantConfig> = {
   presenting: {
     variant: 'presenting',
     path: '/assets/aoi/presenting-open.png',
-    fallbackPath: '/aoi/generated-image_(17).png',
+    fallbackPath: '/assets/aoi/standing-neutral.png',
     alt: 'aOi presenting content',
     objectPosition: 'center top',
     scale: '1',
@@ -38,7 +40,7 @@ export const AOI_VARIANTS: Record<AoiVariant, AoiVariantConfig> = {
   portrait: {
     variant: 'portrait',
     path: '/assets/aoi/portrait-close.png',
-    fallbackPath: '/aoi/img_5166.png',
+    fallbackPath: '/assets/aoi/hero-welcome.png',
     alt: 'aOi portrait',
     objectPosition: 'center top',
     scale: '1',
@@ -46,7 +48,7 @@ export const AOI_VARIANTS: Record<AoiVariant, AoiVariantConfig> = {
   celebration: {
     variant: 'celebration',
     path: '/assets/aoi/celebration.jpg',
-    fallbackPath: '/aoi/img_5179.jpeg',
+    fallbackPath: '/assets/aoi/presenting-open.png',
     alt: 'aOi celebrating',
     objectPosition: 'center top',
     scale: '1',
@@ -54,7 +56,7 @@ export const AOI_VARIANTS: Record<AoiVariant, AoiVariantConfig> = {
   guiding: {
     variant: 'guiding',
     path: '/assets/aoi/guiding-left.png',
-    fallbackPath: '/aoi/img_5160.png',
+    fallbackPath: '/assets/aoi/aoi-fullbody-welcome.png',
     alt: 'aOi guiding you',
     objectPosition: 'center top',
     scale: '1',
@@ -62,7 +64,7 @@ export const AOI_VARIANTS: Record<AoiVariant, AoiVariantConfig> = {
   standing: {
     variant: 'standing',
     path: '/assets/aoi/standing-neutral.png',
-    fallbackPath: '/aoi/files_8303297-1767179378107-image.png',
+    fallbackPath: '/assets/aoi/aoi-fullbody-welcome.png',
     alt: 'aOi standing',
     objectPosition: 'center top',
     scale: '1',

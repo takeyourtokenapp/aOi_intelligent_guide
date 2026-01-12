@@ -1,0 +1,31 @@
+<svg width="400" height="600" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Soft gradient background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E6E0F8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D4E8F0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E8F0E8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="charGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#9B8FD9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7BA7BC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="600" fill="url(#bgGradient)" rx="20"/>
+
+  <!-- aOi character (葵) -->
+  <text x="200" y="320" font-family="'Noto Sans JP', sans-serif" font-size="180" font-weight="500" fill="url(#charGradient)" text-anchor="middle">葵</text>
+
+  <!-- Subtitle -->
+  <text x="200" y="420" font-family="system-ui, sans-serif" font-size="24" fill="#6B7280" text-anchor="middle">aOi AI Guide</text>
+
+  <!-- Tech accent line -->
+  <line x1="120" y1="450" x2="280" y2="450" stroke="#9B8FD9" stroke-width="2" opacity="0.5"/>
+
+  <!-- Small indicator dots -->
+  <circle cx="200" cy="480" r="4" fill="#9B8FD9" opacity="0.7"/>
+  <circle cx="215" cy="480" r="4" fill="#7BA7BC" opacity="0.7"/>
+  <circle cx="185" cy="480" r="4" fill="#8FA68E" opacity="0.7"/>
+</svg>
