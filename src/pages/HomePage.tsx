@@ -177,12 +177,12 @@ export default function HomePage({ onAoiClick, onNavigate }: HomePageProps) {
                 <div className="absolute inset-0 bg-purple-400/30 dark:bg-purple-500/20 rounded-2xl blur-2xl group-hover:blur-3xl transition-all"></div>
                 <div className="relative z-10 group-hover:scale-105 transition-all duration-300">
                   <img
-                    src="/assets/aoi/guiding-left.png"
+                    src="/assets/aoi/aoi-fullbody-welcome.png"
                     alt="aOi - AI Guide"
                     className="w-24 h-auto md:w-32 object-contain group-hover:scale-105 transition-transform"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = '/aoi/img_5160.png';
+                      target.src = '/assets/aoi/guiding-left.png';
                     }}
                   />
                 </div>

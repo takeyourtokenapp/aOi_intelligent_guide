@@ -23,13 +23,13 @@ export function AoiCharacter({
   const imagePaths = {
     hero: '/assets/aoi/hero-welcome.png',
     avatar: '/assets/aoi/portrait-close.png',
-    full: '/assets/aoi/standing-neutral.png'
+    full: '/assets/aoi/aoi-fullbody-welcome.png'
   };
 
   const fallbackPaths = {
-    hero: '/aoi/img_5162.png',
-    avatar: '/aoi/img_5166.png',
-    full: '/aoi/files_8303297-1767179378107-image.png'
+    hero: '/assets/aoi/hero-welcome.png',
+    avatar: '/assets/aoi/portrait-close.png',
+    full: '/assets/aoi/standing-neutral.png'
   };
 
   const sizeClasses = {

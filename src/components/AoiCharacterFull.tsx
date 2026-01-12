@@ -31,7 +31,7 @@ export function AoiCharacterFull({
 
       <div className="relative z-10">
         <img
-          src="/assets/aoi/standing-neutral.png"
+          src="/assets/aoi/aoi-fullbody-welcome.png"
           alt={`${AOI_CHARACTER.name} - Full Character`}
           className={`w-full h-auto object-contain drop-shadow-2xl transition-opacity duration-500 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
