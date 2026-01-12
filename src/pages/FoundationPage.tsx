@@ -6,6 +6,7 @@ import { AoiAvatar } from '../components/AoiAvatar';
 import { FoundationStats } from '../components/FoundationStats';
 import { DonationWidget } from '../components/DonationWidget';
 import { KnowledgeSearch } from '../components/KnowledgeSearch';
+import { FoundationUpdates } from '../components/FoundationUpdates';
 import { parseMarkdownToHTML } from '../utils/markdownParser';
 
 interface ResearchPost {
@@ -667,18 +668,19 @@ function UpdatesSection() {
   const { language } = useLanguage();
 
   return (
-    <div className="p-8 space-y-6">
-      <div className="text-center py-12">
-        <Sparkles className="w-16 h-16 text-blue-500 mx-auto mb-4 opacity-50" />
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-          {language === 'en' ? 'Updates Coming Soon' : 'Обновления скоро появятся'}
-        </h3>
-        <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+    <div className="p-8 space-y-8">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">
+          {language === 'en' ? 'Foundation Updates' : 'Обновления фонда'}
+        </h2>
+        <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
           {language === 'en'
-            ? 'This section will feature research progress, collaboration announcements, and scientific milestones as we build partnerships and advance our mission.'
-            : 'В этом разделе будут публиковаться отчёты о прогрессе исследований, объявления о сотрудничестве и научные достижения по мере развития партнёрств и продвижения нашей миссии.'}
+            ? 'Stay informed about our research progress, partnerships, and milestones as we work to advance pediatric brain tumor research.'
+            : 'Следите за прогрессом наших исследований, партнёрствами и достижениями в продвижении исследований опухолей мозга у детей.'}
         </p>
       </div>
+
+      <FoundationUpdates limit={6} />
     </div>
   );
 }
