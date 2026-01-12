@@ -1,9 +1,10 @@
-import { Shield, Menu, X, Sparkles, ChevronDown, Heart, Award, FileText, BookOpen, Home, MessageSquare } from 'lucide-react';
+import { Menu, X, ChevronDown, Heart, Award, FileText, BookOpen, Home, MessageSquare } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { DOMAIN_CONFIG } from '../config/navigation';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { useLanguage } from '../contexts/LanguageContext';
+import { AoiNavigationAvatar } from './AoiAvatarVariant';
 
 interface NavigationProps {
   onAoiClick?: () => void;
@@ -163,30 +164,7 @@ export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationPr
 
             <div className="w-px h-6 bg-gray-300 dark:bg-[#D2A44C]/20 mx-1" />
 
-            <button
-              onClick={onAoiClick}
-              className="group relative flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-br from-[#D2A44C]/10 to-[#00F0FF]/10 hover:from-[#D2A44C]/20 hover:to-[#00F0FF]/20 border border-[#D2A44C]/30 hover:border-[#D2A44C]/50 transition-all"
-              title="Ask aOi AI Guide"
-            >
-              <div className="relative">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#9b87f5] to-[#00F0FF] flex items-center justify-center overflow-hidden ring-2 ring-[#D2A44C]/30">
-                  <img
-                    src="/aoi/explorer-thinking.png"
-                    alt="aOi"
-                    className="w-full h-full object-cover object-top scale-150"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
-                  />
-                  <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-xs">
-                    葵
-                  </span>
-                </div>
-                <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#00FF00] border-2 border-white dark:border-[#0A1122] rounded-full animate-pulse" />
-              </div>
-              <span className="text-sm font-bold text-gray-800 dark:text-white">aOi</span>
-            </button>
+            <AoiNavigationAvatar onClick={onAoiClick} />
 
             <div className="flex items-center gap-2 ml-1">
               <LanguageSwitcher />
@@ -204,35 +182,13 @@ export function Navigation({ onAoiClick, onNavigate, currentPage }: NavigationPr
 
         {mobileMenuOpen && (
           <div className="lg:hidden py-4 space-y-2 border-t border-gray-200 dark:border-[#D2A44C]/20">
-            <button
+            <AoiNavigationAvatar
               onClick={() => {
                 onAoiClick?.();
                 setMobileMenuOpen(false);
               }}
-              className="w-full flex items-center gap-3 py-2.5 px-4 rounded-lg bg-gradient-to-br from-[#D2A44C]/10 to-[#00F0FF]/10 border border-[#D2A44C]/30 mb-3"
-            >
-              <div className="relative">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#9b87f5] to-[#00F0FF] flex items-center justify-center overflow-hidden ring-2 ring-[#D2A44C]/30">
-                  <img
-                    src="/aoi/explorer-thinking.png"
-                    alt="aOi"
-                    className="w-full h-full object-cover object-top scale-150"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
-                  />
-                  <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm">
-                    葵
-                  </span>
-                </div>
-                <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#00FF00] border-2 border-white dark:border-[#0A1122] rounded-full animate-pulse" />
-              </div>
-              <div className="text-left">
-                <div className="text-sm font-bold text-gray-800 dark:text-white">aOi AI Guide</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">{t('aoi.ask') || (t('language') === 'en' ? 'Ask me anything' : t('language') === 'ru' ? 'Спроси меня' : 'שאל אותי')}</div>
-              </div>
-            </button>
+              className="w-full justify-start mb-3"
+            />
 
             <button
               onClick={() => {

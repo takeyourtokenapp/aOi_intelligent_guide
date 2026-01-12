@@ -5,6 +5,7 @@ import type { AoiContext } from '../services/foundationApi';
 import { useUserProgress } from '../contexts/UserProgressContext';
 import { progressService } from '../services/progressService';
 import { crossDomainApi } from '../services/crossDomainApi';
+import { AoiChatAvatar } from './AoiAvatarVariant';
 
 interface Message {
   id: string;
@@ -307,23 +308,7 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
       <div className="bg-gradient-to-r from-blue-500 via-purple-600 to-purple-700 p-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center overflow-hidden ring-2 ring-white/20">
-                <img
-                  src="/aoi/image.png"
-                  alt="aOi"
-                  className="w-full h-full object-contain"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
-                <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg">
-                  葵
-                </span>
-              </div>
-              <div className={`absolute -bottom-1 -right-1 w-3 h-3 border-2 border-purple-600 rounded-full ${isOnline ? 'bg-green-400' : 'bg-orange-500 animate-pulse'}`} />
-            </div>
+            <AoiChatAvatar size="md" showSparkle={isOnline} />
             <div>
               <h3 className="font-bold text-white flex items-center gap-2 text-lg">
                 aOi (葵)
@@ -372,9 +357,7 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
             className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} items-start gap-2`}
           >
             {message.role === 'aoi' && (
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mt-1">
-                <Sparkles className="w-4 h-4" />
-              </div>
+              <AoiChatAvatar size="sm" showSparkle={false} className="mt-1" />
             )}
             <div
               className={`
@@ -411,9 +394,7 @@ export function AoiAssistant({ isOpen: controlledIsOpen, onOpenChange }: AoiAssi
         ))}
         {isLoading && (
           <div className="flex justify-start items-start gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-              <Sparkles className="w-4 h-4" />
-            </div>
+            <AoiChatAvatar size="sm" showSparkle={false} />
             <div className="bg-slate-700/80 text-gray-100 p-4 rounded-2xl rounded-tl-none border border-slate-600/50">
               <div className="flex gap-2">
                 <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
