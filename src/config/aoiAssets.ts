@@ -23,28 +23,28 @@ export const AOI_CHARACTER = {
 export const AOI_ASSETS: AoiAsset[] = [
   {
     id: 'aoi-beginner-neutral',
-    path: '/aoi/beginner-neutral.png',
+    path: '/assets/aoi/portrait-close.png',
     level: 'beginner',
     emotion: 'neutral',
     description: 'Beginner level - soft features, maximum empathy',
   },
   {
     id: 'aoi-explorer-thinking',
-    path: '/aoi/explorer-thinking.png',
+    path: '/assets/aoi/guiding-left.png',
     level: 'explorer',
     emotion: 'thinking',
     description: 'Explorer level - clearer gaze, schemas appearing',
   },
   {
     id: 'aoi-builder-excited',
-    path: '/aoi/builder-excited.png',
+    path: '/assets/aoi/presenting-open.png',
     level: 'builder',
     emotion: 'excited',
     description: 'Builder level - more mature, micro-holograms',
   },
   {
     id: 'aoi-guardian-neutral',
-    path: '/aoi/guardian-neutral.png',
+    path: '/assets/aoi/standing-neutral.png',
     level: 'guardian',
     emotion: 'neutral',
     description: 'Guardian level - maximum composure, control center',
