@@ -5,7 +5,7 @@ export const AOI_IMAGES = {
   pointingRight: '/aoi/pointing-right.png',
   guidingLeft: '/aoi/guiding-left.png',
   presentingOpen: '/aoi/presenting-open.png',
-  celebration: '/aoi/celebration.jpg',
+  celebration: '/aoi/celebration.png',
   heroWelcome: '/aoi/hero-welcome.png',
   placeholder: '/aoi/aoi-placeholder.svg',
 } as const;
