@@ -13,9 +13,17 @@ interface FundTransparency {
   description: string;
   proof_url: string | null;
   blockchain_hash: string | null;
-  is_public: boolean;
+  merkle_root: string | null;
+  orbital_timestamp: string | null;
+  orbital_witness_url: string | null;
+  aoi_verified: boolean;
+  aoi_verified_at: string | null;
+  source_type: string | null;
+  source_id: string | null;
+  source_url: string | null;
   created_at: string;
-  metadata: any;
+  verification_level: string;
+  fully_verified: boolean;
 }
 
 interface FoundationStats {
@@ -41,9 +49,8 @@ export default function TransparencyPage() {
     try {
       const [transResult, statsResult] = await Promise.all([
         supabase
-          .from('fund_transparency')
+          .from('foundation_public_ledger')
           .select('*')
-          .eq('is_public', true)
           .order('created_at', { ascending: false })
           .limit(50),
         supabase
@@ -296,12 +303,35 @@ export default function TransparencyPage() {
                       {getTypeIcon(tx.transaction_type)}
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
+                      <div className="flex items-center gap-3 mb-2 flex-wrap">
                         {getTypeBadge(tx.transaction_type)}
-                        {tx.blockchain_hash && (
+                        {tx.fully_verified && (
+                          <span className="text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full flex items-center gap-1 font-medium">
+                            <Shield className="w-3 h-3" />
+                            {language === 'en' ? 'Fully Verified' : 'Полностью верифицировано'}
+                          </span>
+                        )}
+                        {tx.blockchain_hash && !tx.fully_verified && (
                           <span className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
                             <CheckCircle2 className="w-3 h-3" />
-                            {language === 'en' ? 'Verified' : 'Верифицировано'}
+                            {language === 'en' ? 'Blockchain' : 'Блокчейн'}
+                          </span>
+                        )}
+                        {tx.orbital_timestamp && (
+                          <span className="text-xs text-purple-600 dark:text-purple-400 flex items-center gap-1">
+                            <span className="text-lg">🌌</span>
+                            {language === 'en' ? 'Orbital' : 'Орбитал'}
+                          </span>
+                        )}
+                        {tx.aoi_verified && (
+                          <span className="text-xs text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                            <span className="text-lg">葵</span>
+                            {language === 'en' ? 'aOi' : 'aOi'}
+                          </span>
+                        )}
+                        {tx.source_type && (
+                          <span className="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded">
+                            {tx.source_type}
                           </span>
                         )}
                       </div>
@@ -325,7 +355,7 @@ export default function TransparencyPage() {
                           </>
                         )}
                       </div>
-                      <div className="flex items-center gap-4 mt-2 text-xs text-slate-500 dark:text-slate-400">
+                      <div className="flex items-center gap-4 mt-2 text-xs text-slate-500 dark:text-slate-400 flex-wrap">
                         <div className="flex items-center gap-1">
                           <Calendar className="w-3 h-3" />
                           <span>{new Date(tx.created_at).toLocaleString(language === 'en' ? 'en-US' : 'ru-RU')}</span>
@@ -338,8 +368,36 @@ export default function TransparencyPage() {
                             className="flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:underline"
                           >
                             <ExternalLink className="w-3 h-3" />
-                            <span>{language === 'en' ? 'View on Etherscan' : 'Смотреть в Etherscan'}</span>
+                            <span>{language === 'en' ? 'Blockchain' : 'Блокчейн'}</span>
                           </a>
+                        )}
+                        {tx.orbital_witness_url && (
+                          <a
+                            href={tx.orbital_witness_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-purple-600 dark:text-purple-400 hover:underline"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            <span>{language === 'en' ? 'Orbital Proof' : 'Орбитальное доказательство'}</span>
+                          </a>
+                        )}
+                        {tx.source_url && (
+                          <a
+                            href={tx.source_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-cyan-600 dark:text-cyan-400 hover:underline"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            <span>{language === 'en' ? 'Source in App' : 'Источник в App'}</span>
+                          </a>
+                        )}
+                        {tx.merkle_root && (
+                          <span className="flex items-center gap-1 text-amber-600 dark:text-amber-400">
+                            <CheckCircle2 className="w-3 h-3" />
+                            <span>{language === 'en' ? 'Batched' : 'В пакете'}</span>
+                          </span>
                         )}
                       </div>
                     </div>

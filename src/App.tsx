@@ -11,9 +11,10 @@ import AcademyPage from './pages/AcademyPage';
 import ContactPage from './pages/ContactPage';
 import GrantsPage from './pages/GrantsPage';
 import TransparencyPage from './pages/TransparencyPage';
+import OrbitalEventsPage from './pages/OrbitalEventsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
-type PageType = 'home' | 'foundation' | 'academy' | 'contact' | 'grants' | 'transparency' | 'notfound';
+type PageType = 'home' | 'foundation' | 'academy' | 'contact' | 'grants' | 'transparency' | 'orbital' | 'notfound';
 type FoundationTab = 'about' | 'research' | 'manifesto' | 'updates';
 
 function AppContent() {
@@ -49,6 +50,7 @@ function AppContent() {
         {currentPage === 'contact' && <ContactPage />}
         {currentPage === 'grants' && <GrantsPage />}
         {currentPage === 'transparency' && <TransparencyPage />}
+        {currentPage === 'orbital' && <OrbitalEventsPage />}
         {currentPage === 'notfound' && <NotFoundPage onNavigate={handleNavigate} onAoiClick={handleAoiClick} />}
 
         <footer className="container mx-auto px-6 py-12 border-t-2 border-[#9B8FD9]/40 dark:border-[#9B8FD9]/20">
