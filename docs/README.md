@@ -1,259 +1,221 @@
-# Documentation Index
+# TYT Foundation - Documentation
 
-Complete documentation for TakeYourToken.app platform.
+> **Last Updated**: 16 January 2026
+> **Project**: tyt.foundation / takeyourtoken.app ecosystem
+> **Status**: Active development
 
 ---
 
 ## Quick Navigation
 
+### Core Documentation
+
 - **[Root README](../README.md)** - Project overview and quick start
-- **[Architecture](#architecture)** - System design and integration
-- **[Setup Guides](#setup-guides)** - Deployment and configuration
-- **[Development](#development)** - Development notes and templates
-- **[Security](#security)** - Security updates and policies
-- **[aOi Guide](#aoi-ai-guide)** - AI assistant documentation
+- **[PROJECT_STATUS_REPORT.md](../PROJECT_STATUS_REPORT.md)** - Comprehensive status report (85/100 complete)
+- **[NEXT_STEPS.md](../NEXT_STEPS.md)** - Implementation roadmap (12 weeks to beta)
+- **[FOUNDATION_ARCHITECTURE.md](FOUNDATION_ARCHITECTURE.md)** - Technical architecture details
 
 ---
 
 ## Architecture
 
-Core system architecture and design documents:
-
 ### Foundation Architecture
-- **[TYT Foundation Architecture](../TYT_FOUNDATION_ARCHITECTURE.md)** - Complete platform architecture
-- **[Cross-Domain Architecture](architecture/AOI_CROSS_DOMAIN_ARCHITECTURE.md)** - Integration between domains
-- **[Communication System](architecture/COMMUNICATION_SYSTEM_OVERVIEW.md)** - Contact and notification system
-
-### Research & Mission
-- **[Research Manifesto](../TYT_RESEARCH_MANIFESTO_I-QCC.md)** - I-QCC research framework and mission
-
----
-
-## Setup Guides
-
-Deployment, configuration, and initial setup:
-
-### Deployment
-- **[Deployment Guide](setup/DEPLOYMENT_GUIDE.md)** - Production deployment instructions
-- **[Deployment Checklist](setup/DEPLOYMENT_CHECKLIST.md)** - Pre-launch checklist
-- **[Deployment Ready](setup/DEPLOYMENT_READY.md)** - Final deployment status
-
-### Configuration
-- **[Multilingual Theme Guide](setup/MULTILINGUAL_THEME_GUIDE.md)** - Language and theme setup
-- **[Demo Stats Config](setup/DEMO_STATS_CONFIG.md)** - Lead generation statistics
-- **[Admin Dashboard Guide](setup/ADMIN_DASHBOARD_GUIDE.md)** - Admin panel setup
-
-### Private Setup (Gitignored)
-- **[Add First Admin](private/ADD_FIRST_ADMIN.md)** - Initial admin setup
-- **[Email Setup Guide](private/EMAIL_SETUP_GUIDE.md)** - Email service configuration
-- **[Email System Complete](private/EMAIL_SYSTEM_SETUP_COMPLETE.md)** - Email verification
-- **[Telegram Bot Setup](private/TELEGRAM_BOT_SETUP.md)** - Telegram notifications
+- **[FOUNDATION_ARCHITECTURE.md](FOUNDATION_ARCHITECTURE.md)** - Complete technical architecture
+  - Database schema (40 tables)
+  - API endpoints and services
+  - Cross-domain integration
+  - Security model (RLS policies)
+  - aOi integration architecture
 
 ---
 
-## Development
+## Research Documents
 
-Development notes, implementation details, and templates:
-
-### Implementation Notes
-- **[Project Analysis](development/PROJECT_ANALYSIS.md)** - Initial project analysis
-- **[Implementation Complete](development/IMPLEMENTATION_COMPLETE.md)** - Feature completion log
-- **[Integration Summary](development/INTEGRATION_SUMMARY.md)** - Integration milestones
-- **[Contact Form Fixes](development/CONTACT_FORM_FIXES_SUMMARY.md)** - Form improvements
-
-### Templates
-- **[Medical Content](development/templates/TEMPLATE_MEDICAL_CONTENT.md)** - Medical information templates
-- **[Web3 Content](development/templates/TEMPLATE_WEB3_CONTENT.md)** - Web3 education templates
-- **[Response Formats](development/templates/TEMPLATE_RESPONSE_FORMATS.md)** - API response templates
+### Medical Research
+- **tyt_foundation.pdf** - Foundation mission and research focus
+- **aoi_digital_mentor_1.pdf** - aOi character design and educational approach
+- **aoi_digital_mentor_2.pdf** - aOi implementation guidelines
 
 ---
 
-## Security
+## Key Concepts
 
-Security updates, RLS policies, and vulnerability fixes:
+### Two Domains, One Mission
 
-### Security Updates
-- **[Security Advisory Fixes](security/SECURITY_ADVISORY_FIXES.md)** - Vulnerability patches
-- **[Security Performance Fixes](security/SECURITY_PERFORMANCE_FIXES.md)** - Performance & security
-- **[Remaining Issues Resolved](security/REMAINING_SECURITY_ISSUES_RESOLVED.md)** - Final security audit
+**tyt.foundation** (Shows & Educates)
+- Medical knowledge base
+- Scientific articles and research
+- Foundation transparency and reports
+- Partnerships (I-QCC)
+- Educational content
 
-### Database Security
-- **[Contact Form RLS Fix](security/CONTACT_FORM_RLS_FIX.md)** - RLS policy corrections
-- **[Null Safety Fixes](security/NULL_SAFETY_FIXES.md)** - Null pointer protection
-- **[Foreign Key Indexes](security/FOREIGN_KEY_INDEXES_ADDED.md)** - Database optimization
+**takeyourtoken.app** (Implements & Executes)
+- Web3 Academy
+- User accounts and authentication
+- Donation processing
+- Progress tracking
+- Real-time statistics
 
----
-
-## aOi AI Guide
-
-Documentation for the aOi (葵) AI assistant:
-
-### Core Documentation
-- **[aOi Integration Complete](aoi/AOI_INTEGRATION_COMPLETE.md)** - Complete integration guide
-- **[aOi Integration Summary](aoi/README_AOI_INTEGRATION.md)** - Technical deep-dive
-- **[Prompt for aOi Guide Repo](aoi/PROMPT_FOR_AOI_GUIDE_REPO.md)** - Guide repository setup
-
-### Character Design
-- **[Visual Identity](aoi/AOI_VISUAL_IDENTITY.md)** - Character design guidelines
-- **[Character Design Update](aoi/AOI_CHARACTER_DESIGN_UPDATE.md)** - Design iterations
-- **[Character Integration](aoi/AOI_CHARACTER_INTEGRATION.md)** - Implementation details
-- **[Hero Redesign](aoi/AOI_HERO_REDESIGN.md)** - Hero section updates
-- **[Organic Redesign](aoi/AOI_ORGANIC_REDESIGN.md)** - Natural design evolution
-
-### Visual Assets
-- **[Image Integration](aoi/AOI_IMAGE_INTEGRATION.md)** - Image implementation
-- **[Images Deployed](aoi/AOI_IMAGES_DEPLOYED.md)** - Asset deployment status
-- **[Avatar Cropping](aoi/AOI_AVATAR_CROPPING.md)** - Avatar optimization
-- **[Size Optimization](aoi/AOI_SIZE_OPTIMIZATION.md)** - File size reduction
-
-### Integration & Status
-- **[Header Integration](aoi/AOI_HEADER_INTEGRATION.md)** - Navigation integration
-- **[Integration Status](aoi/AOI_INTEGRATION_STATUS.md)** - Current status
-- **[Deployment Ready](aoi/AOI_DEPLOYMENT_READY.md)** - Production readiness
-- **[Redesign Summary](aoi/AOI_REDESIGN_SUMMARY.md)** - Design changes summary
-
-### Technical Implementation
-- **[API Contract](aoi/AOI_API_CONTRACT.md)** - API specifications
-- **[Knowledge Schema](aoi/AOI_KNOWLEDGE_SCHEMA.md)** - Knowledge base structure
-- **[Self-Learning Implementation](aoi/AOI_SELF_LEARNING_IMPLEMENTATION.md)** - ML integration
-- **[Test Scenarios](aoi/AOI_TEST_SCENARIOS.md)** - Testing documentation
-
-### Guidelines & Safety
-- **[Legal Constraints](aoi/AOI_LEGAL_CONSTRAINTS.md)** - Legal compliance
-- **[Safety Checklist](aoi/AOI_SAFETY_CHECKLIST.md)** - Safety guidelines
+### aOi (葵) - The Bridge
+- AI curator and navigator between domains
+- Adaptive learning guide
+- Trust verification system
+- Knowledge interpreter (NOT medical advisor)
+- Progress tracking and personalization
 
 ---
 
-## Visual Assets
+## Database Architecture
 
-Character images and visual identity:
+### Foundation Trust Layer (B0-B6)
+✅ **100% Complete** (as of January 16, 2026)
 
-- **[aOi Character Images](../public/aoi/)** - Avatar and character assets
-- **[aOi Image README](../public/aoi/README.md)** - Asset usage guidelines
+**Public Views:**
+- `foundation_public_ledger` - Complete transparency with 3-tier verification
+- `foundation_orbital_events` - Orbital witness timestamping
+- `foundation_aoi_confidence_view` - aOi verification scores
 
----
+**Key Features:**
+- Multi-level proof stack (SHA-256 + Merkle + Orbital + aOi)
+- Cross-domain traceability
+- Read-only foundation domain
+- RLS security (100% coverage)
 
-## File Organization
-
-### Root Documentation
-```
-project/
-├── README.md                           # Main README (public-safe)
-├── TYT_FOUNDATION_ARCHITECTURE.md     # Core architecture
-└── TYT_RESEARCH_MANIFESTO_I-QCC.md    # Research mission
-```
-
-### Organized Documentation
-```
-docs/
-├── README.md                    # This file
-├── architecture/                # System design
-├── setup/                       # Deployment guides
-├── development/                 # Dev notes & templates
-├── security/                    # Security docs
-├── aoi/                         # aOi documentation
-└── private/                     # Sensitive docs (gitignored)
-```
+See [PROJECT_STATUS_REPORT.md](../PROJECT_STATUS_REPORT.md) for full details.
 
 ---
 
-## Documentation Standards
+## Implementation Status
+
+### Completed (85/100)
+✅ Trust Layer (B0-B6) - 100%
+✅ Database Schema - 40 tables with RLS
+✅ Knowledge Base - 105 articles with embeddings
+✅ Core Pages - 9 operational pages
+✅ aOi RAG - Vector search functional
+✅ Security - A+ grade (96/100)
+
+### In Progress
+🔄 Donation processing backend
+🔄 Impact stories system
+🔄 Content expansion (target: 200+ articles)
+
+### Planned
+📋 Volunteer portal
+📋 Foundation blog
+📋 Partner clinics showcase
+📋 Privacy policy & GDPR compliance
+
+See [NEXT_STEPS.md](../NEXT_STEPS.md) for detailed roadmap.
+
+---
+
+## Development Guidelines
 
 ### Security Rules
 
-**NEVER commit to GitHub:**
+**NEVER commit to version control:**
 - API keys or tokens
 - Passwords or secrets
-- Personal email addresses
-- Supabase project URLs/IDs
+- Personal information
 - Database credentials
-- Private setup instructions
+- Environment variables with sensitive data
 
-**Safe to commit:**
-- Architecture documentation
+**Safe to document:**
+- Architecture and design patterns
 - Public API contracts
-- Development guides (without secrets)
-- Code examples (with placeholders)
-- Design guidelines
+- Code structure and organization
+- Configuration templates (with placeholders)
 
-### Document Naming
+### Code Organization
 
-- `COMPONENT_NAME.md` - Component documentation
-- `FEATURE_SUMMARY.md` - Feature completion
-- `*_GUIDE.md` - Step-by-step guides
-- `*_FIX.md` - Bug fix documentation
-- `TEMPLATE_*.md` - Content templates
-
----
-
-## Contributing to Docs
-
-### Adding New Documentation
-
-1. Choose appropriate directory:
-   - Architecture → `docs/architecture/`
-   - Setup → `docs/setup/`
-   - Development → `docs/development/`
-   - Security → `docs/security/`
-   - aOi → `docs/aoi/`
-   - Sensitive → `docs/private/`
-
-2. Follow naming conventions
-3. Update this index
-4. Check for sensitive information
-5. Ensure `.gitignore` covers sensitive files
-
-### Updating Existing Docs
-
-1. Keep version history in comments
-2. Update modification date
-3. Link related documents
-4. Test all code examples
+```
+project/
+├── src/
+│   ├── components/       # React components
+│   ├── pages/           # Page components
+│   ├── services/        # API and business logic
+│   ├── contexts/        # React contexts
+│   ├── config/          # Configuration
+│   └── lib/             # Utilities
+├── supabase/
+│   ├── migrations/      # Database migrations
+│   └── functions/       # Edge functions
+├── docs/                # Documentation (this directory)
+└── public/              # Static assets
+```
 
 ---
 
-## Quick Reference
+## Testing & Quality
 
-### For New Developers
-1. Start with [Root README](../README.md)
-2. Review [Architecture](../TYT_FOUNDATION_ARCHITECTURE.md)
-3. Follow [Deployment Guide](setup/DEPLOYMENT_GUIDE.md)
-4. Read [Security Docs](security/)
+### Security Checks
+- ✅ RLS policies on all tables
+- ✅ No authentication bypass vulnerabilities
+- ✅ Foreign key indexes for performance
+- ✅ Input validation and sanitization
+- ✅ Rate limiting on Edge Functions
 
-### For Content Writers
-1. Use [Templates](development/templates/)
-2. Follow [aOi Guidelines](aoi/AOI_VISUAL_IDENTITY.md)
-3. Check [Legal Constraints](aoi/AOI_LEGAL_CONSTRAINTS.md)
-
-### For Administrators
-1. See [Private Setup](private/)
-2. Review [Admin Guide](setup/ADMIN_DASHBOARD_GUIDE.md)
-3. Configure [Email System](private/EMAIL_SETUP_GUIDE.md)
+### Performance
+- ✅ Vector search optimization
+- ✅ Database indexes on frequently queried columns
+- ✅ Efficient SQL queries with proper joins
+- ✅ Edge Function caching where appropriate
 
 ---
 
-## Maintenance
+## Contributing
 
-### Regular Updates Needed
-- Deployment guides (when infrastructure changes)
-- API contracts (when endpoints change)
-- Security docs (after vulnerability fixes)
-- Integration status (after major features)
+### Adding New Features
 
-### Deprecated Documents
-Obsolete documents moved to `docs/archive/` or deleted if no historical value.
+1. **Plan First**
+   - Update [NEXT_STEPS.md](../NEXT_STEPS.md)
+   - Document architecture changes
+   - Consider security implications
+
+2. **Implement**
+   - Follow existing patterns
+   - Add proper RLS policies
+   - Write clear comments
+   - Test thoroughly
+
+3. **Document**
+   - Update [PROJECT_STATUS_REPORT.md](../PROJECT_STATUS_REPORT.md)
+   - Add technical notes to [FOUNDATION_ARCHITECTURE.md](FOUNDATION_ARCHITECTURE.md)
+   - Update this README if needed
+
+### Database Changes
+
+1. Create migration file: `supabase/migrations/[timestamp]_descriptive_name.sql`
+2. Always include detailed comments
+3. Add RLS policies immediately
+4. Test with different user roles
+5. Document in [PROJECT_STATUS_REPORT.md](../PROJECT_STATUS_REPORT.md)
 
 ---
 
-## Support
+## Support & Contact
 
-For questions about documentation:
-- Check this index first
-- Review related documents
-- See main [README](../README.md) for contact info
+### For Developers
+- Review [PROJECT_STATUS_REPORT.md](../PROJECT_STATUS_REPORT.md) for current state
+- Check [NEXT_STEPS.md](../NEXT_STEPS.md) for upcoming tasks
+- See [FOUNDATION_ARCHITECTURE.md](FOUNDATION_ARCHITECTURE.md) for technical details
+
+### For Contributors
+- Understand the mission in [Root README](../README.md)
+- Follow security guidelines above
+- Maintain code quality standards
 
 ---
 
-**Last Updated**: January 8, 2026
+## Version History
+
+- **16 January 2026** - Documentation cleanup, trust layer complete
+- **12 January 2026** - Knowledge base expansion, embedding generation
+- **8 January 2026** - Foundation trust layer implementation begins
+
+---
+
 **Maintained By**: TYT Foundation Development Team
-**Status**: ✅ Complete and organized
+**License**: Proprietary
+**Status**: Active Development (Beta Launch: Q1 2026)

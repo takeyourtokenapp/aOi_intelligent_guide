@@ -1473,6 +1473,5 @@ This roadmap provides a **clear 12-week path** from current state (85/100) to be
 ---
 
 **Related Documents:**
-- [PROJECT_STATUS_REPORT.md](PROJECT_STATUS_REPORT.md) - Full status analysis
-- [FOUNDATION_TRUST_LAYER_COMPLETE.md](FOUNDATION_TRUST_LAYER_COMPLETE.md) - Trust layer implementation
-- [FOUNDATION_TRUST_LAYER_STATUS.md](FOUNDATION_TRUST_LAYER_STATUS.md) - B0-B6 compliance status
+- [PROJECT_STATUS_REPORT.md](PROJECT_STATUS_REPORT.md) - Full status analysis (includes trust layer details)
+- [docs/FOUNDATION_ARCHITECTURE.md](docs/FOUNDATION_ARCHITECTURE.md) - Technical architecture
