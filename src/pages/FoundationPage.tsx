@@ -47,7 +47,7 @@ const tr = (key: keyof typeof translations, lang: Language) => translations[key]
 export default function FoundationPage({ initialTab = 'about' }: FoundationPageProps) {
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<'about' | 'research' | 'manifesto' | 'knowledge' | 'updates'>(initialTab);
-  const [manifestoPost, setManifestoPost] = useState<ResearchPost | null>(null);
+  const [manifestoPosts, setManifestoPosts] = useState<ResearchPost[]>([]);
   const [researchPosts, setResearchPosts] = useState<ResearchPost[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -67,7 +67,7 @@ export default function FoundationPage({ initialTab = 'about' }: FoundationPageP
           .select('*')
           .eq('post_type', 'manifesto')
           .eq('featured', true)
-          .maybeSingle(),
+          .order('published_at', { ascending: false }),
         supabase
           .from('research_posts')
           .select('*')
@@ -79,7 +79,7 @@ export default function FoundationPage({ initialTab = 'about' }: FoundationPageP
       if (manifestoResult.error) throw manifestoResult.error;
       if (researchResult.error) throw researchResult.error;
 
-      setManifestoPost(manifestoResult.data);
+      setManifestoPosts(manifestoResult.data || []);
       setResearchPosts(researchResult.data || []);
     } catch (error) {
       console.error('Error loading content:', error);
@@ -152,7 +152,7 @@ export default function FoundationPage({ initialTab = 'about' }: FoundationPageP
           {activeTab === 'about' && <AboutSection />}
           {activeTab === 'research' && <ResearchSection posts={researchPosts} loading={loading} />}
           {activeTab === 'knowledge' && <KnowledgeSection />}
-          {activeTab === 'manifesto' && <ManifestoSection post={manifestoPost} loading={loading} />}
+          {activeTab === 'manifesto' && <ManifestoSection posts={manifestoPosts} loading={loading} />}
           {activeTab === 'updates' && <UpdatesSection />}
         </div>
       </div>
@@ -403,8 +403,9 @@ function ResearchSection({ posts, loading }: { posts: ResearchPost[]; loading: b
   );
 }
 
-function ManifestoSection({ post, loading }: { post: ResearchPost | null; loading: boolean }) {
+function ManifestoSection({ posts, loading }: { posts: ResearchPost[]; loading: boolean }) {
   const { language } = useLanguage();
+  const [selectedPost, setSelectedPost] = useState<ResearchPost | null>(null);
   const [viewingFull, setViewingFull] = useState(false);
 
   if (loading) {
@@ -420,7 +421,7 @@ function ManifestoSection({ post, loading }: { post: ResearchPost | null; loadin
     );
   }
 
-  if (!post) {
+  if (!posts || posts.length === 0) {
     return (
       <div className="p-8 text-center">
         <p className="text-slate-600 dark:text-slate-400">
@@ -429,6 +430,8 @@ function ManifestoSection({ post, loading }: { post: ResearchPost | null; loadin
       </div>
     );
   }
+
+  const post = selectedPost || posts[0];
 
   const getContent = (field: 'title' | 'subtitle' | 'excerpt' | 'content') => {
     const fieldName = `${field}_${language}` as keyof ResearchPost;
@@ -454,7 +457,10 @@ function ManifestoSection({ post, loading }: { post: ResearchPost | null; loadin
       <div className="p-8 space-y-6">
         <div className="flex items-center justify-between gap-4">
           <button
-            onClick={() => setViewingFull(false)}
+            onClick={() => {
+              setViewingFull(false);
+              setSelectedPost(null);
+            }}
             className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -515,6 +521,42 @@ function ManifestoSection({ post, loading }: { post: ResearchPost | null; loadin
 
   return (
     <div className="p-8 space-y-8">
+      {posts.length > 1 && (
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
+            {language === 'en' ? 'Open Manifestos' : 'Открытые манифесты'}
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            {posts.map((manifestoPost) => {
+              const isSelected = manifestoPost.id === post.id;
+              const manifestoTitle = (manifestoPost[`title_${language}` as keyof ResearchPost] ||
+                manifestoPost.title_ru) as string;
+              const manifestoSubtitle = (manifestoPost[`subtitle_${language}` as keyof ResearchPost] ||
+                manifestoPost.subtitle_ru) as string;
+
+              return (
+                <button
+                  key={manifestoPost.id}
+                  onClick={() => setSelectedPost(manifestoPost)}
+                  className={`p-4 rounded-xl text-left transition-all ${
+                    isSelected
+                      ? 'bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/40 dark:to-cyan-900/40 border-2 border-blue-500 dark:border-blue-400'
+                      : 'bg-slate-100 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
+                  }`}
+                >
+                  <h4 className="font-bold text-slate-900 dark:text-white mb-2">
+                    {manifestoTitle}
+                  </h4>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
+                    {manifestoSubtitle}
+                  </p>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       <div className="flex items-start gap-6">
         <AoiAvatar size="lg" emotion="thinking" level="guardian" showKanji={true} />
         <div className="flex-1">

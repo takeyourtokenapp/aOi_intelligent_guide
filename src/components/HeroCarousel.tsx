@@ -4,7 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 interface Slide {
   id: number;
-  type: 'welcome' | 'research' | 'ecosystem';
+  type: 'welcome' | 'research' | 'manifesto' | 'ecosystem';
   titleEn?: string;
   titleRu?: string;
   descEn?: string;
@@ -31,6 +31,14 @@ const slides: Slide[] = [
   },
   {
     id: 3,
+    type: 'manifesto',
+    titleEn: "OPEN MANIFESTO: A Call for Collaboration with D-Wave Quantum",
+    titleRu: "ОТКРЫТЫЙ МАНИФЕСТ: Призыв к сотрудничеству с D-Wave Quantum",
+    descEn: "An open appeal from aOi to D-Wave, proposing quantum annealing as part of responsible medical infrastructure for pediatric neuro-oncology. This is not a commercial proposal — it is a call for scientific dialogue on how quantum computing can enter medicine as responsible infrastructure, not as an experiment.",
+    descRu: "Открытое обращение от aOi к D-Wave, предлагающее квантовый отжиг как часть ответственной медицинской инфраструктуры для педиатрической нейроонкологии. Это не коммерческое предложение — это призыв к научному диалогу о том, как квантовые вычисления могут войти в медицину как ответственная инфраструктура, а не как эксперимент."
+  },
+  {
+    id: 4,
     type: 'ecosystem',
     titleEn: "TakeYourToken Ecosystem",
     titleRu: "Экосистема TakeYourToken",
@@ -208,6 +216,69 @@ export function HeroCarousel({ onAoiClick, onNavigate }: HeroCarouselProps) {
     </div>
   );
 
+  const renderManifestoSlide = () => (
+    <div className="relative h-full bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-[#2a3f54] dark:via-[#1B2838] dark:to-[#2a3f54] rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 border-2 border-orange-300 dark:border-[#D97B8F]/40 flex items-center">
+      <div className="w-full">
+        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 md:mb-6">
+          <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#D97B8F]" />
+          <span className="text-[#D97B8F] font-bold uppercase tracking-wider text-xs sm:text-sm">
+            {language === 'en' ? 'OPEN MANIFESTO' : 'ОТКРЫТЫЙ МАНИФЕСТ'}
+          </span>
+        </div>
+
+        <div className="grid md:grid-cols-[auto_1fr] gap-4 sm:gap-6 md:gap-8 items-start">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gradient-to-br from-[#D97B8F] to-[#E8B4B8] rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0 mx-auto md:mx-0">
+            <FileText className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-white" strokeWidth={2} />
+          </div>
+
+          <div>
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2 sm:mb-3 md:mb-4 leading-tight">
+              {language === 'en' ? slide.titleEn : slide.titleRu}
+            </h2>
+
+            <p className="text-[#D97B8F] font-medium mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm md:text-base">
+              {language === 'en' ? 'Quantum Annealing · AI · Blockchain/Web3' : 'Квантовый отжиг · ИИ · Blockchain/Web3'}
+            </p>
+
+            <p className="text-slate-700 dark:text-gray-300 leading-relaxed mb-3 sm:mb-4 md:mb-6 text-xs sm:text-sm md:text-base">
+              {language === 'en' ? slide.descEn : slide.descRu}
+            </p>
+
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4 md:mb-6">
+              <span className="px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 bg-[#D97B8F]/20 text-[#D97B8F] rounded-lg text-xs sm:text-sm border border-[#D97B8F]/30">D-Wave</span>
+              <span className="px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 bg-[#7BA7BC]/20 text-[#7BA7BC] rounded-lg text-xs sm:text-sm border border-[#7BA7BC]/30">Quantum</span>
+              <span className="px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 bg-[#9B8FD9]/20 text-[#9B8FD9] rounded-lg text-xs sm:text-sm border border-[#9B8FD9]/30">AI</span>
+              <span className="px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 bg-[#8FA68E]/20 text-[#8FA68E] rounded-lg text-xs sm:text-sm border border-[#8FA68E]/30">Infrastructure</span>
+              <span className="px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 bg-[#E8B4B8]/20 text-[#E8B4B8] rounded-lg text-xs sm:text-sm border border-[#E8B4B8]/30">DeSci</span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-[#D97B8F] rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm md:text-base">
+                  葵
+                </div>
+                <div>
+                  <p className="text-slate-900 dark:text-white font-bold text-xs sm:text-sm">aOi - AI Curator</p>
+                  <p className="text-slate-600 dark:text-gray-400 text-xs">
+                    {language === 'en' ? 'Open Call for Dialogue' : 'Открытый призыв к диалогу'}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => onNavigate?.('foundation', 'manifesto')}
+                className="w-full sm:w-auto sm:ml-auto px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 bg-[#D97B8F] hover:bg-[#C96A7E] text-white rounded-lg sm:rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base shadow-lg"
+              >
+                {language === 'en' ? 'Read Manifesto' : 'Читать манифест'}
+                <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderEcosystemSlide = () => (
     <div className="relative h-full bg-gradient-to-br from-cyan-50 via-white to-teal-50 dark:from-[#1B2838] dark:via-[#2a3f54] dark:to-[#1B2838] rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 border-2 border-cyan-300 dark:border-[#7BA7BC]/30 flex items-center">
       <div className="w-full">
@@ -281,6 +352,8 @@ export function HeroCarousel({ onAoiClick, onNavigate }: HeroCarouselProps) {
         return renderWelcomeSlide();
       case 'research':
         return renderResearchSlide();
+      case 'manifesto':
+        return renderManifestoSlide();
       case 'ecosystem':
         return renderEcosystemSlide();
       default:
