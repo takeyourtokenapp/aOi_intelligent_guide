@@ -12,9 +12,10 @@ import ContactPage from './pages/ContactPage';
 import GrantsPage from './pages/GrantsPage';
 import TransparencyPage from './pages/TransparencyPage';
 import OrbitalEventsPage from './pages/OrbitalEventsPage';
+import AoiTransparencyPage from './pages/AoiTransparencyPage';
 import NotFoundPage from './pages/NotFoundPage';
 
-type PageType = 'home' | 'foundation' | 'academy' | 'contact' | 'grants' | 'transparency' | 'orbital' | 'notfound';
+type PageType = 'home' | 'foundation' | 'academy' | 'contact' | 'grants' | 'transparency' | 'orbital' | 'aoi' | 'notfound';
 type FoundationTab = 'about' | 'research' | 'manifesto' | 'updates';
 
 function AppContent() {
@@ -51,6 +52,7 @@ function AppContent() {
         {currentPage === 'grants' && <GrantsPage />}
         {currentPage === 'transparency' && <TransparencyPage />}
         {currentPage === 'orbital' && <OrbitalEventsPage />}
+        {currentPage === 'aoi' && <AoiTransparencyPage />}
         {currentPage === 'notfound' && <NotFoundPage onNavigate={handleNavigate} onAoiClick={handleAoiClick} />}
 
         <footer className="container mx-auto px-6 py-12 border-t-2 border-[#9B8FD9]/40 dark:border-[#9B8FD9]/20">
