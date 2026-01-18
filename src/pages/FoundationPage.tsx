@@ -100,13 +100,25 @@ export default function FoundationPage({ initialTab = 'about' }: FoundationPageP
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <AoiAvatar size="lg" emotion="happy" level="guardian" showKanji={true} />
-            <div className="text-left">
-              <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-6">
+            <div className="relative">
+              <AoiAvatar size="lg" emotion="happy" level="guardian" showKanji={true} />
+              <div className="absolute -top-1 -right-1">
+                <div className="relative">
+                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
+                  <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping opacity-75"></div>
+                </div>
+              </div>
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-green-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap shadow-lg">
+                {language === 'en' ? 'ONLINE' : 'ОНЛАЙН'}
+              </div>
+            </div>
+
+            <div className="text-center sm:text-left">
+              <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-2">
                 {language === 'en' ? 'TYT Foundation' : 'Фонд TYT'}
               </h1>
-              <p className="text-lg text-slate-600 dark:text-slate-400">
+              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400">
                 {language === 'en'
                   ? 'Children\'s Brain Cancer Research & Support'
                   : 'Исследования и поддержка детей с опухолями мозга'}
@@ -114,13 +126,24 @@ export default function FoundationPage({ initialTab = 'about' }: FoundationPageP
             </div>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/30 rounded-full text-sm text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
-            <Sparkles className="w-4 h-4" />
-            <span>
-              {language === 'en'
-                ? 'Curated by aOi - AI Research Infrastructure Curator'
-                : 'Курируется aOi - AI-куратор научной инфраструктуры'}
-            </span>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/30 rounded-full text-sm text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
+              <Sparkles className="w-4 h-4" />
+              <span>
+                {language === 'en'
+                  ? 'Curated by aOi - AI Research Curator'
+                  : 'Курируется aOi - AI-куратор исследований'}
+              </span>
+            </div>
+
+            <button
+              onClick={() => setActiveTab('knowledge')}
+              className="relative inline-flex items-center gap-2 px-4 py-2 bg-[#9B8FD9] hover:bg-[#8B7AC7] text-white rounded-full text-sm font-bold shadow-lg hover:shadow-xl transition-all animate-pulse hover:animate-none group"
+            >
+              <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-ping"></span>
+              <Search className="w-4 h-4 group-hover:scale-110 transition-transform" />
+              <span>{language === 'en' ? 'Ask aOi' : 'Спросить aOi'}</span>
+            </button>
           </div>
         </div>
 

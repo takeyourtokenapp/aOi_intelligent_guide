@@ -83,70 +83,78 @@ export function HeroCarousel({ onAoiClick, onNavigate }: HeroCarouselProps) {
   const slide = slides[currentSlide];
 
   const renderWelcomeSlide = () => (
-    <div className="relative h-full bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-[#1B2838] dark:via-[#2a3f54] dark:to-[#1B2838] rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 lg:p-12 flex items-center justify-center border-2 border-purple-200 dark:border-[#9B8FD9]/30">
-      <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center max-w-6xl w-full">
+    <div className="relative h-full bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-[#1B2838] dark:via-[#2a3f54] dark:to-[#1B2838] rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-8 lg:p-12 flex items-center justify-center border-2 border-purple-200 dark:border-[#9B8FD9]/30 overflow-hidden">
+      <div className="grid md:grid-cols-[300px_1fr] lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:gap-10 items-center max-w-6xl w-full">
         <div className="relative flex items-center justify-center order-2 md:order-1">
           <img
             src="/aoi/aoi-fullbody-welcome.png"
             alt="aOi AI Guide"
-            className="w-full max-w-[200px] sm:max-w-[260px] md:max-w-sm mx-auto drop-shadow-2xl object-contain rounded-2xl"
+            className="w-full max-w-[160px] sm:max-w-[200px] md:max-w-[240px] lg:max-w-sm mx-auto drop-shadow-2xl object-contain rounded-2xl"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = '/aoi/hero-welcome.png';
             }}
           />
-          <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
+          <div className="absolute top-1 right-1 sm:top-2 sm:right-2 md:top-3 md:right-3">
+            <div className="relative">
+              <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
+              <div className="absolute inset-0 w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 bg-green-400 rounded-full animate-ping opacity-75"></div>
+            </div>
+            <div className="absolute -bottom-6 right-0 bg-green-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap shadow-lg">
+              {language === 'en' ? 'LIVE' : 'ОНЛАЙН'}
+            </div>
+          </div>
         </div>
 
-        <div className="text-slate-900 dark:text-white order-1 md:order-2">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight">
-            {language === 'en' ? 'Hello, I am' : 'Привет, я'}
-            <br />
-            <span className="text-[#9B8FD9] bg-gradient-to-r from-[#9B8FD9] to-[#7BA7BC] bg-clip-text text-transparent">aOi (葵)</span>
-          </h1>
+        <div className="text-slate-900 dark:text-white order-1 md:order-2 space-y-2 sm:space-y-3 md:space-y-4">
+          <div className="space-y-1 sm:space-y-2">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+              {language === 'en' ? 'Hello, I am' : 'Привет, я'}
+              <br />
+              <span className="text-[#9B8FD9] bg-gradient-to-r from-[#9B8FD9] to-[#7BA7BC] bg-clip-text text-transparent">aOi (葵)</span>
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400 italic">
+              {language === 'en' ? 'Your Interactive AI Guide' : 'Ваш интерактивный ИИ-гид'}
+            </p>
+          </div>
 
-          <div className="bg-purple-100/80 dark:bg-[#2a3f54]/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 mb-3 sm:mb-4 md:mb-6 border border-purple-300 dark:border-[#9B8FD9]/20">
-            <p className="text-slate-700 dark:text-gray-300 mb-2 text-xs sm:text-sm md:text-base leading-relaxed">
+          <div className="bg-purple-100/80 dark:bg-[#2a3f54]/80 backdrop-blur-sm rounded-lg md:rounded-xl p-2 sm:p-3 md:p-4 border border-purple-300 dark:border-[#9B8FD9]/20">
+            <p className="text-slate-700 dark:text-gray-300 mb-1.5 sm:mb-2 text-xs sm:text-sm leading-relaxed">
               {language === 'en' ? 'My name means 葵 — like the mallow flower' : 'Моё имя означает 葵 — как цветок мальвы'}
             </p>
-            <div className="flex gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm flex-wrap text-slate-600 dark:text-gray-300">
-              <span className="flex items-center gap-1">🌱 {language === 'en' ? 'Growth' : 'Рост'}</span>
-              <span className="flex items-center gap-1">🧠 {language === 'en' ? 'Wisdom' : 'Мудрость'}</span>
-              <span className="flex items-center gap-1">🧬 {language === 'en' ? 'Intelligence' : 'Интеллект'}</span>
+            <div className="flex gap-2 sm:gap-3 text-[10px] sm:text-xs flex-wrap text-slate-600 dark:text-gray-300">
+              <span className="flex items-center gap-0.5 sm:gap-1">🌱 {language === 'en' ? 'Growth' : 'Рост'}</span>
+              <span className="flex items-center gap-0.5 sm:gap-1">🧠 {language === 'en' ? 'Wisdom' : 'Мудрость'}</span>
+              <span className="flex items-center gap-0.5 sm:gap-1">🧬 {language === 'en' ? 'Intelligence' : 'Интеллект'}</span>
             </div>
           </div>
 
-          <p className="text-slate-700 dark:text-gray-200 leading-relaxed mb-3 sm:mb-4 text-xs sm:text-sm md:text-base">
+          <p className="text-slate-700 dark:text-gray-200 leading-relaxed text-xs sm:text-sm md:text-base">
             {language === 'en'
-              ? 'I am the Core AI Orchestrator of TYT ecosystem — routing between Foundation (research & knowledge) and Academy (Web3 tools & infrastructure). I guide you through complex systems: blockchain, quantum computing, and neuro-oncology.'
-              : 'Я — основной ИИ-оркестратор экосистемы TYT — маршрутизирую между Foundation (исследования и знания) и Academy (Web3-инструменты и инфраструктура). Я веду вас через сложные системы: блокчейн, квантовые вычисления и нейроонкологию.'}
+              ? 'I guide you through complex systems: blockchain, quantum computing, and neuro-oncology. I route between Foundation (knowledge) and Academy (Web3 tools).'
+              : 'Я веду вас через сложные системы: блокчейн, квантовые вычисления и нейроонкологию. Я соединяю Foundation (знания) и Academy (Web3-инструменты).'}
           </p>
 
-          <p className="text-slate-600 dark:text-gray-300 text-xs sm:text-sm mb-4 sm:mb-5 md:mb-6 italic leading-relaxed">
+          <p className="text-slate-600 dark:text-gray-300 text-[10px] sm:text-xs italic leading-relaxed hidden sm:block">
             {language === 'en'
-              ? "I adapt to 4 levels based on your age and experience. For minors, guardian consent is required. I am NOT a medical advisor — I am your academic system guide."
-              : "Я адаптируюсь к 4 уровням в зависимости от вашего возраста и опыта. Для несовершеннолетних требуется согласие опекуна. Я НЕ медицинский консультант — я ваш академический системный гид."}
+              ? "I am NOT a medical advisor — I am your academic system guide. You don't need to be a doctor to understand."
+              : "Я НЕ медицинский консультант — я ваш академический гид. Вам не нужно быть врачом, чтобы понять."}
           </p>
 
-          <p className="text-slate-800 dark:text-white text-sm sm:text-base md:text-lg font-medium italic mb-5 sm:mb-6 md:mb-8 hidden sm:block leading-relaxed">
-            {language === 'en'
-              ? "You don't need to be a doctor or developer to understand. Let me explain how everything connects."
-              : "Вам не нужно быть врачом или разработчиком, чтобы понять. Позвольте мне объяснить, как всё связано."}
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 md:gap-4">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-2.5 md:gap-3 pt-1 sm:pt-2">
             <button
               onClick={onAoiClick}
-              className="px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 bg-[#9B8FD9] hover:bg-[#8B7AC7] rounded-lg sm:rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-sm sm:text-base shadow-lg hover:shadow-xl hover:shadow-purple-500/30 text-white"
+              className="relative px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 bg-[#9B8FD9] hover:bg-[#8B7AC7] rounded-lg sm:rounded-xl font-bold transition-all flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base shadow-lg hover:shadow-xl hover:shadow-purple-500/30 text-white animate-pulse hover:animate-none group"
             >
+              <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-ping"></span>
               {language === 'en' ? 'Talk with aOi' : 'Поговорить с aOi'}
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
               onClick={() => onNavigate?.('foundation')}
-              className="px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 border-2 border-[#9B8FD9] hover:bg-[#9B8FD9]/10 rounded-lg sm:rounded-xl font-bold transition-colors text-sm sm:text-base"
+              className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 border-2 border-[#9B8FD9] hover:bg-[#9B8FD9]/10 rounded-lg sm:rounded-xl font-bold transition-colors text-xs sm:text-sm md:text-base"
             >
-              {language === 'en' ? 'Learn About Foundation' : 'Узнать о Фонде'}
+              {language === 'en' ? 'Learn More' : 'Узнать больше'}
             </button>
           </div>
         </div>
