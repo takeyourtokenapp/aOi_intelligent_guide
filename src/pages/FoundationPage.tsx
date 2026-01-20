@@ -7,6 +7,7 @@ import { FoundationStats } from '../components/FoundationStats';
 import { DonationWidget } from '../components/DonationWidget';
 import { KnowledgeSearch } from '../components/KnowledgeSearch';
 import { FoundationUpdates } from '../components/FoundationUpdates';
+import ResearchContactButton from '../components/ResearchContactButton';
 import { parseMarkdownToHTML } from '../utils/markdownParser';
 
 interface ResearchPost {
@@ -315,6 +316,23 @@ function ResearchSection({ posts, loading }: { posts: ResearchPost[]; loading: b
             }}
           />
         </div>
+
+        <div className="mt-8 p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
+            {language === 'en' ? 'Interested in This Research?' : language === 'ru' ? 'Заинтересованы в этом исследовании?' : 'מעוניין במחקר זה?'}
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300 mb-4">
+            {language === 'en'
+              ? 'Connect with our research team to discuss collaboration opportunities, technical details, or potential partnerships on this work.'
+              : language === 'ru'
+              ? 'Свяжитесь с нашей исследовательской командой, чтобы обсудить возможности сотрудничества, технические детали или потенциальные партнерства по этой работе.'
+              : 'צור קשר עם צוות המחקר שלנו כדי לדון באפשרויות שיתוף פעולה, פרטים טכניים או שותפויות פוטנציאליות בעבודה זו.'}
+          </p>
+          <ResearchContactButton
+            researchTitle={title}
+            researchType="paper"
+          />
+        </div>
       </div>
     );
   }
@@ -538,6 +556,23 @@ function ManifestoSection({ posts, loading }: { posts: ResearchPost[]; loading: 
             dangerouslySetInnerHTML={{ __html: parseMarkdownToHTML(content) }}
           />
         </article>
+
+        <div className="max-w-4xl mx-auto mt-8 p-6 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
+            {language === 'en' ? 'Interested in Collaboration?' : language === 'ru' ? 'Заинтересованы в сотрудничестве?' : 'מעוניין בשיתוף פעולה?'}
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300 mb-4">
+            {language === 'en'
+              ? 'If you represent a research institution, quantum computing center (like I-QCC or D-Wave), or are interested in collaborating on this research, we would love to hear from you.'
+              : language === 'ru'
+              ? 'Если вы представляете исследовательское учреждение, центр квантовых вычислений (например, I-QCC или D-Wave) или заинтересованы в сотрудничестве, мы будем рады услышать вас.'
+              : 'אם אתה מייצג מוסד מחקר, מרכז מחשוב קוונטי (כמו I-QCC או D-Wave), או מעוניין לשתף פעולה במחקר זה, נשמח לשמוע ממך.'}
+          </p>
+          <ResearchContactButton
+            researchTitle={title}
+            researchType="manifesto"
+          />
+        </div>
       </div>
     );
   }
@@ -659,7 +694,7 @@ function ManifestoSection({ posts, loading }: { posts: ResearchPost[]; loading: 
         </ul>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-4">
         <button
           onClick={() => setViewingFull(true)}
           className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl font-medium hover:shadow-lg transition-shadow"
@@ -670,6 +705,11 @@ function ManifestoSection({ posts, loading }: { posts: ResearchPost[]; loading: 
           </span>
           <ArrowRight className="w-4 h-4" />
         </button>
+
+        <ResearchContactButton
+          researchTitle={title}
+          researchType="manifesto"
+        />
       </div>
     </div>
   );

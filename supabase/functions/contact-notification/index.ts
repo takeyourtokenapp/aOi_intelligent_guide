@@ -39,6 +39,7 @@ function getRecipientEmail(submissionType: string, contactInfo: ContactInfo): st
     case 'partnership_proposal':
     case 'research_collaboration':
     case 'media_inquiry':
+      // High-priority research collaboration requests go to partnerships
       return contactInfo.partnerships_email || contactInfo.primary_email;
 
     case 'general_inquiry':
